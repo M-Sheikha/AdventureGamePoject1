@@ -8,6 +8,7 @@ namespace AdventureGame
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hej");
+            Console.WriteLine("Hej, hej!");
         }
     }
 }
