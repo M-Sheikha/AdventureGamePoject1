@@ -9,6 +9,18 @@ namespace AdventureGame
 
         static void Main(string[] args)
         {
+
+            var items = Items.MakeItems();
+
+            Player player1 = new Player("Harald", "Dwarf", 120, 10);
+            Console.WriteLine(player1.Damage);
+
+            Console.ReadLine();
+
+
+
+
+
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             
             MakeMaze();
@@ -63,6 +75,11 @@ namespace AdventureGame
                     }
                 }
             } while (true);
+
+
+           
+
+
         }
 
         /*
