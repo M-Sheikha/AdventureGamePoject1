@@ -1,0 +1,13 @@
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.exe
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.deps.json
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.runtimeconfig.json
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.runtimeconfig.dev.json
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.dll
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.pdb
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.csprojAssemblyReference.cache
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.AssemblyInfoInputs.cache
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.AssemblyInfo.cs
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.csproj.CoreCompileInputs.cache
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.dll
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.pdb
+C:\Code\KYH\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.genruntimeconfig.cache
