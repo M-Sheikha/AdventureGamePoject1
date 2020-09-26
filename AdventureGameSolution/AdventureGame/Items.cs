@@ -5,6 +5,23 @@ namespace AdventureGame
 {
     class Items
     {
+        // FÖREMÅL ============================================================
+
+        // Föremål kan plockas upp och läggas i spelarens väska.
+
+        // Föremål är antingen förbrukningsbara eller bärbara.
+
+        // Spelaren kan öppna sin ryggsäck och använda föremål.
+
+        // Förbrukningsbar innebär att föremålet försvinner vid användning (ät
+        // ett kokt ägg, kasta en kaststjärna eller hissa en flagga).
+
+        // Bärbara föremål kan spelaren ta upp ur väskan och sätta på sig (bära
+        // en hatt eller solglasögon).
+
+        // Genom att konsumera eller sätta på sig ett föremål ändras spelarens
+        // egenskaper.
+
         public string Name { get; set; }
         public string Type { get; set; }
         public int Life { get; set; }

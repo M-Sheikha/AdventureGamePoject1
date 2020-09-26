@@ -30,6 +30,8 @@ namespace AdventureGame
         public static void Print()
         {
             Console.Clear();
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\n");
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
