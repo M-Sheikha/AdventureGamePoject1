@@ -62,5 +62,53 @@ namespace AdventureGame
             Console.WriteLine("Hej");
             Console.WriteLine("Hej, hej!");
         }
+
+        public static void PrintPlayer(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write("*");
+        }
+
+        public static void PrintEmpty(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
+        }
+
+        public static void MovePlayer(ref int x, ref int y)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (x > 10)
+                    {
+                        PrintEmpty(x, y);
+                        x--;
+                    }
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (x < 105)
+                    {
+                        PrintEmpty(x, y);
+                        x++;
+                    }
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (y > 3)
+                    {
+                        PrintEmpty(x, y);
+                        y--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (y < 25)
+                    {
+                        PrintEmpty(x, y);
+                        y++;
+                    }
+                    break;
+            }
+        }
     }
 }
