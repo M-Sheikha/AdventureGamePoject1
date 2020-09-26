@@ -2,6 +2,7 @@
 
 namespace AdventureGame
 {
+
     class Program
     {
         static void Main(string[] args)
