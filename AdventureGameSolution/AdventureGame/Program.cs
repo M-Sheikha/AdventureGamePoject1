@@ -18,8 +18,6 @@ namespace AdventureGame
             //(char) i den 2-dimensionella världen.
             //När spelet startar instansieras olika entiterer och deras position slumpas.
 
-            //Här kan man skriva något.
-
             //==============================SPELAREN==============================
             //Spelaren ärver från klassen entity men kan även förflytta sig till 
             //skillnad från övriga varelser som står stilla.
