@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Mohammed Sheikha\\.nuget\\packages\\": {}
+    "C:\\Users\\d\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mohammed Sheikha\\source\\repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
+      "projectUniqueName": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
       "projectName": "AdventureGame",
-      "projectPath": "C:\\Users\\Mohammed Sheikha\\source\\repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
-      "packagesPath": "C:\\Users\\Mohammed Sheikha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mohammed Sheikha\\source\\repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\obj\\",
+      "projectPath": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
+      "packagesPath": "C:\\Users\\d\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Mohammed Sheikha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\d\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

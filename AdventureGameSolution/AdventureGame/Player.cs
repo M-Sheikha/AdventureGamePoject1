@@ -67,7 +67,14 @@ namespace AdventureGame
                     Console.ReadLine();
                     Console.Clear();                    
                     GraphicalUserInterface.PrintField();
-                    break;                    
+                    break;
+                case ConsoleKey.C:
+                    Console.Clear();
+                    GraphicalUserInterface.PrintCharacterPanel();
+                    Console.ReadLine();
+                    Console.Clear();
+                    GraphicalUserInterface.PrintField();
+                    break;
             }
         }
 
