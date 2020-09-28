@@ -24,3 +24,16 @@ C:\Users\d\Source\Repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\Adv
 C:\Users\d\Source\Repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.dll
 C:\Users\d\Source\Repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.pdb
 C:\Users\d\Source\Repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.genruntimeconfig.cache
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.exe
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.deps.json
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.runtimeconfig.json
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.runtimeconfig.dev.json
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.dll
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\bin\Debug\netcoreapp3.1\AdventureGame.pdb
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.csprojAssemblyReference.cache
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.AssemblyInfoInputs.cache
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.AssemblyInfo.cs
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.csproj.CoreCompileInputs.cache
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.dll
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.pdb
+C:\Users\Mohammed Sheikha\source\repos\M-Sheikha\AdventureGamePoject1\AdventureGameSolution\AdventureGame\obj\Debug\netcoreapp3.1\AdventureGame.genruntimeconfig.cache

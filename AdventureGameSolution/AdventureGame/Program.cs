@@ -45,9 +45,10 @@ namespace AdventureGame
             // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
             // och spelet fortsätter.
 
-            
-            GameMatrix.Create();
-            GameMatrix.Print();
+
+            GraphicalUserInterface.PrintField();
+            Console.CursorVisible = false;
+
             
             int x = 20;
             int y = 20;

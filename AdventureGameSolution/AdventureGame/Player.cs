@@ -61,6 +61,13 @@ namespace AdventureGame
                         y++;
                     }
                     break;
+                case ConsoleKey.I:
+                    Console.Clear();
+                    GraphicalUserInterface.PrintInventory();
+                    Console.ReadLine();
+                    Console.Clear();                    
+                    GraphicalUserInterface.PrintField();
+                    break;                    
             }
         }
 
