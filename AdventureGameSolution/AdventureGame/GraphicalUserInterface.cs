@@ -13,6 +13,7 @@ namespace AdventureGame
         public static void PrintField()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
+
             //Skriver ut toppen av ramen
             Console.Write("\n\t\u2554");
             for (int i = 0; i < width - 2; i++)
@@ -39,6 +40,7 @@ namespace AdventureGame
         public static void PrintInventory()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+
             //Skriver ut toppen av ramen
             Console.Write("\n\t\u2554\u2550INVENTORY");
             for (int i = 0; i < width - 12; i++)
