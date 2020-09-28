@@ -17,7 +17,6 @@ namespace AdventureGame
 
         public static void Print(int x, int y)
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.SetCursorPosition(x, y);
             Console.Write("*");
         }
