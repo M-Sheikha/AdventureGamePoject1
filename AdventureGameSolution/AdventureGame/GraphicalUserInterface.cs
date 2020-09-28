@@ -38,7 +38,7 @@ namespace AdventureGame
 
         public static void PrintInventory()
         {
-            hight = Player.inventory.Count + 1;
+            hight = Player.inventory.Count + 2;
             //Skriver ut toppen av ramen
             Console.Write("\n\t\u2554\u2550INVENTORY");
             for (int i = 0; i < width - 12; i++)

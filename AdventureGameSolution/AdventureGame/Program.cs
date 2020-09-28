@@ -50,6 +50,20 @@ namespace AdventureGame
             Console.CursorVisible = false;
 
             var player1 = new Player("Frodo", "Halfling", "Thief");
+            var items = Items.MakeItems();
+            Player.inventory.Add(items[0]);
+
+            Player.inventory.Add(items[1]);
+            Player.inventory.Add(items[2]);
+            Player.inventory.Add(items[3]);
+            Player.inventory.Add(items[5]);
+            Player.inventory.Add(items[6]);
+            Player.inventory.Add(items[7]);
+            Player.inventory.Add(items[8]);
+            Player.inventory.Add(items[9]);
+
+
+            
             player1.X = 10;
             player1.Y = 2;           
             

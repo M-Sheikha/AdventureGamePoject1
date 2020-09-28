@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace AdventureGame
 {
@@ -83,6 +84,54 @@ namespace AdventureGame
 
         }
 
+        public void Inventory()
+        {
+            GraphicalUserInterface.PrintInventory();
+
+            int top = 2;
+            int left = 10;
+
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("You are carrying the following items:");
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.Write($"{i+1}. ");              
+                if (inventory[i].Name == "Gold")
+                    Console.Write($"{inventory[i].Value} ");
+                Console.WriteLine(inventory[i].Name);
+            }
+
+            top += 2;
+            Console.SetCursorPosition(left, top++);
+            Console.Write($"Enter a number between 1 and {inventory.Count} to use an item: ");
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                index--;
+                if (inventory[index].Type == "Equipable")
+                {
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine($"You equipped {inventory[index].Name}");
+                    Damage += inventory[index].Damage;
+                    Protection += inventory[index].Protection;
+                    gear.Add(inventory[index]);
+                    inventory.RemoveAt(index);
+                }
+                else if (inventory[index].Type == "Consumable")
+                {
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine($"You used {inventory[index].Name}");
+                    Health += inventory[index].Health;
+                    inventory.RemoveAt(index);
+                }
+                else
+                {
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine("You can't use that.");
+                }
+                Thread.Sleep(1000);
+            }
+        }
         public void Move()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -118,8 +167,7 @@ namespace AdventureGame
                     break;
                 case ConsoleKey.I:
                     Console.Clear();
-                    GraphicalUserInterface.PrintInventory();
-                    Console.ReadKey();
+                    Inventory();                                      
                     Console.Clear();                    
                     GraphicalUserInterface.PrintField();
                     break;
