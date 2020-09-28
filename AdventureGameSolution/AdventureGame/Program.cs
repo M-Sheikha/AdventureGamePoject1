@@ -49,14 +49,15 @@ namespace AdventureGame
             GraphicalUserInterface.PrintField();
             Console.CursorVisible = false;
 
+            var player1 = new Player("Frodo", "Halfling", "Thief");
+            player1.X = 10;
+            player1.Y = 2;           
             
-            int x = 20;
-            int y = 20;
 
             do
             {
-                Player.Print(x, y);
-                Player.Move(ref x, ref y);
+                player1.Print();
+                player1.Move();
 
             } while (true);
 

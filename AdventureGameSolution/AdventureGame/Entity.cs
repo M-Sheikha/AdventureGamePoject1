@@ -15,6 +15,9 @@
         public string Race { get; set; }
         public int Health { get; set; }
         public int Damage { get; set; }
+        public int Protection { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         // Abilities
         public int Strength { get; set; }

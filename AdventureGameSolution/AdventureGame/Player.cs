@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AdventureGame
 {
@@ -15,62 +16,117 @@ namespace AdventureGame
         // Spelaren kan interagera med andra varelser i världen (motståndare)
         // genom att ställa sig på samma position. Då sker ett möte.
 
-        public static void Print(int x, int y)
+        
+
+        public static List<Items> inventory = new List<Items>();
+        public static List<Items> gear = new List<Items>();
+        public string Class { get; set; }
+
+        public Player(string name, string race, string _class)
         {
-            Console.SetCursorPosition(x, y);
+            Name = name;
+            Race = race;
+            Class = _class;
+        }
+        public void Print()
+        {
+            Console.SetCursorPosition(X, Y);
             Console.Write("*");
         }
 
-        static void PrintEmpty(int x, int y)
+        public void PrintEmpty()
         {
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(X, Y);
             Console.Write(" ");
         }
 
-        public static void Move(ref int x, ref int y)
+        public void CharacterPanel()
+        {
+            GraphicalUserInterface.PrintCharacterPanel();
+            int left = 10;
+            int top = 2;
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"{Name} the {Race} {Class}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Health: {Health}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Damage: {Damage}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Protection: {Protection}");
+            top += 2;
+
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Strenght: {Strength}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Dexterity: {Dexterity}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Constitution: {Constitution}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Intelligence: {Intelligence}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Wisdom: {Wisdom}");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"Charisma: {Charisma}");
+            top += 2;
+
+            foreach (var item in gear)
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.Write($"{item.Name} ");
+                if (item.Protection > 0)
+                    Console.WriteLine($"+{item.Protection} Protection");
+                else if (item.Damage > 0)
+                    Console.WriteLine($"+{item.Damage} Damage");
+            }
+
+            Console.ReadKey();
+
+        }
+
+        public void Move()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             switch (keyInfo.Key)
             {
                 case ConsoleKey.LeftArrow:
-                    if (x > 10)
+                    if (X > 10)
                     {
-                        PrintEmpty(x, y);
-                        x--;
+                        PrintEmpty();
+                        X--;
                     }
                     break;
                 case ConsoleKey.RightArrow:
-                    if (x < 105)
+                    if (X < 105)
                     {
-                        PrintEmpty(x, y);
-                        x++;
+                        PrintEmpty();
+                        X++;
                     }
                     break;
                 case ConsoleKey.UpArrow:
-                    if (y > 3)
+                    if (Y > 2)
                     {
-                        PrintEmpty(x, y);
-                        y--;
+                        PrintEmpty();
+                        Y--;
                     }
                     break;
                 case ConsoleKey.DownArrow:
-                    if (y < 25)
+                    if (Y < 24)
                     {
-                        PrintEmpty(x, y);
-                        y++;
+                        PrintEmpty();
+                        Y++;
                     }
                     break;
                 case ConsoleKey.I:
                     Console.Clear();
                     GraphicalUserInterface.PrintInventory();
-                    Console.ReadLine();
+                    Console.ReadKey();
                     Console.Clear();                    
                     GraphicalUserInterface.PrintField();
                     break;
                 case ConsoleKey.C:
-                    Console.Clear();
-                    GraphicalUserInterface.PrintCharacterPanel();
-                    Console.ReadLine();
+                    Console.Clear();                    
+                    CharacterPanel();
+                    Console.ReadKey();
                     Console.Clear();
                     GraphicalUserInterface.PrintField();
                     break;
