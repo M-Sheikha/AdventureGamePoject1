@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Code\\KYH\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj": {}
+    "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj": {}
   },
   "projects": {
-    "C:\\Code\\KYH\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj": {
+    "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Code\\KYH\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
+        "projectUniqueName": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
         "projectName": "AdventureGame",
-        "projectPath": "C:\\Code\\KYH\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
-        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
-        "outputPath": "C:\\Code\\KYH\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\obj\\",
+        "projectPath": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\AdventureGame.csproj",
+        "packagesPath": "C:\\Users\\d\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\d\\Source\\Repos\\M-Sheikha\\AdventureGamePoject1\\AdventureGameSolution\\AdventureGame\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\d\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
