@@ -17,8 +17,8 @@ namespace AdventureGame
         // Spelaren kan interagera med andra varelser i världen (motståndare)
         // genom att ställa sig på samma position. Då sker ett möte.
 
-        
 
+        public static Random rnd = new Random();
         public static List<Items> inventory = new List<Items>();
         public static List<Items> gear = new List<Items>();
         public string Class { get; set; }
@@ -28,7 +28,42 @@ namespace AdventureGame
             Name = name;
             Race = race;
             Class = _class;
+
+            Strength = AbilityScore();
+            Dexterity = AbilityScore();
+            Constitution = AbilityScore();
+            Intelligence = AbilityScore();
+            Wisdom = AbilityScore();
+            Charisma = AbilityScore();
+
+            Health = rnd.Next(1, 11) + Modifier(Constitution);
+            Damage = 1 + Modifier(Strength);
+            Protection = 10 + Modifier(Dexterity);
+
         }
+
+        public int AbilityScore()
+        {
+            int a = rnd.Next(1, 7);
+            int b = rnd.Next(1, 7);
+            int c = rnd.Next(1, 7);
+            int d = rnd.Next(1, 7);
+
+            if (a <= b && a <= c && a <= d)
+                return b + c + d;
+            else if (b <= a && b <= c && b <= d)
+                return a + c + d;
+            else if (c <= a && c <= b && c <= d)
+                return a + b + d;
+            else
+                return a + b + c;
+        }
+
+        public int Modifier(int ability)
+        {
+            return (ability - 10) / 2;
+        }
+
         public void Print()
         {
             Console.SetCursorPosition(X, Y);
@@ -174,7 +209,6 @@ namespace AdventureGame
                 case ConsoleKey.C:
                     Console.Clear();                    
                     CharacterPanel();
-                    Console.ReadKey();
                     Console.Clear();
                     GraphicalUserInterface.PrintField();
                     break;
