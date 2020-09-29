@@ -45,25 +45,30 @@ namespace AdventureGame
             // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
             // och spelet fortsätter.
 
-
+            Random rnd = new Random();
             GraphicalUserInterface.PrintField();
             Console.CursorVisible = false;
 
             var player1 = new Player("Frodo", "Halfling", "Thief");
             var items = Items.MakeItems();
             Player.inventory.Add(items[0]);
-
+            Player.inventory[0].Value = rnd.Next(1, 100);
             Player.inventory.Add(items[1]);
             Player.inventory.Add(items[2]);
             Player.inventory.Add(items[3]);
+            Player.inventory.Add(items[4]);
             Player.inventory.Add(items[5]);
             Player.inventory.Add(items[6]);
             Player.inventory.Add(items[7]);
             Player.inventory.Add(items[8]);
+            Player.inventory.Add(items[8]);
             Player.inventory.Add(items[9]);
+            Player.inventory.Add(items[10]);
+            Player.inventory.Add(items[11]);
 
 
-            
+
+
             player1.X = 10;
             player1.Y = 2;           
             

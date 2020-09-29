@@ -63,7 +63,7 @@ namespace AdventureGame
             Console.WriteLine("\u2563");
 
             //sidor på ramen
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Console.Write("\t\u2551");
                 for (int j = 0; j < width - 2; j++)
@@ -120,7 +120,7 @@ namespace AdventureGame
                 Console.Write("\u2550");
             Console.WriteLine("\u2563");
             //skriver ut sidorna för gear
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < Player.gear.Count + 1; i++)
             {
                 Console.Write("\t\u2551");
                 for (int j = 0; j < width - 2; j++)
