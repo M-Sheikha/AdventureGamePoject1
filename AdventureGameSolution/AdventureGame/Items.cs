@@ -42,6 +42,9 @@ namespace AdventureGame
             Damage = damage;
             Health = health;
             Cost = cost;
+
+            X = rnd.Next(10, 104);
+            Y = rnd.Next(2, 24);
         }
 
         public static List<Items> MakeItems()
@@ -128,6 +131,15 @@ namespace AdventureGame
         {
             Console.SetCursorPosition(X, Y);
             Console.Write("I");
+        }
+
+        public Items ItemForPickUp()
+        {
+            List<Items> items = MakeItems();
+            Items item = items[rnd.Next(items.Count)];
+            item.X = rnd.Next(10, 105);
+            item.Y = rnd.Next(2, 24);
+            return item;
         }
     }
 }

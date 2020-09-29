@@ -54,19 +54,23 @@ namespace AdventureGame
             // Skapar ett föremål och ger det en random position.
             var items = Items.MakeItems();
             Items item1 = items[rnd.Next(items.Count)];
-            item1.X = rnd.Next(10, 105);
-            item1.Y = rnd.Next(2, 24);
+            foreach (var item in items)
+            {
+                item.PrintItem();
+            }
+            //item1.X = rnd.Next(10, 105);
+            //item1.Y = rnd.Next(2, 24);
 
             // Skapar flera föremål på random positioner. ===INTE KLAR===
             // Skriver ite ut dem igen efter att man öppnat inventory eller character panel...
             // Föremålen läggs inte till i inventory om man går till samma position.
-            for (int i = 0; i < 10; i++)
-            {
-                Items _item = items[rnd.Next(items.Count)];
-                _item.X = rnd.Next(10, 105);
-                _item.Y = rnd.Next(2, 24);
-                _item.PrintItem();
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Items _item = items[rnd.Next(items.Count)];
+            //    _item.X = rnd.Next(10, 105);
+            //    _item.Y = rnd.Next(2, 24);
+            //    _item.PrintItem();
+            //}
 
 
 
