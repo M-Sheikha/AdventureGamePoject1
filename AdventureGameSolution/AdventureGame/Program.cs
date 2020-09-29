@@ -50,33 +50,65 @@ namespace AdventureGame
             Console.CursorVisible = false;
 
             var player1 = new Player("Frodo", "Halfling", "Thief");
+
+            // Skapar ett föremål och ger det en random position.
             var items = Items.MakeItems();
-            Player.inventory.Add(items[0]);
-            Player.inventory[0].Value = rnd.Next(1, 100);
-            Player.inventory.Add(items[1]);
-            Player.inventory.Add(items[2]);
-            Player.inventory.Add(items[3]);
-            Player.inventory.Add(items[4]);
-            Player.inventory.Add(items[5]);
-            Player.inventory.Add(items[6]);
-            Player.inventory.Add(items[7]);
-            Player.inventory.Add(items[8]);
-            Player.inventory.Add(items[8]);
-            Player.inventory.Add(items[9]);
-            Player.inventory.Add(items[10]);
-            Player.inventory.Add(items[11]);
+            Items item1 = items[rnd.Next(items.Count)];
+            item1.X = rnd.Next(10, 105);
+            item1.Y = rnd.Next(2, 24);
+
+            // Skapar flera föremål på random positioner. ===INTE KLAR===
+            for (int i = 0; i < 10; i++)
+            {
+                Items _item = items[rnd.Next(items.Count)];
+                _item.X = rnd.Next(10, 105);
+                _item.Y = rnd.Next(2, 24);
+                _item.PrintItem();
+            }
 
 
 
+            //Player.inventory[0].Value = rnd.Next(1, 100);
+            //Player.inventory.Add(items[1]);
+            //Player.inventory.Add(items[2]);
+            //Player.inventory.Add(items[3]);
+            //Player.inventory.Add(items[4]);
+            //Player.inventory.Add(items[5]);
+            //Player.inventory.Add(items[6]);
+            //Player.inventory.Add(items[7]);
+            //Player.inventory.Add(items[8]);
+            //Player.inventory.Add(items[8]);
+            //Player.inventory.Add(items[9]);
+            //Player.inventory.Add(items[10]);
+            //Player.inventory.Add(items[11]);
 
+            bool notTaken = true;
+
+            // Spelarens initiala position.
             player1.X = 10;
             player1.Y = 2;           
             
 
             do
             {
-                player1.Print();
+                // Skriver ut spelaren till skärmen.
+                player1.PrintCharacter();
+
+                // Skriver ut föremålet så länge det inte är taget.
+                if (notTaken)
+                    item1.PrintItem();
+
+                // Styr spelaren.
                 player1.Move();
+
+                // Om spelaren har samma posiiton som föremålet plockas det upp.
+                if (player1.X == item1.X && player1.Y == player1.Y)
+                {
+                    Player.inventory.Add(item1);
+                    item1.X = 0;
+                    item1.Y = 0;
+                    notTaken = false;
+                }
 
             } while (true);
 

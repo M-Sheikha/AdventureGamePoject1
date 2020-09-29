@@ -31,6 +31,9 @@ namespace AdventureGame
         public int Cost { get; set; }
         public int Value { get; set; }
 
+        public int X { get; set; }
+        public int Y { get; set; }
+
         public Items(string name, string placement, int protection, string damage, int health, int cost)
         {
             Name = name;
@@ -119,6 +122,12 @@ namespace AdventureGame
                 "Healer's Kit" => rnd.Next(1, 5),
                 _ => throw new NotImplementedException(),
             };
+        }
+
+        public void PrintItem()
+        {
+            Console.SetCursorPosition(X, Y);
+            Console.Write("I");
         }
     }
 }

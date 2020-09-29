@@ -82,7 +82,7 @@ namespace AdventureGame
             return (ability - 10) / 2;
         }
 
-        public void Print()
+        public void PrintCharacter()
         {
             Console.SetCursorPosition(X, Y);
             Console.Write("*");
