@@ -27,6 +27,9 @@ namespace AdventureGame
         public string Class { get; set; }
         public int MaxHealth { get; set; }
 
+        public static int left;
+        public static int top;
+
         public Player(string name, string race, string _class)
         {
             Name = name;
@@ -94,30 +97,39 @@ namespace AdventureGame
         public void CharacterPanel()
         {
             GraphicalUserInterface.PrintCharacterPanel();
-            int left = 10;
-            int top = 2;
+            left = 10;
+            top = 2;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"{Name} the {Race} {Class}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Health: {Health}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Damage: {Damage}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Protection: {Protection}");
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Health: {Health}");
+            PrintStat("Health", Health);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Damage: {Damage}");
+            PrintStat("Damage", Damage);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Protection: {Protection}");
+            PrintStat("Protection", Protection);
             top += 2;
 
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Strenght: {Strength}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Dexterity: {Dexterity}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Constitution: {Constitution}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Intelligence: {Intelligence}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Wisdom: {Wisdom}");
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"Charisma: {Charisma}");
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Strenght: {Strength}");
+            PrintStat("Strength", Strength);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Dexterity: {Dexterity}");
+            PrintStat("Dextrerity", Dexterity);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Constitution: {Constitution}");
+            PrintStat("Constitution", Constitution);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Intelligence: {Intelligence}");
+            PrintStat("Intelligence", Intelligence);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Wisdom: {Wisdom}");
+            PrintStat("Wisdom", Wisdom);
+            //Console.SetCursorPosition(left, top++);
+            //Console.WriteLine($"Charisma: {Charisma}");
+            PrintStat("Charisma", Charisma);
             top += 2;
 
             // Skriver ut alla equippade föremål med tillhörande stats.
@@ -130,9 +142,13 @@ namespace AdventureGame
                 else if (item.Damage != null)
                     Console.WriteLine($"{item.Damage} Damage");
             }
-
             Console.ReadKey();
+        }
 
+        private void PrintStat(string stat, int _stat)
+        {
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"{stat}: {_stat}");
         }
 
         public void Inventory()
@@ -141,8 +157,8 @@ namespace AdventureGame
             GraphicalUserInterface.PrintInventory();
 
             // Variabler till CurserPosiiton.
-            int top = 2;
-            int left = 10;
+            top = 2;
+            left = 10;
 
             // Placerar markören på rätt plats.
             Console.SetCursorPosition(left, top++);
@@ -160,18 +176,14 @@ namespace AdventureGame
 
             top += 2;
             Console.SetCursorPosition(left, top++);
-            Console.Write($"Enter a number between 1 and {inventory.Count} to use or drop an item: ");
+            Console.Write($"Enter a number between 1 and {inventory.Count} to use or to drop an item: ");
             string choice = Console.ReadLine();
 
             // Om spelaren vill slänga ett föremål ur inventory.
-            if (choice.ToLower().EndsWith("d"))
+            if (choice.ToLower().StartsWith("drop"))
             {
-                var choiceList = choice.ToLower().ToList();
-                choice = "";
-                choiceList.Remove('d');
-                foreach (var number in choiceList)
-                    choice += number;
-                if (int.TryParse(choice, out int _index))
+                var cArr = choice.ToLower().Split('p');
+                if (int.TryParse(cArr[1], out int _index))
                 {
                     Console.SetCursorPosition(left, top++);
                     Console.WriteLine($"You dropped {inventory[_index - 1].Name}");
@@ -183,6 +195,9 @@ namespace AdventureGame
             // Om spelaren vill använda ett föremål ur inventory.
             else if (int.TryParse(choice, out int index))
             {
+                bool okToEquip = true;
+                string placement = "";
+                Items _item = new Items(null, null, 0, null, 0, 0);
                 index--;
                 if (inventory[index].Placement != null)
                 {
@@ -207,46 +222,89 @@ namespace AdventureGame
                             // Om det finns ett likadant föremål eller liknande byter föremålen plats och statsen ändras.
                             if (item.Placement == inventory[index].Placement)
                             {
-                                gear.Remove(item);
-                                Protection -= item.Value;
-                                inventory.Add(item);
+                                okToEquip = false;
+                                placement = inventory[index].Placement;
+                                _item = item;
+                                //gear.Remove(item);
+                                //Protection -= item.Value;
+                                //inventory.Add(item);
                             }
                             else if (item.Placement == "main-hand" && inventory[index].Placement == "two-handed")
                             {
-                                gear.Remove(item);
-                                Protection -= item.Value;
-                                inventory.Add(item);
+                                okToEquip = false;
+                                placement = inventory[index].Placement;
+                                _item = item;
+                                //gear.Remove(item);
+                                //Protection -= item.Value;
+                                //inventory.Add(item);
                             }
                             else if (item.Placement == "two-handed" && inventory[index].Placement == "main-hand")
                             {
-                                gear.Remove(item);
-                                Protection -= item.Value;
-                                inventory.Add(item);
+                                okToEquip = false;
+                                placement = inventory[index].Placement;
+                                _item = item;
+                                //gear.Remove(item);
+                                //Protection -= item.Value;
+                                //inventory.Add(item);
                             }
                             else if (item.Placement == "two-handed" && inventory[index].Placement == "off-hand")
                             {
-                                gear.Remove(item);
-                                Protection -= item.Value;
-                                inventory.Add(item);
+                                okToEquip = false;
+                                placement = inventory[index].Placement;
+                                _item = item;
+                                //gear.Remove(item);
+                                //Protection -= item.Value;
+                                //inventory.Add(item);
                             }
 
                             if (item.Placement == "off-hand" && inventory[index].Placement == "two-handed")
                             {
-                                gear.Remove(item);
-                                Protection -= item.Value;
-                                inventory.Add(item);
+                                okToEquip = false;
+                                placement = inventory[index].Placement;
+                                _item = item;
+                                //gear.Remove(item);
+                                //Protection -= item.Value;
+                                //inventory.Add(item);
                             }
                         }
-                        Console.SetCursorPosition(left, top++);
-                        Console.WriteLine($"You equipped {inventory[index].Name}");
-                        if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                        if (okToEquip)
                         {
-                            // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
-                            inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
-                            Protection += inventory[index].Value;
+                            Console.SetCursorPosition(left, top++);
+                            Console.WriteLine($"You equipped {inventory[index].Name}");
+                            if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                            {
+                                // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
+                                inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
+                                Protection += inventory[index].Value;
+                            }
+                            gear.Add(inventory[index]);
+                            inventory.RemoveAt(index);
                         }
-                        gear.Add(inventory[index]);
-                        inventory.RemoveAt(index);
+                        else
+                        {
+                            Console.SetCursorPosition(left, top);
+                            Console.Write($"You already have equipped a {inventory[index].Placement} item. Do you want to switch?(y/n) ");
+                            string playerChoice = Console.ReadLine();
+                            if (playerChoice.ToLower() != "n")
+                            {
+                                gear.Remove(_item);
+                                Protection -= _item.Value;
+                                inventory.Add(_item);
+                                Console.SetCursorPosition(left, top);
+                                Console.WriteLine("                                                                                            ");
+                                Console.SetCursorPosition(left, top);
+                                Console.WriteLine($"You equipped {inventory[index].Name}");
+                                if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                                {
+                                    // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
+                                    inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
+                                    Protection += inventory[index].Value;
+                                }
+                                gear.Add(inventory[index]);
+                                inventory.RemoveAt(index);
+                            }
+                        }
+                        
                     }
                 }
                 // Man kan inte äta eller equippa guld.
