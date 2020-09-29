@@ -58,6 +58,8 @@ namespace AdventureGame
             item1.Y = rnd.Next(2, 24);
 
             // Skapar flera föremål på random positioner. ===INTE KLAR===
+            // Skriver ite ut dem igen efter att man öppnat inventory eller character panel...
+            // Föremålen läggs inte till i inventory om man går till samma position.
             for (int i = 0; i < 10; i++)
             {
                 Items _item = items[rnd.Next(items.Count)];
