@@ -54,46 +54,56 @@ namespace AdventureGame
 
             var player1 = new Player("Frodo", "Halfling", "Thief");
 
-            // Skapar ett föremål och ger det en random position.
+            // Skapar en lista med alla föremål
             var items = Items.MakeItems();
+
+            // Skapar 5 föremål från listan items.
             Items item1 = items[rnd.Next(items.Count)];
-            
-            
-
-            bool notTaken = true;
-
-            
-                       
-            
+            Items item2 = items[rnd.Next(items.Count)];
+            Items item3 = items[rnd.Next(items.Count)];
+            Items item4 = items[rnd.Next(items.Count)];
+            Items item5 = items[rnd.Next(items.Count)];
+            Items item6 = items[rnd.Next(items.Count)];
+            Items item7 = items[rnd.Next(items.Count)];
+            Items item8 = items[rnd.Next(items.Count)];
+            Items item9 = items[rnd.Next(items.Count)];
+            Items item10 = items[rnd.Next(items.Count)];
 
             do
             {
                 // Skriver ut spelaren till skärmen.
                 player1.PrintCharacter();
 
-                // Skriver ut föremålet så länge det inte är taget.
-                if (notTaken)
-                    item1.PrintItem();
+                // Skriver ut föremålen så länge de inte är tagna.
+                item1.PrintItem(item1);
+                item2.PrintItem(item2);
+                item3.PrintItem(item3);
+                item4.PrintItem(item4);
+                item5.PrintItem(item5);
+                item6.PrintItem(item6);
+                item7.PrintItem(item7);
+                item8.PrintItem(item8);
+                item9.PrintItem(item9);
+                item10.PrintItem(item10);
 
                 // Styr spelaren.
                 player1.Move();
 
                 // Om spelaren har samma posiiton som föremålet plockas det upp.
-                if (player1.X == item1.X && player1.Y == player1.Y)
-                {
-                    Player.inventory.Add(item1);
-                    item1.X = 0;
-                    item1.Y = 0;
-                    notTaken = false;
-                }
+                Items.WannaPickUp(player1, item1);
+                Items.WannaPickUp(player1, item2);
+                Items.WannaPickUp(player1, item3);
+                Items.WannaPickUp(player1, item4);
+                Items.WannaPickUp(player1, item5);
+                Items.WannaPickUp(player1, item6);
+                Items.WannaPickUp(player1, item7);
+                Items.WannaPickUp(player1, item8);
+                Items.WannaPickUp(player1, item9);
+                Items.WannaPickUp(player1, item10);
 
             } while (true);
 
         }
-
-        
-        
-
         
     }
 }

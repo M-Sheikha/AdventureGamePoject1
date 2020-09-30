@@ -35,6 +35,8 @@ namespace AdventureGame
         public int X { get; set; }
         public int Y { get; set; }
 
+        public bool NotTaken { get; set; }
+
         public Items(string name, string placement, int protection, string damage, int health, int cost)
         {
             Name = name;
@@ -46,6 +48,7 @@ namespace AdventureGame
 
             X = rnd.Next(10, 104);
             Y = rnd.Next(2, 24);
+            NotTaken = true;
         }
 
         public static List<Items> MakeItems()
@@ -128,10 +131,13 @@ namespace AdventureGame
             };
         }
 
-        public void PrintItem()
+        public void PrintItem(Items item)
         {
-            Console.SetCursorPosition(X, Y);
-            Console.Write("●");
+            if (item.NotTaken)
+            {
+                Console.SetCursorPosition(X, Y);
+                Console.Write("●");
+            }
         }
 
         public Items ItemForPickUp()
@@ -141,6 +147,17 @@ namespace AdventureGame
             item.X = rnd.Next(10, 105);
             item.Y = rnd.Next(2, 24);
             return item;
+        }
+
+        public static void WannaPickUp(Player player, Items item)
+        {
+            if (player.X == item.X && player.Y == item.Y)
+            {
+                Player.inventory.Add(item);
+                item.X = 0;
+                item.Y = 0;
+                item.NotTaken = false;
+            }
         }
     }
 }
