@@ -45,6 +45,9 @@ namespace AdventureGame
             // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
             // och spelet fortsätter.
 
+            // Fixar så vi kan skriva ut lite fler unicode characters.
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             Random rnd = new Random();
             GraphicalUserInterface.PrintField();
             Console.CursorVisible = false;

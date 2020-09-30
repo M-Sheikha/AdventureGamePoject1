@@ -5,6 +5,7 @@ namespace AdventureGame
 {
     class Items
     {
+
         // FÖREMÅL ============================================================
 
         // Föremål kan plockas upp och läggas i spelarens väska.
@@ -130,7 +131,7 @@ namespace AdventureGame
         public void PrintItem()
         {
             Console.SetCursorPosition(X, Y);
-            Console.Write("I");
+            Console.Write("●");
         }
 
         public Items ItemForPickUp()

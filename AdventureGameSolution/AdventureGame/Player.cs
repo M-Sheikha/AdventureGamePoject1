@@ -88,7 +88,7 @@ namespace AdventureGame
         public void PrintCharacter()
         {
             Console.SetCursorPosition(X, Y);
-            Console.Write("*");
+            Console.Write("☺");
         }
 
         public void PrintEmpty()
