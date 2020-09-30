@@ -4,24 +4,7 @@ using System.Collections.Generic;
 namespace AdventureGame
 {
     class Items
-    {
-
-        // FÖREMÅL ============================================================
-
-        // Föremål kan plockas upp och läggas i spelarens väska.
-
-        // Föremål är antingen förbrukningsbara eller bärbara.
-
-        // Spelaren kan öppna sin ryggsäck och använda föremål.
-
-        // Förbrukningsbar innebär att föremålet försvinner vid användning (ät
-        // ett kokt ägg, kasta en kaststjärna eller hissa en flagga).
-
-        // Bärbara föremål kan spelaren ta upp ur väskan och sätta på sig (bära
-        // en hatt eller solglasögon).
-
-        // Genom att konsumera eller sätta på sig ett föremål ändras spelarens
-        // egenskaper.
+    {        
         public static Random rnd = new Random();
 
         public string Name { get; set; }
@@ -35,7 +18,7 @@ namespace AdventureGame
         public int X { get; set; }
         public int Y { get; set; }
 
-        public bool NotTaken { get; set; }
+        public bool Taken { get; set; }
 
         public Items(string name, string placement, int protection, string damage, int health, int cost)
         {
@@ -48,7 +31,7 @@ namespace AdventureGame
 
             X = rnd.Next(10, 104);
             Y = rnd.Next(2, 24);
-            NotTaken = true;
+            Taken = false;
         }
 
         public static List<Items> MakeItems()
@@ -133,7 +116,7 @@ namespace AdventureGame
 
         public void PrintItem(Items item)
         {
-            if (item.NotTaken)
+            if (!item.Taken)
             {
                 Console.SetCursorPosition(X, Y);
                 Console.Write("●");
@@ -149,14 +132,14 @@ namespace AdventureGame
             return item;
         }
 
-        public static void WannaPickUp(Player player, Items item)
+        public static void WannaPickMeUp(Player player, Items item)
         {
             if (player.X == item.X && player.Y == item.Y)
             {
                 Player.inventory.Add(item);
                 item.X = 0;
                 item.Y = 0;
-                item.NotTaken = false;
+                item.Taken = true;
             }
         }
     }

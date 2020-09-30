@@ -8,19 +8,7 @@ using System.Threading;
 namespace AdventureGame
 {
     class Player : Entity
-    {
-        // SPELAREN ============================================================
-
-        // Spelaren ärver från klassen entity men kan även förflytta sig till 
-        // skillnad från övriga varelser som står stilla.
-
-        // Spelaren har en väska med plats för föremål och kan plocka upp
-        // föremål från spelplanen.
-
-        // Spelaren kan interagera med andra varelser i världen (motståndare)
-        // genom att ställa sig på samma position. Då sker ett möte.
-
-
+    {       
         public static Random rnd = new Random();
         public static List<Items> inventory = new List<Items>();
         public static List<Items> gear = new List<Items>();
@@ -63,7 +51,7 @@ namespace AdventureGame
             return sum * 10;
         }
 
-        public int AbilityScore()
+        public static int AbilityScore()
         {
             int a = rnd.Next(1, 7);
             int b = rnd.Next(1, 7);
@@ -80,7 +68,7 @@ namespace AdventureGame
                 return a + b + c;
         }
 
-        public int Modifier(int ability)
+        public static int Modifier(int ability)
         {
             return (ability - 10) / 2;
         }
@@ -103,35 +91,17 @@ namespace AdventureGame
             left = 10;
             top = 2;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"{Name} the {Race} {Class}");
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Health: {Health}");
-            PrintStat("Health", Health);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Damage: {Damage}");
-            PrintStat("Damage", Damage);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Protection: {Protection}");
+            Console.WriteLine($"{Name} the {Race} {Class}");            
+            PrintStat("Health", Health);            
+            PrintStat("Damage", Damage);            
             PrintStat("Protection", Protection);
             top += 2;
-
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Strenght: {Strength}");
-            PrintStat("Strength", Strength);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Dexterity: {Dexterity}");
-            PrintStat("Dextrerity", Dexterity);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Constitution: {Constitution}");
-            PrintStat("Constitution", Constitution);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Intelligence: {Intelligence}");
-            PrintStat("Intelligence", Intelligence);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Wisdom: {Wisdom}");
-            PrintStat("Wisdom", Wisdom);
-            //Console.SetCursorPosition(left, top++);
-            //Console.WriteLine($"Charisma: {Charisma}");
+           
+            PrintStat("Strength", Strength);            
+            PrintStat("Dextrerity", Dexterity);           
+            PrintStat("Constitution", Constitution);            
+            PrintStat("Intelligence", Intelligence);            
+            PrintStat("Wisdom", Wisdom);           
             PrintStat("Charisma", Charisma);
             top += 2;
 
@@ -228,36 +198,28 @@ namespace AdventureGame
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
                                 _item = item;
-                                //gear.Remove(item);
-                                //Protection -= item.Value;
-                                //inventory.Add(item);
+                                
                             }
                             else if (item.Placement == "main-hand" && inventory[index].Placement == "two-handed")
                             {
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
                                 _item = item;
-                                //gear.Remove(item);
-                                //Protection -= item.Value;
-                                //inventory.Add(item);
+                               
                             }
                             else if (item.Placement == "two-handed" && inventory[index].Placement == "main-hand")
                             {
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
                                 _item = item;
-                                //gear.Remove(item);
-                                //Protection -= item.Value;
-                                //inventory.Add(item);
+                                
                             }
                             else if (item.Placement == "two-handed" && inventory[index].Placement == "off-hand")
                             {
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
                                 _item = item;
-                                //gear.Remove(item);
-                                //Protection -= item.Value;
-                                //inventory.Add(item);
+                                
                             }
 
                             if (item.Placement == "off-hand" && inventory[index].Placement == "two-handed")
@@ -265,9 +227,7 @@ namespace AdventureGame
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
                                 _item = item;
-                                //gear.Remove(item);
-                                //Protection -= item.Value;
-                                //inventory.Add(item);
+                                
                             }
                         }
                         if (okToEquip)
@@ -345,6 +305,11 @@ namespace AdventureGame
             }
         }
 
+        const int leftBorder = 10;
+        const int rightBorder = 105;
+        const int topBorder = 2;
+        const int bottomBorder = 24;
+
         // Förflyttar spelaren och öppnar Inventory och CharacterPanel.
         public void Move()
         {
@@ -352,28 +317,28 @@ namespace AdventureGame
             switch (keyInfo.Key)
             {
                 case ConsoleKey.LeftArrow:
-                    if (X > 10)
+                    if (X > leftBorder)
                     {
                         PrintEmpty();
                         X--;
                     }
                     break;
                 case ConsoleKey.RightArrow:
-                    if (X < 105)
+                    if (X < rightBorder)
                     {
                         PrintEmpty();
                         X++;
                     }
                     break;
                 case ConsoleKey.UpArrow:
-                    if (Y > 2)
+                    if (Y > topBorder)
                     {
                         PrintEmpty();
                         Y--;
                     }
                     break;
                 case ConsoleKey.DownArrow:
-                    if (Y < 24)
+                    if (Y < bottomBorder)
                     {
                         PrintEmpty();
                         Y++;
@@ -392,6 +357,15 @@ namespace AdventureGame
                     GraphicalUserInterface.PrintField();
                     break;
             }
+        }
+
+        private static bool ValidatePosition(int x, int y)
+        {
+            if (x > 10 && x < 105 && y > 2 && y < 24)
+                return true;
+            else
+                return false;
+            
         }
 
     }
