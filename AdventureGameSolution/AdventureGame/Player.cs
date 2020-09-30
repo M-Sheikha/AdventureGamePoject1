@@ -32,6 +32,9 @@ namespace AdventureGame
 
         public Player(string name, string race, string _class)
         {
+            X = 10;
+            Y = 2;
+
             Name = name;
             Race = race;
             Class = _class;
