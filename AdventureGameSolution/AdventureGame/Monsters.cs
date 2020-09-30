@@ -57,7 +57,7 @@ namespace AdventureGame
         {
             if (player.X == monster.X && player.Y == monster.Y)
             {
-                Encounter(player, monster);
+                Encounter._Encounter(player, monster);
                 monster.X = 0;
                 monster.Y = 0;
                 monster.Defeated = true;
