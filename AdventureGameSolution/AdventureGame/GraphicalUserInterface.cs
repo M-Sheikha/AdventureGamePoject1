@@ -33,6 +33,10 @@ namespace AdventureGame
             for (int i = 0; i < width - 2; i++)
                 Console.Write("\u2550");
             Console.WriteLine("\u255D");
+            for(int i = 0; i < width - 99; i++)
+                Console.WriteLine("\tPress (C) For Characterpanel");
+            Console.WriteLine("\tPress (I) For Inventory");
+                
 
         }
 
