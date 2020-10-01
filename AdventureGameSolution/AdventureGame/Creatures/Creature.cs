@@ -35,7 +35,11 @@ namespace AdventureGame
 
         public int AttackRoll(Player player)
         {
-            return RollDice("1d20") + player.AbilityModifier(player.gear[0].AbilityModifier);
+            if (player.gear[0] is Weapon weapon)
+            {
+                return RollDice("1d20") + weapon.AbilityModifier;
+            }
+            return 0;
         }
 
         

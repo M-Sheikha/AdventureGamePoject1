@@ -17,13 +17,12 @@ namespace AdventureGame
         public static int left;
         public static int top;
 
-        public Player(string name, string race, string _class)
+        public Player(string name, string race, string _class) : base(name)
         {
             X = 10;
             Y = 2;
             Defeated = false;
 
-            Name = name;
             Race = race;
             Class = _class;
 
@@ -36,23 +35,6 @@ namespace AdventureGame
             HitPoints = rnd.Next(1, 11) + AbilityModifier(Constitution);
             MaxHealth = HitPoints;
             ArmorClass = 10 + AbilityModifier(Dexterity);
-        }
-
-        public override int RollDice(string dice)
-        {
-            return dice switch
-            {
-                "1d4" => rnd.Next(1, 5),
-                "1d6" => rnd.Next(1, 7),
-                "1d8" => rnd.Next(1, 9),
-                "1d10" => rnd.Next(1, 11),
-                "1d12" => rnd.Next(1, 13),
-                "1d20" => rnd.Next(1, 21),
-                "2d4" => rnd.Next(2, 9),
-                "2d6" => rnd.Next(2, 13),
-                "2d8" => rnd.Next(2, 17),
-                _ => throw new NotImplementedException(),
-            };
         }
 
         public void StartingGold(Player player)
@@ -118,10 +100,10 @@ namespace AdventureGame
             {
                 Console.SetCursorPosition(left, top++);
                 Console.Write($"{item.Name} ");
-                if (item.Value > 0)
-                    Console.WriteLine($"+{item.Value} Protection");
-                else if (item.Damage != null)
-                    Console.WriteLine($"{item.Damage} Damage");
+                if (item is Armor armor)
+                    Console.WriteLine($"+{armor.ArmorClass} Protection");
+                else if (item is Weapon weapon)
+                    Console.WriteLine($"{weapon.Damage} Damage");
             }
             Console.ReadKey();
             Console.Clear();
@@ -175,19 +157,14 @@ namespace AdventureGame
             {
                 bool okToEquip = true;
                 string placement = "";
-                Item _item = new Item();
+                Item _item = new Item("");
                 index--;
-                if (inventory[index].Placement != null)
+                if (inventory[index] is Weapon || inventory[index] is Armor)
                 {
                     if (gear.Count < 1)
                     {
                         Console.SetCursorPosition(left, top++);
                         Console.WriteLine($"You equipped {inventory[index].Name}");
-                        if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
-                        {
-                            inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
-                            ArmorClass += inventory[index].Value;
-                        }
                         gear.Add(inventory[index]);
                         inventory.RemoveAt(index);
                     }
@@ -195,60 +172,88 @@ namespace AdventureGame
                     {
                         foreach (var item in gear.ToList())
                         {
-                            if (item.Placement == inventory[index].Placement)
+                            if (item is Armor armor)
                             {
-                                okToEquip = false;
-                                placement = inventory[index].Placement;
-                                _item = item;
-                                
+                                if (inventory[index] is Armor _armor)
+                                {
+                                    if (armor.Property == _armor.Property)
+                                    {
+                                        okToEquip = false;
+                                        placement = _armor.Property;
+                                        _item = armor;
+
+                                    }
+                                }
+                                else if (inventory[index] is Weapon weapon)
+                                {
+                                    if (armor.Property == "Off-hand" && weapon.Property == "Two-handed")
+                                    {
+                                        okToEquip = false;
+                                        placement = weapon.Property;
+                                        _item = armor;
+                                    }
+                                }
                             }
-                            else if (item.Placement == "main-hand" && inventory[index].Placement == "two-handed")
+                            else if (item is Weapon weapon)
                             {
-                                okToEquip = false;
-                                placement = inventory[index].Placement;
-                                _item = item;
-                               
-                            }
-                            else if (item.Placement == "two-handed" && inventory[index].Placement == "main-hand")
-                            {
-                                okToEquip = false;
-                                placement = inventory[index].Placement;
-                                _item = item;
-                                
-                            }
-                            else if (item.Placement == "two-handed" && inventory[index].Placement == "off-hand")
-                            {
-                                okToEquip = false;
-                                placement = inventory[index].Placement;
-                                _item = item;
-                                
-                            }
-                            else if (item.Placement == "off-hand" && inventory[index].Placement == "two-handed")
-                            {
-                                okToEquip = false;
-                                placement = inventory[index].Placement;
-                                _item = item;
-                                
+                                if (inventory[index] is Weapon _weapon)
+                                {
+                                    if (weapon.Property == _weapon.Property)
+                                    {
+                                        okToEquip = false;
+                                        placement = _weapon.Property;
+                                        _item = weapon;
+
+                                    }
+                                    else if (weapon.Property == "Main hand" && _weapon.Property == "Two-handed")
+                                    {
+                                        okToEquip = false;
+                                        placement = _weapon.Property;
+                                        _item = weapon;
+
+                                    }
+                                    else if (weapon.Property == "Two-handed" && _weapon.Property == "Main hand")
+                                    {
+                                        okToEquip = false;
+                                        placement = _weapon.Property;
+                                        _item = weapon;
+
+                                    }
+                                }
+                                else if (inventory[index] is Armor shield)
+                                {
+                                    if (weapon.Property == "Two-handed" && shield.Property == "Off-hand")
+                                    {
+                                        okToEquip = false;
+                                        placement = shield.Property;
+                                        _item = weapon;
+
+                                    }
+                                }
                             }
                         }
                         if (okToEquip)
                         {
                             Console.SetCursorPosition(left, top++);
                             Console.WriteLine($"You equipped {inventory[index].Name}");
-                            if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
-                            {
-                                inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
-                                ArmorClass += inventory[index].Value;
-                                gear.Add(inventory[index]);
-                            }
-                            else
+                            if (inventory[index] is Weapon)
                                 gear.Insert(0, inventory[index]);
+                            else
+                                gear.Add(inventory[index]);
                             inventory.RemoveAt(index);
                         }
                         else
                         {
-                            Console.SetCursorPosition(left, top);
-                            Console.Write($"You already have equipped a {inventory[index].Placement} item. Do you want to switch?(y/n) ");
+                            if (inventory[index] is Weapon weapon)
+                            {
+                                Console.SetCursorPosition(left, top);
+                                Console.Write($"You already have equipped a {weapon.Property} item. Do you want to switch?(y/n) ");
+                            }
+                            else if (inventory[index] is Armor armor)
+                            {
+                                Console.SetCursorPosition(left, top);
+                                Console.Write($"You already have equipped a {armor.Property} item. Do you want to switch?(y/n) ");
+                            }
                             string playerChoice = Console.ReadLine();
                             if (playerChoice.ToLower() == "y")
                             {
@@ -259,15 +264,10 @@ namespace AdventureGame
                                 Console.WriteLine("                                                                                            ");
                                 Console.SetCursorPosition(left, top);
                                 Console.WriteLine($"You equipped {inventory[index].Name}");
-                                if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
-                                {
-                                    // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
-                                    inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
-                                    ArmorClass += inventory[index].Value;
-                                    gear.Add(inventory[index]);
-                                }
-                                else
+                                if (inventory[index] is Weapon _weapon)
                                     gear.Insert(0, inventory[index]);
+                                else
+                                    gear.Add(inventory[index]);
                                 inventory.RemoveAt(index);
                             }
                         }
@@ -288,15 +288,15 @@ namespace AdventureGame
                     {
                         Console.SetCursorPosition(left, top++);
                         Console.Write($"You used {inventory[index].Name} and was healed ");
-                        inventory[index].Health = Item.CalculateHealth(inventory[index].Name);
-                        HitPoints += inventory[index].Health;
+                        inventory[index].HitPoints = Item.CalculateHealth(inventory[index].Name);
+                        HitPoints += inventory[index].HitPoints;
                         if (HitPoints > MaxHealth)
                         {
                             HitPoints = MaxHealth;
                             Console.WriteLine("to max health.");
                         }
                         else
-                            Console.WriteLine($"by: {inventory[index].Health}");
+                            Console.WriteLine($"by: {inventory[index].HitPoints}");
                         inventory.RemoveAt(index);
                     }
                     else
@@ -365,9 +365,12 @@ namespace AdventureGame
             Console.WriteLine($"\n\tYou try to hit the {monster.Name} with your {gear[0].Name}!");
             if (AttackRoll(player) >= monster.ArmorClass)
             {
-                int damage = RollDice(gear[0].Damage);
-                Console.WriteLine($"\tYou hit the {monster.Name} with your {gear[0].Name}, dealing {damage} damage!");
-                monster.HitPoints -= damage;
+                if (gear[0] is Weapon weapon)
+                {
+                    int damage = RollDice(weapon.Damage);
+                    Console.WriteLine($"\tYou hit the {monster.Name} with your {gear[0].Name}, dealing {damage} damage!");
+                    monster.HitPoints -= damage;
+                }
             }
             else
                 Console.WriteLine("\tYou missed.");

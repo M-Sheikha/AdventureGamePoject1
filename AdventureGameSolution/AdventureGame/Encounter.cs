@@ -148,6 +148,7 @@ namespace AdventureGame
             else if (player.HitPoints < 0)
             {
                 Console.WriteLine($"\tThe {monster.Name} killed You!");
+                Console.WriteLine("\n\tYou lose!");
                 player.Defeated = true;
                 return true;
             }

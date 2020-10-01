@@ -7,7 +7,7 @@ namespace AdventureGame
     class Gear : Item
     {
         public string Property { get; set; }
-        public int AbilityModifier { get; set; }
+        public new int AbilityModifier { get; set; }
 
         public Gear(string name, string property, int abilityModifier) : base(name)
         {

@@ -14,7 +14,7 @@ namespace AdventureGame
             StrengthMinimum = strengthMinimum;
         }
 
-        public static List<Armor> MakeList(Player player)
+        public static new List<Armor> MakeList(Player player)
         {
             var dexterirtyModifier = AbilityModifier(player.Dexterity);
 

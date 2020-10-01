@@ -28,14 +28,12 @@ namespace AdventureGame
             //skapar en lista med alla monster.
             var monsters = new List<Creature>
             {
-                new Imp(),
-                new Quasit(),
-                new Skeleton(),
-                new Zombie(),
-                new Imp(),
-                new Quasit(),
-                new Skeleton(),
-                new Zombie()
+                new Bat("Bat"),
+                new BlackBear("Black Bear"),
+                new Imp("Imp"),
+                new Quasit("Quasit"),
+                new Skeleton("Skeleton"),
+                new Zombie("Zombie"),
             };
 
             // Skapar 10 föremål från listan items.
@@ -49,6 +47,8 @@ namespace AdventureGame
             var item8 = weapons[rnd.Next(weapons.Count)];
             var item9 = weapons[rnd.Next(weapons.Count)];
             var item10 = weapons[rnd.Next(weapons.Count)];
+
+            player.gear.Add(item7);
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];
@@ -134,8 +134,6 @@ namespace AdventureGame
             } while (true);
 
             Console.Clear();
-            Console.SetCursorPosition(55, 15);
-            Console.WriteLine("YOU LOSE!");
             Console.ReadLine();
         }
 
