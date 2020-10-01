@@ -21,12 +21,9 @@ namespace AdventureGame
             // Ger spelaren lite guld att börja med.
             player.StartingGold(player);
 
+            List<Item> items = Item.MakeList(player);
             List<Armor> armors = Armor.MakeList(player);
-
-            // Skapar en lista med alla föremål
-            var items = Item.MakeItems(player);
-            
-            //player.gear.Add(items[3]);
+            List<Weapon> weapons = Weapon.MakeList(player);
 
             //skapar en lista med alla monster.
             var monsters = new List<Creature>
@@ -42,16 +39,16 @@ namespace AdventureGame
             };
 
             // Skapar 10 föremål från listan items.
-            Item item1 = items[rnd.Next(items.Count)];
-            Item item2 = items[rnd.Next(items.Count)];
-            Item item3 = items[rnd.Next(items.Count)];
-            Item item4 = items[rnd.Next(items.Count)];
-            Item item5 = items[rnd.Next(items.Count)];
-            Item item6 = items[rnd.Next(items.Count)];
-            Item item7 = items[rnd.Next(items.Count)];
-            Item item8 = items[rnd.Next(items.Count)];
-            Item item9 = items[rnd.Next(items.Count)];
-            Item item10 = items[rnd.Next(items.Count)];
+            var item1 = items[rnd.Next(items.Count)];
+            var item2 = items[rnd.Next(items.Count)];
+            var item3 = items[rnd.Next(items.Count)];
+            var item4 = armors[rnd.Next(armors.Count)];
+            var item5 = armors[rnd.Next(armors.Count)];
+            var item6 = armors[rnd.Next(armors.Count)];
+            var item7 = weapons[rnd.Next(weapons.Count)];
+            var item8 = weapons[rnd.Next(weapons.Count)];
+            var item9 = weapons[rnd.Next(weapons.Count)];
+            var item10 = weapons[rnd.Next(weapons.Count)];
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];

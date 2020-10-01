@@ -6,7 +6,7 @@ namespace AdventureGame
 {
     class Zombie : Creature
     {
-        public Zombie()
+        public Zombie(string name) : base(name)
         {
             Name = "Zombie";
             ArmorClass = 8;

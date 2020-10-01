@@ -7,7 +7,7 @@ namespace AdventureGame
 {
     class Imp : Creature
     {
-        public Imp()
+        public Imp(string name) : base(name)
         {
             Name = "Imp";
             ArmorClass = 13;

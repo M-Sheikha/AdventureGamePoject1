@@ -6,7 +6,7 @@ namespace AdventureGame
 {
     class Quasit : Creature
     {
-        public Quasit()
+        public Quasit(string name) : base(name)
         {
             Name = "Quasit";
             ArmorClass = 13;

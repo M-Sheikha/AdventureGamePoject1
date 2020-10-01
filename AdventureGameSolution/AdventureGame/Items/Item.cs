@@ -20,7 +20,7 @@ namespace AdventureGame
             IsTaken = false;
         }
 
-        public static List<Item> MakeItems(Player player)
+        public static List<Item> MakeList(Player player)
         {
             var item = new Item("");
 

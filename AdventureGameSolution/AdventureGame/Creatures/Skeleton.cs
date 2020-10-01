@@ -6,7 +6,7 @@ namespace AdventureGame
 {
     class Skeleton : Creature
     {
-        public Skeleton()
+        public Skeleton(string name) : base(name)
         {
             Name = "Skeleton";
             ArmorClass = 13;

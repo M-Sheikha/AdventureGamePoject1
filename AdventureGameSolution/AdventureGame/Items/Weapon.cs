@@ -13,7 +13,7 @@ namespace AdventureGame
             Damage = damage;
         }
 
-        public static List<Weapon> MakeWeapons(Player player)
+        public static List<Weapon> MakeList(Player player)
         {
             var strengthModifier = AbilityModifier(player.Strength);
             var dexteriryModifier = AbilityModifier(player.Dexterity);

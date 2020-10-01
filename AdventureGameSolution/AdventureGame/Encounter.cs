@@ -39,27 +39,31 @@ namespace AdventureGame
         public static void Fight(Player player, Creature monster)
         {
             Console.Clear();
-            player.Initiative = player.RollDice(player.InitiativeDice) + player.AbilityModifier(player.Dexterity);
-            monster.Initiative = monster.RollDice(monster.InitiativeDice) + monster.AbilityModifier(monster.Dexterity);
+            player.Initiative = Entity.RollDice(player.InitiativeDice) + Entity.AbilityModifier(player.Dexterity);
+            monster.Initiative = Entity.RollDice(monster.InitiativeDice) + Entity.AbilityModifier(monster.Dexterity);
 
-            bool bothAreAlive;
+            bool areBothAlive;
 
             do
             {
                 // Skriv ut ramen till skärmen. Låt den vara dynamisk till mängden text.
 
-                if (monster is Imp imp)
-                    bothAreAlive = CombatRound(player, imp);
+                if (monster is Bat bat)
+                    areBothAlive = CombatRound(player, bat);
+                else if (monster is BlackBear blackBear)
+                    areBothAlive = CombatRound(player, blackBear);
+                else if (monster is Imp imp)
+                    areBothAlive = CombatRound(player, imp);
                 else if (monster is Quasit quasit)
-                    bothAreAlive = CombatRound(player, quasit);
+                    areBothAlive = CombatRound(player, quasit);
                 else if (monster is Skeleton skeleton)
-                    bothAreAlive = CombatRound(player, skeleton);
+                    areBothAlive = CombatRound(player, skeleton);
                 else if (monster is Zombie zombie)
-                    bothAreAlive = CombatRound(player, zombie);
+                    areBothAlive = CombatRound(player, zombie);
                 else
                     throw new NotImplementedException();
 
-            } while (bothAreAlive);
+            } while (areBothAlive);
             
             Console.ReadKey();
             Console.Clear();
@@ -105,14 +109,24 @@ namespace AdventureGame
 
         public static void MonsterAttacks(Player player, Creature monster)
         {
-            if (monster is Imp imp)
+            var whichAction = rnd.Next(1, 3);
+
+            if (monster is Bat bat)
+                bat.Bite(player);
+            else if (monster is BlackBear blackBear)
+            {
+                if (whichAction == 1)
+                    blackBear.Bite(player);
+                else
+                    blackBear.Claws(player);
+            }
+            else if (monster is Imp imp)
                 imp.Sting(player);
             else if (monster is Quasit quasit)
                 quasit.Claws(player);
             else if (monster is Skeleton skeleton)
             {
-                var attack = rnd.Next(1, 3);
-                if (attack == 1)
+                if (whichAction == 1)
                     skeleton.Shortsword(player);
                 else
                     skeleton.Shortbow(player);
@@ -122,7 +136,6 @@ namespace AdventureGame
             else
                 throw new NotImplementedException();
         }
-
 
         public static bool IsDefeated(Player player, Creature monster)
         {
