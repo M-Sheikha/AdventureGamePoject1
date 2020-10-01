@@ -7,10 +7,10 @@ using System.Threading;
 
 namespace AdventureGame
 {
-    class Player : Entity
+    class Player : Creature
     {       
-        public static List<Items> inventory = new List<Items>();
-        public static List<Items> gear = new List<Items>();
+        public List<Item> inventory = new List<Item>();
+        public List<Item> gear = new List<Item>();
         public string Class { get; set; }
         public int MaxHealth { get; set; }
 
@@ -27,30 +27,44 @@ namespace AdventureGame
             Race = race;
             Class = _class;
 
-            Strength = AbilityScore();
-            Dexterity = AbilityScore();
-            Constitution = AbilityScore();
-            Intelligence = AbilityScore();
-            Wisdom = AbilityScore();
-            Charisma = AbilityScore();
-            HitPoints = rnd.Next(1, 11) + Modifier(Constitution);
+            Strength = SetAbilityScore();
+            Dexterity = SetAbilityScore();
+            Constitution = SetAbilityScore();
+            Intelligence = SetAbilityScore();
+            Wisdom = SetAbilityScore();
+            Charisma = SetAbilityScore();
+            HitPoints = rnd.Next(1, 11) + AbilityModifier(Constitution);
             MaxHealth = HitPoints;
-            ArmorClass = 10 + Modifier(Dexterity);
+            ArmorClass = 10 + AbilityModifier(Dexterity);
+        }
 
-            var goldPieces = new Items("Gold Pieces", null, 0, null, 0);
-            goldPieces.Value = StartingGold();
+        public override int RollDice(string dice)
+        {
+            return dice switch
+            {
+                "1d4" => rnd.Next(1, 5),
+                "1d6" => rnd.Next(1, 7),
+                "1d8" => rnd.Next(1, 9),
+                "1d10" => rnd.Next(1, 11),
+                "1d12" => rnd.Next(1, 13),
+                "1d20" => rnd.Next(1, 21),
+                "2d4" => rnd.Next(2, 9),
+                "2d6" => rnd.Next(2, 13),
+                "2d8" => rnd.Next(2, 17),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public void StartingGold(Player player)
+        {
+            var goldPieces = new Item();
+            goldPieces.Name = "Gold Pieces";
+            for (int i = 0; i < 5; i++)
+                goldPieces.Value += rnd.Next(1, 5);
             inventory.Add(goldPieces);
         }
 
-        private int StartingGold()
-        {
-            int sum = 0;
-            for (int i = 0; i < 5; i++)
-                sum += rnd.Next(1, 5);
-            return sum * 10;
-        }
-
-        public static int AbilityScore()
+        public static int SetAbilityScore()
         {
             int a = rnd.Next(1, 7);
             int b = rnd.Next(1, 7);
@@ -67,11 +81,6 @@ namespace AdventureGame
                 return a + b + c;
         }
 
-        public static int Modifier(int ability)
-        {
-            return (ability - 10) / 2;
-        }
-
         public void PrintCharacter()
         {
             Console.SetCursorPosition(X, Y);
@@ -84,15 +93,18 @@ namespace AdventureGame
             Console.Write(" ");
         }
 
-        public void CharacterPanel()
+        public void CharacterPanel(Player player)
         {
-            GUI.PrintCharacterPanel();
+            Console.Clear();
+            
             left = 10;
             top = 2;
+            
+            GUI.PrintCharacterPanel(player);
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"{Name} the {Race} {Class}");            
-            PrintStat("Hit Points", HitPoints);           
             PrintStat("Armor Class", ArmorClass);
+            PrintStat("Hit Points", HitPoints);           
             top += 2;
            
             PrintStat("Strength", Strength);            
@@ -103,7 +115,6 @@ namespace AdventureGame
             PrintStat("Charisma", Charisma);
             top += 2;
 
-            // Skriver ut alla equippade föremål med tillhörande stats.
             foreach (var item in gear)
             {
                 Console.SetCursorPosition(left, top++);
@@ -114,6 +125,8 @@ namespace AdventureGame
                     Console.WriteLine($"{item.Damage} Damage");
             }
             Console.ReadKey();
+            Console.Clear();
+            GUI.PrintField();
         }
 
         private void PrintStat(string stat, int _stat)
@@ -122,20 +135,17 @@ namespace AdventureGame
             Console.WriteLine($"{stat}: {_stat}");
         }
 
-        public void Inventory()
+        public void Inventory(Player player)
         {
-            // Skriver ut ramen.
-            GUI.PrintInventory();
+            Console.Clear();
+            GUI.PrintInventory(player);
 
-            // Variabler till CurserPosiiton.
             top = 2;
             left = 10;
 
-            // Placerar markören på rätt plats.
             Console.SetCursorPosition(left, top++);
             Console.WriteLine("You are carrying the following items:");
 
-            // Skriver ut alla föremål i inventory.
             for (int i = 0; i < inventory.Count; i++)
             {
                 Console.SetCursorPosition(left, top++);
@@ -150,7 +160,6 @@ namespace AdventureGame
             Console.Write($"Enter a number between 1 and {inventory.Count} to use or to drop an item: ");
             string choice = Console.ReadLine();
 
-            // Om spelaren vill slänga ett föremål ur inventory.
             if (choice.ToLower().StartsWith("drop"))
             {
                 var cArr = choice.ToLower().Split('p');
@@ -163,23 +172,21 @@ namespace AdventureGame
                 }
                 
             }
-            // Om spelaren vill använda ett föremål ur inventory.
             else if (int.TryParse(choice, out int index))
             {
                 bool okToEquip = true;
                 string placement = "";
-                Items _item = new Items(null, null, 0, null, 0);
+                Item _item = new Item();
                 index--;
                 if (inventory[index].Placement != null)
                 {
-                    // Om spelaren inte har equippat något föremål tidigare.
                     if (gear.Count < 1)
                     {
                         Console.SetCursorPosition(left, top++);
                         Console.WriteLine($"You equipped {inventory[index].Name}");
-                        if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                        if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
                         {
-                            inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
+                            inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
                             ArmorClass += inventory[index].Value;
                         }
                         gear.Add(inventory[index]);
@@ -187,10 +194,8 @@ namespace AdventureGame
                     }
                     else
                     {
-                        // Kollar igenom gear om det redan finns ett föremål av samma typ i listan.
                         foreach (var item in gear.ToList())
                         {
-                            // Om det finns ett likadant föremål eller liknande byter föremålen plats och statsen ändras.
                             if (item.Placement == inventory[index].Placement)
                             {
                                 okToEquip = false;
@@ -219,8 +224,7 @@ namespace AdventureGame
                                 _item = item;
                                 
                             }
-
-                            if (item.Placement == "off-hand" && inventory[index].Placement == "two-handed")
+                            else if (item.Placement == "off-hand" && inventory[index].Placement == "two-handed")
                             {
                                 okToEquip = false;
                                 placement = inventory[index].Placement;
@@ -232,13 +236,14 @@ namespace AdventureGame
                         {
                             Console.SetCursorPosition(left, top++);
                             Console.WriteLine($"You equipped {inventory[index].Name}");
-                            if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                            if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
                             {
-                                // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
-                                inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
+                                inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
                                 ArmorClass += inventory[index].Value;
+                                gear.Add(inventory[index]);
                             }
-                            gear.Add(inventory[index]);
+                            else
+                                gear.Insert(0, inventory[index]);
                             inventory.RemoveAt(index);
                         }
                         else
@@ -246,7 +251,7 @@ namespace AdventureGame
                             Console.SetCursorPosition(left, top);
                             Console.Write($"You already have equipped a {inventory[index].Placement} item. Do you want to switch?(y/n) ");
                             string playerChoice = Console.ReadLine();
-                            if (playerChoice.ToLower() != "n")
+                            if (playerChoice.ToLower() == "y")
                             {
                                 gear.Remove(_item);
                                 ArmorClass -= _item.Value;
@@ -255,13 +260,15 @@ namespace AdventureGame
                                 Console.WriteLine("                                                                                            ");
                                 Console.SetCursorPosition(left, top);
                                 Console.WriteLine($"You equipped {inventory[index].Name}");
-                                if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
+                                if (inventory[index].Placement == "body" || inventory[index].Placement == "off-hand")
                                 {
                                     // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
-                                    inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
+                                    inventory[index].Value = Item.CalculateProtection(inventory[index].Name);
                                     ArmorClass += inventory[index].Value;
+                                    gear.Add(inventory[index]);
                                 }
-                                gear.Add(inventory[index]);
+                                else
+                                    gear.Insert(0, inventory[index]);
                                 inventory.RemoveAt(index);
                             }
                         }
@@ -282,7 +289,7 @@ namespace AdventureGame
                     {
                         Console.SetCursorPosition(left, top++);
                         Console.Write($"You used {inventory[index].Name} and was healed ");
-                        inventory[index].Health = Items.CalculateHealth(inventory[index].Name);
+                        inventory[index].Health = Item.CalculateHealth(inventory[index].Name);
                         HitPoints += inventory[index].Health;
                         if (HitPoints > MaxHealth)
                         {
@@ -301,6 +308,8 @@ namespace AdventureGame
                 }
                 Thread.Sleep(2000);
             }
+            Console.Clear();
+            GUI.PrintField();
         }
 
         const int leftBorder = 10;
@@ -309,7 +318,7 @@ namespace AdventureGame
         const int bottomBorder = 24;
 
         // Förflyttar spelaren och öppnar Inventory och CharacterPanel.
-        public void Move()
+        public void Move(Player player)
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             switch (keyInfo.Key)
@@ -343,57 +352,36 @@ namespace AdventureGame
                     }
                     break;
                 case ConsoleKey.I:
-                    Console.Clear();
-                    Inventory();                                      
-                    Console.Clear();                    
-                    GUI.PrintField();
+                    Inventory(player);                                      
                     break;
                 case ConsoleKey.C:
-                    Console.Clear();                    
-                    CharacterPanel();
-                    Console.Clear();
-                    GUI.PrintField();
+                    CharacterPanel(player);
                     break;
             }
         }
 
+        public void Attack(Player player, Creature monster)
+        {
+            // Lägg till weapon.Modifier på nåt sätt istället för att hårdkoda Strength.
+            Console.WriteLine($"\n\tYou try to hit the {monster.Name} with your {gear[0].Name}!");
+            if (AttackRoll(player) >= monster.ArmorClass)
+            {
+                int damage = RollDice(gear[0].Damage);
+                Console.WriteLine($"\tYou hit the {monster.Name} with your {gear[0].Name}, dealing {damage} damage!");
+                monster.HitPoints -= damage;
+            }
+            else
+                Console.WriteLine("\tYou missed.");
+        }
+        
+        // === Får den inte att funka ===
         //private static bool ValidatePosition(int x, int y)
         //{
         //    if (x > 10 && x < 105 && y > 2 && y < 24)
         //        return true;
         //    else
         //        return false;
-            
+
         //}
-
-        public void Attack(Items weapon, Creatures monster)
-        {
-            Console.WriteLine($"\n\tYou try to hit the {monster.Race} with your {weapon.Name}!");
-            if (rnd.Next(1, 21) + Modifier(Strength) >= monster.ArmorClass)
-            {
-                int damage = weapon.Hit;
-                Console.WriteLine($"\tYou hit the {monster.Race} with your {weapon.Name}, dealing {damage} damage!");
-                monster.HitPoints -= damage;
-            }
-            else
-                Console.WriteLine("\tYou missed.");
-        }
-
-        public override int RollDice(string dice)
-        {
-            return dice switch
-            {
-                "1d4" => rnd.Next(1, 5),
-                "1d6" => rnd.Next(1, 7),
-                "1d8" => rnd.Next(1, 9),
-                "1d10" => rnd.Next(1, 11),
-                "1d12" => rnd.Next(1, 13),
-                "1d20" => rnd.Next(1, 21),
-                "2d4" => rnd.Next(2, 9),
-                "2d6" => rnd.Next(2, 13),
-                "2d8" => rnd.Next(2, 17),
-                _ => throw new NotImplementedException(),
-            };
-        }
     }
 }

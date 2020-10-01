@@ -5,11 +5,11 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Imp : Creatures
+    class Imp : Creature
     {
         public Imp()
         {
-            Race = "Imp";
+            Name = "Imp";
             ArmorClass = 13;
             HitPoints = 10;
             Strength = 6;
@@ -23,7 +23,7 @@ namespace AdventureGame
         public void Sting(Player player)
         {
             Console.WriteLine("\n\tThe Imp tries to sting you!");
-            if (rnd.Next(1, 21) + 5 >= player.ArmorClass)
+            if (RollDice("1d20") + 5 >= player.ArmorClass)
             {
                 int damage = RollDice("1d4") + 3;
                 Console.WriteLine($"\tThe Imp stings you, dealing {damage} damage!");

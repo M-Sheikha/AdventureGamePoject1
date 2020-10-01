@@ -40,9 +40,9 @@ namespace AdventureGame
 
         }
 
-        public static void PrintInventory()
+        public static void PrintInventory(Player player)
         {
-            hight = Player.inventory.Count + 2;
+            hight = player.inventory.Count + 2;
             //Skriver ut toppen av ramen
             Console.Write("\n\t\u2554\u2550INVENTORY");
             for (int i = 0; i < width - 12; i++)
@@ -83,7 +83,7 @@ namespace AdventureGame
 
         }
 
-        public static void PrintCharacterPanel()
+        public static void PrintCharacterPanel(Player player)
         {
             //skriver ut toppen av ramen
             Console.Write("\n\t\u2554\u2550CHARACTER");
@@ -124,7 +124,7 @@ namespace AdventureGame
                 Console.Write("\u2550");
             Console.WriteLine("\u2563");
             //skriver ut sidorna för gear
-            for (int i = 0; i < Player.gear.Count + 1; i++)
+            for (int i = 0; i < player.gear.Count + 1; i++)
             {
                 Console.Write("\t\u2551");
                 for (int j = 0; j < width - 2; j++)

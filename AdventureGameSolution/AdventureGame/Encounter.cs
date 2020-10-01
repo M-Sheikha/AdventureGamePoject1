@@ -6,7 +6,7 @@ namespace AdventureGame
 {
     class Encounter
     {
-        public static Random rnd = new Random(); 
+        public static Random rnd = new Random();
         // MÖTE ============================================================
 
         // Vid möte så turas spelaren och varelsen om att använda förmågor.
@@ -25,40 +25,85 @@ namespace AdventureGame
         // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
         // och spelet fortsätter.
 
-        public static void _Encounter(Player player, Items weapon, Creatures monster)
+        public static void WannaFightMe(Player player, Creature monster)
         {
-            Console.Clear();
-
-            player.Initiative = rnd.Next(1, 21) + Player.Modifier(player.Dexterity);
-            monster.Initiative = rnd.Next(1, 21) + Player.Modifier(monster.Dexterity);
-
-            bool run = true;
-
-            do
+            if (player.X == monster.X && player.Y == monster.Y)
             {
-                if (monster is Imp imp)
-                    run = Turn(player, imp);
-                else if (monster is Quasit quasit)
-                    run = Turn(player, quasit);
-                else if (monster is Skeleton skeleton)
-                    run = Turn(player, skeleton);
-                else if (monster is Zombie zombie)
-                    run = Turn(player, zombie);
-                else
-                    throw new NotImplementedException();
-
-            } while (run);
-            
-            Console.ReadLine();
-            Console.Clear();
-            if (player.HitPoints >= 0)
-            {
-                GUI.PrintField();
-
+                Fight(player, monster);
+                monster.X = 0;
+                monster.Y = 0;
+                monster.Defeated = true;
             }
         }
 
-        public static void MonsterAttacks(Player player, Creatures monster)
+        public static void Fight(Player player, Creature monster)
+        {
+            Console.Clear();
+            player.Initiative = player.RollDice(player.InitiativeDice) + player.AbilityModifier(player.Dexterity);
+            monster.Initiative = monster.RollDice(monster.InitiativeDice) + monster.AbilityModifier(monster.Dexterity);
+
+            bool bothAreAlive;
+
+            do
+            {
+                // Skriv ut ramen till skärmen. Låt den vara dynamisk till mängden text.
+
+                if (monster is Imp imp)
+                    bothAreAlive = CombatRound(player, imp);
+                else if (monster is Quasit quasit)
+                    bothAreAlive = CombatRound(player, quasit);
+                else if (monster is Skeleton skeleton)
+                    bothAreAlive = CombatRound(player, skeleton);
+                else if (monster is Zombie zombie)
+                    bothAreAlive = CombatRound(player, zombie);
+                else
+                    throw new NotImplementedException();
+
+            } while (bothAreAlive);
+            
+            Console.ReadKey();
+            Console.Clear();
+            if (player.HitPoints >= 0)
+                GUI.PrintField();
+        }
+
+        public static bool CombatRound(Player player, Creature monster)
+        {
+            if (player.Initiative >= monster.Initiative)
+            {
+                player.Attack(player, monster);
+                Console.WriteLine($"\tThe {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                Console.ReadKey();
+                if (IsDefeated(player, monster))
+                    return false;
+
+                MonsterAttacks(player, monster);
+                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
+                Console.ReadKey();
+                if (IsDefeated(player, monster))
+                    return false;
+
+                return true;
+            }
+            else
+            {
+                MonsterAttacks(player, monster);
+                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
+                Console.ReadKey();
+                if (IsDefeated(player, monster))
+                    return false;
+
+                player.Attack(player, monster);
+                Console.WriteLine($"\tThe {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                Console.ReadKey();
+                if (IsDefeated(player, monster))
+                    return false;
+
+                return true;
+            }
+        }
+
+        public static void MonsterAttacks(Player player, Creature monster)
         {
             if (monster is Imp imp)
                 imp.Sting(player);
@@ -78,56 +123,18 @@ namespace AdventureGame
                 throw new NotImplementedException();
         }
 
-        public static bool Turn(Player player, Creatures monster)
-        {
-            if (player.Initiative >= monster.Initiative)
-            {
-                player.Attack(Player.gear[0], monster);
-                Console.WriteLine($"\tThe {monster.Race}'s Hit Points are now: {monster.HitPoints}");
 
-                Console.ReadLine();
-                if (IsDefeated(player, monster))
-                    return false;
-                MonsterAttacks(player, monster);
-                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
-
-                Console.ReadLine();
-                if (IsDefeated(player, monster))
-                    return false;
-                return true;
-            }
-            else
-            {
-                MonsterAttacks(player, monster);
-                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
-
-                Console.ReadLine();
-                if (IsDefeated(player, monster))
-                    return false;
-                player.Attack(Player.gear[0], monster);
-                Console.WriteLine($"\tThe {monster.Race}'s Hit Points are now: {monster.HitPoints}");
-
-                Console.ReadLine();
-                if (IsDefeated(player, monster))
-                    return false;
-                return true;
-            }
-
-            
-
-        }
-
-        public static bool IsDefeated(Player player, Creatures monster)
+        public static bool IsDefeated(Player player, Creature monster)
         {
             if (monster.HitPoints < 0)
             {
-                Console.WriteLine($"\tYou killed the {monster.Race}!");
+                Console.WriteLine($"\tYou killed the {monster.Name}!");
                 monster.Defeated = true;
                 return true;
             }
             else if (player.HitPoints < 0)
             {
-                Console.WriteLine($"\tThe {monster.Race} killed You!");
+                Console.WriteLine($"\tThe {monster.Name} killed You!");
                 player.Defeated = true;
                 return true;
             }

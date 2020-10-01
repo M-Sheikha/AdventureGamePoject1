@@ -4,11 +4,11 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Zombie : Creatures
+    class Zombie : Creature
     {
         public Zombie()
         {
-            Race = "Zombie";
+            Name = "Zombie";
             ArmorClass = 8;
             HitPoints = 22;
             Strength = 13;
@@ -22,7 +22,7 @@ namespace AdventureGame
         public void Slam(Player player)
         {
             Console.WriteLine("\n\tThe Zombie tries to slam you!");
-            if (rnd.Next(1, 21) + 3 >= player.ArmorClass)
+            if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 int damage = RollDice("1d6") + 1;
                 Console.WriteLine($"\tThe Zombie slams you, dealing {damage} damage!");

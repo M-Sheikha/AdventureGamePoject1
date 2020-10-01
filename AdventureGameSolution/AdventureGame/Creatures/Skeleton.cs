@@ -4,11 +4,11 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Skeleton : Creatures
+    class Skeleton : Creature
     {
         public Skeleton()
         {
-            Race = "Skeleton";
+            Name = "Skeleton";
             ArmorClass = 13;
             HitPoints = 13;
             Strength = 10;
@@ -22,7 +22,7 @@ namespace AdventureGame
         public void Shortsword(Player player)
         {
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortsword!");
-            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 int damage = RollDice("1d6") + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");
@@ -35,7 +35,7 @@ namespace AdventureGame
         public void Shortbow(Player player)
         {
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortbow!");
-            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 int damage = RollDice("1d6") + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");

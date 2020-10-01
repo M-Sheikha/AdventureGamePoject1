@@ -3,57 +3,78 @@ using System.Collections.Generic;
 
 namespace AdventureGame
 {
-
     class Program
     {
         static void Main(string[] args)
         { 
-            // Fixar så vi kan skriva ut lite fler unicode characters.
-
+            // Den här koden gör att vi kan skriva ut lite fler unicode characters.
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             Random rnd = new Random();
             GUI.PrintField();
             Console.CursorVisible = false;
-
+            
+            // Här kan vi implementera en character creation
             var player = new Player("Frodo", "Halfling", "Thief");
+            
+            // Ger spelaren lite guld att börja med.
+            player.StartingGold(player);
 
             // Skapar en lista med alla föremål
-            var items = Items.MakeItems(player);
-            Player.gear.Add(items[3]);
+            var items = Item.MakeItems(player);
+            
+            //player.gear.Add(items[3]);
 
             //skapar en lista med alla monster.
-            var monsters = new List<Creatures>();
-            monsters.Add(new Imp());
-            monsters.Add(new Quasit());
-            monsters.Add(new Skeleton());
-            monsters.Add(new Zombie());
+            var monsters = new List<Creature>
+            {
+                new Imp(),
+                new Quasit(),
+                new Skeleton(),
+                new Zombie(),
+                new Imp(),
+                new Quasit(),
+                new Skeleton(),
+                new Zombie()
+            };
 
             // Skapar 10 föremål från listan items.
-            Items item1 = items[rnd.Next(items.Count)];
-            Items item2 = items[rnd.Next(items.Count)];
-            Items item3 = items[rnd.Next(items.Count)];
-            Items item4 = items[rnd.Next(items.Count)];
-            Items item5 = items[rnd.Next(items.Count)];
-            Items item6 = items[rnd.Next(items.Count)];
-            Items item7 = items[rnd.Next(items.Count)];
-            Items item8 = items[rnd.Next(items.Count)];
-            Items item9 = items[rnd.Next(items.Count)];
-            Items item10 = items[rnd.Next(items.Count)];
+            Item item1 = items[rnd.Next(items.Count)];
+            Item item2 = items[rnd.Next(items.Count)];
+            Item item3 = items[rnd.Next(items.Count)];
+            Item item4 = items[rnd.Next(items.Count)];
+            Item item5 = items[rnd.Next(items.Count)];
+            Item item6 = items[rnd.Next(items.Count)];
+            Item item7 = items[rnd.Next(items.Count)];
+            Item item8 = items[rnd.Next(items.Count)];
+            Item item9 = items[rnd.Next(items.Count)];
+            Item item10 = items[rnd.Next(items.Count)];
 
-            // skapar 10 monster från listan monsters
+            // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];
+            monster1.X = 20;
+            monster1.Y = 6;
             var monster2 = monsters[rnd.Next(monsters.Count)];
+            monster2.X = 40;
+            monster2.Y = 18;
             var monster3 = monsters[rnd.Next(monsters.Count)];
+            monster3.X = 60;
+            monster3.Y = 8;
             var monster4 = monsters[rnd.Next(monsters.Count)];
+            monster4.X = 80;
+            monster4.Y = 12;
             var monster5 = monsters[rnd.Next(monsters.Count)];
+            monster5.X = 95;
+            monster5.Y = 5;
             var monster6 = monsters[rnd.Next(monsters.Count)];
+            monster6.X = 70;
+            monster6.Y = 20;
             var monster7 = monsters[rnd.Next(monsters.Count)];
+            monster7.X = 17;
+            monster7.Y = 11;
             var monster8 = monsters[rnd.Next(monsters.Count)];
-            var monster9 = monsters[rnd.Next(monsters.Count)];
-            var monster10 = monsters[rnd.Next(monsters.Count)];
-
-
+            monster8.X = 18;
+            monster8.Y = 11;
 
             do
             {
@@ -81,35 +102,31 @@ namespace AdventureGame
                 monster6.PrintMonster(monster6);
                 monster7.PrintMonster(monster7);
                 monster8.PrintMonster(monster8);
-                monster9.PrintMonster(monster9);
-                monster10.PrintMonster(monster10);
 
                 // Styr spelaren.
-                player.Move();
+                player.Move(player);
 
                 // Om spelaren har samma posiiton som föremålet plockas det upp.
-                Items.WannaPickMeUp(player, item1);
-                Items.WannaPickMeUp(player, item2);
-                Items.WannaPickMeUp(player, item3);
-                Items.WannaPickMeUp(player, item4);
-                Items.WannaPickMeUp(player, item5);
-                Items.WannaPickMeUp(player, item6);
-                Items.WannaPickMeUp(player, item7);
-                Items.WannaPickMeUp(player, item8);
-                Items.WannaPickMeUp(player, item9);
-                Items.WannaPickMeUp(player, item10);
+                Item.WannaPickMeUp(player, item1);
+                Item.WannaPickMeUp(player, item2);
+                Item.WannaPickMeUp(player, item3);
+                Item.WannaPickMeUp(player, item4);
+                Item.WannaPickMeUp(player, item5);
+                Item.WannaPickMeUp(player, item6);
+                Item.WannaPickMeUp(player, item7);
+                Item.WannaPickMeUp(player, item8);
+                Item.WannaPickMeUp(player, item9);
+                Item.WannaPickMeUp(player, item10);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.
-                Creatures.WannaFightMe(player, Player.gear[0], monster1);
-                Creatures.WannaFightMe(player, Player.gear[0], monster2);
-                Creatures.WannaFightMe(player, Player.gear[0], monster3);
-                Creatures.WannaFightMe(player, Player.gear[0], monster4);
-                Creatures.WannaFightMe(player, Player.gear[0], monster5);
-                Creatures.WannaFightMe(player, Player.gear[0], monster6);
-                Creatures.WannaFightMe(player, Player.gear[0], monster7);
-                Creatures.WannaFightMe(player, Player.gear[0], monster8);
-                Creatures.WannaFightMe(player, Player.gear[0], monster9);
-                Creatures.WannaFightMe(player, Player.gear[0], monster10);
+                Encounter.WannaFightMe(player, monster1);
+                Encounter.WannaFightMe(player, monster2);
+                Encounter.WannaFightMe(player, monster3);
+                Encounter.WannaFightMe(player, monster4);
+                Encounter.WannaFightMe(player, monster5);
+                Encounter.WannaFightMe(player, monster6);
+                Encounter.WannaFightMe(player, monster7);
+                Encounter.WannaFightMe(player, monster8);
 
                 if (player.HitPoints < 0)
                     break;
@@ -117,12 +134,12 @@ namespace AdventureGame
             } while (true);
 
             Console.Clear();
-            Console.SetCursorPosition(52, 12);
+            Console.SetCursorPosition(55, 15);
             Console.WriteLine("YOU LOSE!");
             Console.ReadLine();
-
-
         }
+
+
         
     }
 }

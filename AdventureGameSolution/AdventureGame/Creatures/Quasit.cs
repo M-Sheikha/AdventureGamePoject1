@@ -4,11 +4,11 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Quasit : Creatures
+    class Quasit : Creature
     {
         public Quasit()
         {
-            Race = "Quasit";
+            Name = "Quasit";
             ArmorClass = 13;
             HitPoints = 7;
             Strength = 5;
@@ -22,7 +22,7 @@ namespace AdventureGame
         public void Claws(Player player)
         {
             Console.WriteLine("\n\tThe Quasit tries to claw you!");
-            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 int damage = RollDice("1d4") + 3;
                 Console.WriteLine($"\tThe Quasit claws you, dealing {damage} damage!");
