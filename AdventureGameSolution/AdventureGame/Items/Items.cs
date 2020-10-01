@@ -3,31 +3,30 @@ using System.Collections.Generic;
 
 namespace AdventureGame
 {
-    class Items
+    class Items : Entity
     {        
-        public static Random rnd = new Random();
-
-        public string Name { get; set; }
         public string Placement { get; set; }
         public int Protection { get; set; }
-        public string Damage { get; set; }
         public int Health { get; set; }
         public int Cost { get; set; }
         public int Value { get; set; }
         public int Hit { get; set; }
-
-        public int X { get; set; }
-        public int Y { get; set; }
+        public string Damage { get; set; }
 
         public bool Taken { get; set; }
 
-        public Items(string name, string placement, int protection, string damage, int health, int cost)
+        public Items()
+        {
+
+        }
+
+        public Items(string name, string placement, int health, string damage, int cost)
         {
             Name = name;
             Placement = placement;
             Protection = Protection;
-            Damage = damage;
             Health = health;
+            Damage = damage;
             Cost = cost;
 
             X = rnd.Next(10, 104);
@@ -38,46 +37,47 @@ namespace AdventureGame
         public static List<Items> MakeItems(Player player)
         {
             List<Items> items = new List<Items>();
+            var item = new Items();
 
-            var goldPieces = new Items("Gold Pieces", null, 0, null, 0, 0);
+            var goldPieces = new Items("Gold Pieces", null, 0, null, 0);
             items.Add(goldPieces);
 
-            var potionOfHealing = new Items("Potion of Healing", null, 0, null, rnd.Next(4, 11), 50);
+            var potionOfHealing = new Items("Potion of Healing", null, rnd.Next(4, 11), null, 50);
             items.Add(potionOfHealing);
 
-            var healersKit = new Items("Healer's Kit", null, 0, null, rnd.Next(1, 5), 5);
+            var healersKit = new Items("Healer's Kit", null, rnd.Next(1, 5), null, 5);
             items.Add(healersKit);
 
-            var battleaxe = new Items("Battleaxe", "main-hand", 0, "1d8", 0, 10);
-            battleaxe.Hit = Entity.d8 + Player.Modifier(player.Strength);
+            var battleaxe = new Items("Battleaxe", "main-hand", 0, "1d8", 10);
+            battleaxe.Hit = item.RollDice("1d8") + Player.Modifier(player.Strength);
             items.Add(battleaxe);
 
-            var greataxe = new Items("Greataxe", "two-handed", 0, "1d12", 0, 30);
-            greataxe.Hit = Entity.d12 + Player.Modifier(player.Strength);
+            var greataxe = new Items("Greataxe", "two-handed", 0, "1d12", 30);
+            greataxe.Hit = item.RollDice("1d12") + Player.Modifier(player.Strength);
             items.Add(greataxe);
 
-            var greatsword = new Items("Greatsword", "two-handed", 0, "2d6", 0, 50);
-            greatsword.Hit = Entity.d6 + Entity.d6 + Player.Modifier(player.Strength);
+            var greatsword = new Items("Greatsword", "two-handed", 0, "2d6", 50);
+            greatsword.Hit = item.RollDice("2d6") + Player.Modifier(player.Strength);
             items.Add(greatsword);
 
-            var shortsword = new Items("Shortsword", "main-hand", 0, "1d6", 0, 10);
-            shortsword.Hit = Entity.d6 + Player.Modifier(player.Strength);
+            var shortsword = new Items("Shortsword", "main-hand", 0, "1d6", 10);
+            shortsword.Hit = item.RollDice("1d6") + Player.Modifier(player.Strength);
             items.Add(shortsword);
 
-            var shortbow = new Items("Shortbow", "two-handed", 0, "1d6", 0, 25);
-            shortbow.Hit = Entity.d6 + Player.Modifier(player.Dexterity);
+            var shortbow = new Items("Shortbow", "two-handed", 0, "1d6", 25);
+            shortbow.Hit = item.RollDice("1d6") + Player.Modifier(player.Dexterity);
             items.Add(shortbow);
 
-            var shield = new Items("Shield", "off-hand", 2, null, 0, 10);
+            var shield = new Items("Shield", "off-hand", 2, null, 10);
             items.Add(shield);
 
-            var lightArmor = new Items("Light Armor", "chest", rnd.Next(11, 13), null, 0, 10);
+            var lightArmor = new Items("Light Armor", "chest", rnd.Next(11, 13), null, 10);
             items.Add(lightArmor);
 
-            var mediumArmor = new Items("Medium Armor", "chest", rnd.Next(12, 16), null, 0, 50);
+            var mediumArmor = new Items("Medium Armor", "chest", rnd.Next(12, 16), null, 50);
             items.Add(mediumArmor);
 
-            var heavyArmor = new Items("Heavy Armor", "chest", rnd.Next(14, 19), null, 0, 75);
+            var heavyArmor = new Items("Heavy Armor", "chest", rnd.Next(14, 19), null, 75);
             items.Add(heavyArmor);
 
             return items;
@@ -147,6 +147,23 @@ namespace AdventureGame
                 item.Y = 0;
                 item.Taken = true;
             }
+        }
+
+        public override int RollDice(string dice)
+        {
+            return dice switch
+            {
+                "1d4" => rnd.Next(1, 5),
+                "1d6" => rnd.Next(1, 7),
+                "1d8" => rnd.Next(1, 9),
+                "1d10" => rnd.Next(1, 11),
+                "1d12" => rnd.Next(1, 13),
+                "1d20" => rnd.Next(1, 21),
+                "2d4" => rnd.Next(2, 9),
+                "2d6" => rnd.Next(2, 13),
+                "2d8" => rnd.Next(2, 17),
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }

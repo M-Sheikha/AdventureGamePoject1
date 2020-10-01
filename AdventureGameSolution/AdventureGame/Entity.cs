@@ -2,7 +2,7 @@
 
 namespace AdventureGame
 {    
-    class Entity
+    abstract class Entity
     {
         public static Random rnd = new Random();
         
@@ -11,7 +11,6 @@ namespace AdventureGame
 
         public int HitPoints { get; set; }
         public bool Defeated { get; set; }
-        public int Damage { get; set; }
         public int ArmorClass { get; set; }
 
         public int X { get; set; }
@@ -27,13 +26,6 @@ namespace AdventureGame
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
 
-        // Dices
-        public static int d4 = rnd.Next(1, 5);
-        public static int d6 = rnd.Next(1, 7);
-        public static int d8 = rnd.Next(1, 9);
-        public static int d10 = rnd.Next(1, 11);
-        public static int d12 = rnd.Next(1, 13);
-        public static int d20 = rnd.Next(1, 21);
-
+        public abstract int RollDice(string dice);
     }
 }

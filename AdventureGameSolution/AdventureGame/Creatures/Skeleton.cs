@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Skeleton : Monsters
+    class Skeleton : Creatures
     {
         public Skeleton()
         {
@@ -24,7 +24,7 @@ namespace AdventureGame
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortsword!");
             if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
             {
-                int damage = d6 + 2;
+                int damage = RollDice("1d6") + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
@@ -37,7 +37,7 @@ namespace AdventureGame
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortbow!");
             if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
             {
-                int damage = d6 + 2;
+                int damage = RollDice("1d6") + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }

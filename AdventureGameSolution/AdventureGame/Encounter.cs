@@ -25,7 +25,7 @@ namespace AdventureGame
         // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
         // och spelet fortsätter.
 
-        public static void _Encounter(Player player, Items weapon, Monsters monster)
+        public static void _Encounter(Player player, Items weapon, Creatures monster)
         {
             Console.Clear();
 
@@ -53,12 +53,12 @@ namespace AdventureGame
             Console.Clear();
             if (player.HitPoints >= 0)
             {
-                GraphicalUserInterface.PrintField();
+                GUI.PrintField();
 
             }
         }
 
-        public static void MonsterAttacks(Player player, Monsters monster)
+        public static void MonsterAttacks(Player player, Creatures monster)
         {
             if (monster is Imp imp)
                 imp.Sting(player);
@@ -78,7 +78,7 @@ namespace AdventureGame
                 throw new NotImplementedException();
         }
 
-        public static bool Turn(Player player, Monsters monster)
+        public static bool Turn(Player player, Creatures monster)
         {
             if (player.Initiative >= monster.Initiative)
             {
@@ -117,7 +117,7 @@ namespace AdventureGame
 
         }
 
-        public static bool IsDefeated(Player player, Monsters monster)
+        public static bool IsDefeated(Player player, Creatures monster)
         {
             if (monster.HitPoints < 0)
             {

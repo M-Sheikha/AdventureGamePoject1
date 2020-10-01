@@ -35,10 +35,9 @@ namespace AdventureGame
             Charisma = AbilityScore();
             HitPoints = rnd.Next(1, 11) + Modifier(Constitution);
             MaxHealth = HitPoints;
-            Damage = 1 + Modifier(Strength);
             ArmorClass = 10 + Modifier(Dexterity);
 
-            var goldPieces = new Items("Gold Pieces", null, 0, null, 0, 0);
+            var goldPieces = new Items("Gold Pieces", null, 0, null, 0);
             goldPieces.Value = StartingGold();
             inventory.Add(goldPieces);
         }
@@ -87,13 +86,12 @@ namespace AdventureGame
 
         public void CharacterPanel()
         {
-            GraphicalUserInterface.PrintCharacterPanel();
+            GUI.PrintCharacterPanel();
             left = 10;
             top = 2;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"{Name} the {Race} {Class}");            
-            PrintStat("Hit Points", HitPoints);            
-            PrintStat("Damage", Damage);            
+            PrintStat("Hit Points", HitPoints);           
             PrintStat("Armor Class", ArmorClass);
             top += 2;
            
@@ -127,7 +125,7 @@ namespace AdventureGame
         public void Inventory()
         {
             // Skriver ut ramen.
-            GraphicalUserInterface.PrintInventory();
+            GUI.PrintInventory();
 
             // Variabler till CurserPosiiton.
             top = 2;
@@ -170,7 +168,7 @@ namespace AdventureGame
             {
                 bool okToEquip = true;
                 string placement = "";
-                Items _item = new Items(null, null, 0, null, 0, 0);
+                Items _item = new Items(null, null, 0, null, 0);
                 index--;
                 if (inventory[index].Placement != null)
                 {
@@ -348,13 +346,13 @@ namespace AdventureGame
                     Console.Clear();
                     Inventory();                                      
                     Console.Clear();                    
-                    GraphicalUserInterface.PrintField();
+                    GUI.PrintField();
                     break;
                 case ConsoleKey.C:
                     Console.Clear();                    
                     CharacterPanel();
                     Console.Clear();
-                    GraphicalUserInterface.PrintField();
+                    GUI.PrintField();
                     break;
             }
         }
@@ -368,7 +366,7 @@ namespace AdventureGame
             
         //}
 
-        public void Attack(Items weapon, Monsters monster)
+        public void Attack(Items weapon, Creatures monster)
         {
             Console.WriteLine($"\n\tYou try to hit the {monster.Race} with your {weapon.Name}!");
             if (rnd.Next(1, 21) + Modifier(Strength) >= monster.ArmorClass)
@@ -381,5 +379,21 @@ namespace AdventureGame
                 Console.WriteLine("\tYou missed.");
         }
 
+        public override int RollDice(string dice)
+        {
+            return dice switch
+            {
+                "1d4" => rnd.Next(1, 5),
+                "1d6" => rnd.Next(1, 7),
+                "1d8" => rnd.Next(1, 9),
+                "1d10" => rnd.Next(1, 11),
+                "1d12" => rnd.Next(1, 13),
+                "1d20" => rnd.Next(1, 21),
+                "2d4" => rnd.Next(2, 9),
+                "2d6" => rnd.Next(2, 13),
+                "2d8" => rnd.Next(2, 17),
+                _ => throw new NotImplementedException(),
+            };
+        }
     }
 }

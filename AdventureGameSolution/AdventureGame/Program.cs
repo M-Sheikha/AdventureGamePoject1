@@ -13,7 +13,7 @@ namespace AdventureGame
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             Random rnd = new Random();
-            GraphicalUserInterface.PrintField();
+            GUI.PrintField();
             Console.CursorVisible = false;
 
             var player = new Player("Frodo", "Halfling", "Thief");
@@ -23,7 +23,7 @@ namespace AdventureGame
             Player.gear.Add(items[3]);
 
             //skapar en lista med alla monster.
-            var monsters = new List<Monsters>();
+            var monsters = new List<Creatures>();
             monsters.Add(new Imp());
             monsters.Add(new Quasit());
             monsters.Add(new Skeleton());
@@ -100,16 +100,16 @@ namespace AdventureGame
                 Items.WannaPickMeUp(player, item10);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.
-                Monsters.WannaFightMe(player, Player.gear[0], monster1);
-                Monsters.WannaFightMe(player, Player.gear[0], monster2);
-                Monsters.WannaFightMe(player, Player.gear[0], monster3);
-                Monsters.WannaFightMe(player, Player.gear[0], monster4);
-                Monsters.WannaFightMe(player, Player.gear[0], monster5);
-                Monsters.WannaFightMe(player, Player.gear[0], monster6);
-                Monsters.WannaFightMe(player, Player.gear[0], monster7);
-                Monsters.WannaFightMe(player, Player.gear[0], monster8);
-                Monsters.WannaFightMe(player, Player.gear[0], monster9);
-                Monsters.WannaFightMe(player, Player.gear[0], monster10);
+                Creatures.WannaFightMe(player, Player.gear[0], monster1);
+                Creatures.WannaFightMe(player, Player.gear[0], monster2);
+                Creatures.WannaFightMe(player, Player.gear[0], monster3);
+                Creatures.WannaFightMe(player, Player.gear[0], monster4);
+                Creatures.WannaFightMe(player, Player.gear[0], monster5);
+                Creatures.WannaFightMe(player, Player.gear[0], monster6);
+                Creatures.WannaFightMe(player, Player.gear[0], monster7);
+                Creatures.WannaFightMe(player, Player.gear[0], monster8);
+                Creatures.WannaFightMe(player, Player.gear[0], monster9);
+                Creatures.WannaFightMe(player, Player.gear[0], monster10);
 
                 if (player.HitPoints < 0)
                     break;
@@ -118,7 +118,7 @@ namespace AdventureGame
 
             Console.Clear();
             Console.SetCursorPosition(52, 12);
-            Console.WriteLine("YOU LOOSE!");
+            Console.WriteLine("YOU LOSE!");
             Console.ReadLine();
 
 

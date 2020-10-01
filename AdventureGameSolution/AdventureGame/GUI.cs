@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class GraphicalUserInterface
+    class GUI
     {
         public static int hight;
         public static int width = 100;
@@ -94,7 +94,7 @@ namespace AdventureGame
             //skriver ut sidorna av ramen
             //Den första botten av den inre ramen ska komma på sjätte raden efter toppen
             //Sidorna för namn m.m.
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Console.Write("\t\u2551");
                 for (int j = 0; j < width - 2; j++)

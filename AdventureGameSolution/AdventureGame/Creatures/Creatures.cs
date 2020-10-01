@@ -5,18 +5,37 @@ using System.Xml.Xsl;
 
 namespace AdventureGame
 {
-    class Monsters : Entity
+    class Creatures : Entity
     {
         // Varelser har även förmågor (som beror på egenskaperna) och de minskar
         // den andra varelsens egeneskaper under ett möte.
 
-        public Monsters()
+        public string InitiativeDice = "1d20";
+
+        public Creatures()
         {
             X = rnd.Next(10, 105);
             Y = rnd.Next(2, 24);
         }
 
-        public Monsters(string race, int str, int dex, int con, int health, int prot)
+        public override int RollDice(string dice)
+        {
+            return dice switch
+            {
+                "1d4" => rnd.Next(1, 5),
+                "1d6" => rnd.Next(1, 7),
+                "1d8" => rnd.Next(1, 9),
+                "1d10" => rnd.Next(1, 11),
+                "1d12" => rnd.Next(1, 13),
+                "1d20" => rnd.Next(1, 21),
+                "2d4" => rnd.Next(2, 9),
+                "2d6" => rnd.Next(2, 13),
+                "2d8" => rnd.Next(2, 17),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public Creatures(string race, int str, int dex, int con, int health, int prot)
         {
             X = rnd.Next(10, 104);
             Y = rnd.Next(2, 24);
@@ -30,26 +49,26 @@ namespace AdventureGame
             ArmorClass = prot;            
         }
 
-        public static List<Monsters> MakeMonsters()
+        public static List<Creatures> MakeMonsters()
         {
-            List<Monsters> monsters = new List<Monsters>();
+            List<Creatures> monsters = new List<Creatures>();
 
-            var imp = new Monsters("Imp", 6, 17, 13, 10, 13);
+            var imp = new Creatures("Imp", 6, 17, 13, 10, 13);
             monsters.Add(imp);
 
-            var quasit = new Monsters("Quasit", 5, 17, 10, 7, 13);
+            var quasit = new Creatures("Quasit", 5, 17, 10, 7, 13);
             monsters.Add(quasit);
 
-            var skeleton = new Monsters("Skeleton", 10, 14, 15, 13, 13);
+            var skeleton = new Creatures("Skeleton", 10, 14, 15, 13, 13);
             monsters.Add(skeleton);
 
-            var zombie = new Monsters("Zombie", 13, 6, 16, 22, 8);
+            var zombie = new Creatures("Zombie", 13, 6, 16, 22, 8);
             monsters.Add(zombie);
 
             return monsters;            
         }
 
-        public void PrintMonster(Monsters monster)
+        public void PrintMonster(Creatures monster)
         {
             if (!monster.Defeated)
             {
@@ -58,7 +77,7 @@ namespace AdventureGame
             }
         }
 
-        public static void WannaFightMe(Player player, Items item, Monsters monster)
+        public static void WannaFightMe(Player player, Items item, Creatures monster)
         {
             if (player.X == monster.X && player.Y == monster.Y)
             {

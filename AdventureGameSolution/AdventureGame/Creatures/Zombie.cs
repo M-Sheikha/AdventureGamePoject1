@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Zombie : Monsters
+    class Zombie : Creatures
     {
         public Zombie()
         {
@@ -24,7 +24,7 @@ namespace AdventureGame
             Console.WriteLine("\n\tThe Zombie tries to slam you!");
             if (rnd.Next(1, 21) + 3 >= player.ArmorClass)
             {
-                int damage = d6 + 1;
+                int damage = RollDice("1d6") + 1;
                 Console.WriteLine($"\tThe Zombie slams you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
