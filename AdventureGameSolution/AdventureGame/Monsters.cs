@@ -10,8 +10,6 @@ namespace AdventureGame
         // Varelser har även förmågor (som beror på egenskaperna) och de minskar
         // den andra varelsens egeneskaper under ett möte.
 
-        public bool Defeated { get; set; }
-
         public Monsters()
         {
             X = rnd.Next(10, 105);
@@ -60,11 +58,11 @@ namespace AdventureGame
             }
         }
 
-        public static void WannaFightMe(Player player, Monsters monster)
+        public static void WannaFightMe(Player player, Items item, Monsters monster)
         {
             if (player.X == monster.X && player.Y == monster.Y)
             {
-                Encounter._Encounter(player, monster);
+                Encounter._Encounter(player, item, monster);
                 monster.X = 0;
                 monster.Y = 0;
                 monster.Defeated = true;

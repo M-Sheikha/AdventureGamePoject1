@@ -10,6 +10,7 @@ namespace AdventureGame
         public string Race { get; set; }
 
         public int HitPoints { get; set; }
+        public bool Defeated { get; set; }
         public int Damage { get; set; }
         public int ArmorClass { get; set; }
 

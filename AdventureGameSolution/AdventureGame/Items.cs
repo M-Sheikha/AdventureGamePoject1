@@ -14,6 +14,7 @@ namespace AdventureGame
         public int Health { get; set; }
         public int Cost { get; set; }
         public int Value { get; set; }
+        public int Hit { get; set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -34,7 +35,7 @@ namespace AdventureGame
             Taken = false;
         }
 
-        public static List<Items> MakeItems()
+        public static List<Items> MakeItems(Player player)
         {
             List<Items> items = new List<Items>();
 
@@ -48,18 +49,23 @@ namespace AdventureGame
             items.Add(healersKit);
 
             var battleaxe = new Items("Battleaxe", "main-hand", 0, "1d8", 0, 10);
+            battleaxe.Hit = Entity.d8 + Player.Modifier(player.Strength);
             items.Add(battleaxe);
 
             var greataxe = new Items("Greataxe", "two-handed", 0, "1d12", 0, 30);
+            greataxe.Hit = Entity.d12 + Player.Modifier(player.Strength);
             items.Add(greataxe);
 
             var greatsword = new Items("Greatsword", "two-handed", 0, "2d6", 0, 50);
+            greatsword.Hit = Entity.d6 + Entity.d6 + Player.Modifier(player.Strength);
             items.Add(greatsword);
 
             var shortsword = new Items("Shortsword", "main-hand", 0, "1d6", 0, 10);
+            shortsword.Hit = Entity.d6 + Player.Modifier(player.Strength);
             items.Add(shortsword);
 
             var shortbow = new Items("Shortbow", "two-handed", 0, "1d6", 0, 25);
+            shortbow.Hit = Entity.d6 + Player.Modifier(player.Dexterity);
             items.Add(shortbow);
 
             var shield = new Items("Shield", "off-hand", 2, null, 0, 10);
@@ -123,14 +129,14 @@ namespace AdventureGame
             }
         }
 
-        public Items ItemForPickUp()
-        {
-            List<Items> items = MakeItems();
-            Items item = items[rnd.Next(items.Count)];
-            item.X = rnd.Next(10, 105);
-            item.Y = rnd.Next(2, 24);
-            return item;
-        }
+        //public Items ItemForPickUp()
+        //{
+        //    List<Items> items = MakeItems();
+        //    Items item = items[rnd.Next(items.Count)];
+        //    item.X = rnd.Next(10, 105);
+        //    item.Y = rnd.Next(2, 24);
+        //    return item;
+        //}
 
         public static void WannaPickMeUp(Player player, Items item)
         {

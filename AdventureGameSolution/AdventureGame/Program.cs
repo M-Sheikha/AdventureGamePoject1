@@ -19,7 +19,8 @@ namespace AdventureGame
             var player = new Player("Frodo", "Halfling", "Thief");
 
             // Skapar en lista med alla föremål
-            var items = Items.MakeItems();
+            var items = Items.MakeItems(player);
+            Player.gear.Add(items[3]);
 
             //skapar en lista med alla monster.
             var monsters = new List<Monsters>();
@@ -99,18 +100,27 @@ namespace AdventureGame
                 Items.WannaPickMeUp(player, item10);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.
-                Monsters.WannaFightMe(player, monster1);
-                Monsters.WannaFightMe(player, monster2);
-                Monsters.WannaFightMe(player, monster3);
-                Monsters.WannaFightMe(player, monster4);
-                Monsters.WannaFightMe(player, monster5);
-                Monsters.WannaFightMe(player, monster6);
-                Monsters.WannaFightMe(player, monster7);
-                Monsters.WannaFightMe(player, monster8);
-                Monsters.WannaFightMe(player, monster9);
-                Monsters.WannaFightMe(player, monster10);
+                Monsters.WannaFightMe(player, Player.gear[0], monster1);
+                Monsters.WannaFightMe(player, Player.gear[0], monster2);
+                Monsters.WannaFightMe(player, Player.gear[0], monster3);
+                Monsters.WannaFightMe(player, Player.gear[0], monster4);
+                Monsters.WannaFightMe(player, Player.gear[0], monster5);
+                Monsters.WannaFightMe(player, Player.gear[0], monster6);
+                Monsters.WannaFightMe(player, Player.gear[0], monster7);
+                Monsters.WannaFightMe(player, Player.gear[0], monster8);
+                Monsters.WannaFightMe(player, Player.gear[0], monster9);
+                Monsters.WannaFightMe(player, Player.gear[0], monster10);
+
+                if (player.HitPoints < 0)
+                    break;
 
             } while (true);
+
+            Console.Clear();
+            Console.SetCursorPosition(52, 12);
+            Console.WriteLine("YOU LOOSE!");
+            Console.ReadLine();
+
 
         }
         

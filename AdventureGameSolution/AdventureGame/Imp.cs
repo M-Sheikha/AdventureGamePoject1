@@ -9,6 +9,7 @@ namespace AdventureGame
     {
         public Imp()
         {
+            Race = "Imp";
             ArmorClass = 13;
             HitPoints = 10;
             Strength = 6;
@@ -22,7 +23,7 @@ namespace AdventureGame
         public void Sting(Player player)
         {
             Console.WriteLine("\n\tThe Imp tries to sting you!");
-            if (d20 + 5 >= player.ArmorClass)
+            if (rnd.Next(1, 21) + 5 >= player.ArmorClass)
             {
                 int damage = d4 + 3;
                 Console.WriteLine($"\tThe Imp stings you, dealing {damage} damage!");

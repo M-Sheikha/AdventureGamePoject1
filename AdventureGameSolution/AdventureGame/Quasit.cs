@@ -8,6 +8,7 @@ namespace AdventureGame
     {
         public Quasit()
         {
+            Race = "Quasit";
             ArmorClass = 13;
             HitPoints = 7;
             Strength = 5;
@@ -21,7 +22,7 @@ namespace AdventureGame
         public void Claws(Player player)
         {
             Console.WriteLine("\n\tThe Quasit tries to claw you!");
-            if (d20 + 4 >= player.ArmorClass)
+            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
             {
                 int damage = d4 + 3;
                 Console.WriteLine($"\tThe Quasit claws you, dealing {damage} damage!");

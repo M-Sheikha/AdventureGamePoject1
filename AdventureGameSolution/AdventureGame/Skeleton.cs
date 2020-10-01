@@ -8,6 +8,7 @@ namespace AdventureGame
     {
         public Skeleton()
         {
+            Race = "Skeleton";
             ArmorClass = 13;
             HitPoints = 13;
             Strength = 10;
@@ -21,7 +22,7 @@ namespace AdventureGame
         public void Shortsword(Player player)
         {
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortsword!");
-            if (d20 + 4 >= player.ArmorClass)
+            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
             {
                 int damage = d6 + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");
@@ -34,7 +35,7 @@ namespace AdventureGame
         public void Shortbow(Player player)
         {
             Console.WriteLine("\n\tThe Skeleton tries to hit you with its shortbow!");
-            if (d20 + 4 >= player.ArmorClass)
+            if (rnd.Next(1, 21) + 4 >= player.ArmorClass)
             {
                 int damage = d6 + 2;
                 Console.WriteLine($"\tThe Skeleton hits you, dealing {damage} damage!");

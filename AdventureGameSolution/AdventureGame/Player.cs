@@ -21,6 +21,7 @@ namespace AdventureGame
         {
             X = 10;
             Y = 2;
+            Defeated = false;
 
             Name = name;
             Race = race;
@@ -358,13 +359,26 @@ namespace AdventureGame
             }
         }
 
-        private static bool ValidatePosition(int x, int y)
-        {
-            if (x > 10 && x < 105 && y > 2 && y < 24)
-                return true;
-            else
-                return false;
+        //private static bool ValidatePosition(int x, int y)
+        //{
+        //    if (x > 10 && x < 105 && y > 2 && y < 24)
+        //        return true;
+        //    else
+        //        return false;
             
+        //}
+
+        public void Attack(Items weapon, Monsters monster)
+        {
+            Console.WriteLine($"\n\tYou try to hit the {monster.Race} with your {weapon.Name}!");
+            if (rnd.Next(1, 21) + Modifier(Strength) >= monster.ArmorClass)
+            {
+                int damage = weapon.Hit;
+                Console.WriteLine($"\tYou hit the {monster.Race} with your {weapon.Name}, dealing {damage} damage!");
+                monster.HitPoints -= damage;
+            }
+            else
+                Console.WriteLine("\tYou missed.");
         }
 
     }
