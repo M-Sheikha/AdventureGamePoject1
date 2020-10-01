@@ -57,8 +57,7 @@ namespace AdventureGame
 
         public void StartingGold(Player player)
         {
-            var goldPieces = new Item();
-            goldPieces.Name = "Gold Pieces";
+            var goldPieces = new Item("Gold Pieces");
             for (int i = 0; i < 5; i++)
                 goldPieces.Value += rnd.Next(1, 5);
             inventory.Add(goldPieces);

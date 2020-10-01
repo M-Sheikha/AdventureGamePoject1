@@ -6,34 +6,58 @@ namespace AdventureGame
 {
     class Armor : Gear
     {
-        public Armor(string name, string placement, int abilityModifier, int armorClass) : base(name, placement, abilityModifier)
+        public int StrengthMinimum { get; set; }
+
+        public Armor(string name, string property, int abilityModifier, int armorClass, int strengthMinimum) : base(name, property, abilityModifier)
         {
             ArmorClass = armorClass;
+            StrengthMinimum = strengthMinimum;
         }
 
-        public static List<Armor> MakeArmor(Player player)
+        public static List<Armor> MakeList(Player player)
         {
-            var armors = new List<Armor>();
+            var dexterirtyModifier = AbilityModifier(player.Dexterity);
 
-            var padded = new Armor("Padded", "body", player.Dexterity, 11);
-            armors.Add(padded);
+            // Light Armor
+            var padded = new Armor("Padded", "body", dexterirtyModifier, 11, 0);
+            var leather = new Armor("Leather", "body", dexterirtyModifier, 11, 0);
+            var studdedLeather = new Armor("Studded leather", "body", dexterirtyModifier, 12, 0);
 
-            var leather = new Armor("Leather", "body", player.Dexterity, 11);
-            armors.Add(leather);
+            if (AbilityModifier(player.Dexterity) > 2)
+                dexterirtyModifier = 2;
 
-            var studdedLeather = new Armor("Studded leather", "body", player.Dexterity, 12);
-            armors.Add(studdedLeather);
+            // Medium Armor
+            var hide = new Armor("Hide", "body", dexterirtyModifier, 12, 0); 
+            var chainShirt = new Armor("Chain shirt", "body", dexterirtyModifier, 13, 0);
+            var scaleMail = new Armor("Scale mail", "body", dexterirtyModifier, 14, 0);
+            var breastplate = new Armor("Breastplate", "body", dexterirtyModifier, 14, 0);
+            var halfPlate = new Armor("Half plate", "body", dexterirtyModifier, 15, 0);
+            
+            // Heavy Armor
+            var ringMail = new Armor("Ring mail", "body", 0, 14, 0);
+            var chainMail = new Armor("Ring mail", "body", 0, 16, 13);
+            var Splint = new Armor("Splint", "body", 0, 17, 15);
+            var plate = new Armor("Plate", "body", 0, 18, 15);
 
-            // Fortsätt här.
+            // Shield
+            var shield = new Armor("Shield", "off-hand", 0, 2, 0);
 
-            var mediumArmor = new Armor("Medium Armor", "body", rnd.Next(12, 16));
-            armors.Add(mediumArmor);
-
-            var heavyArmor = new Armor("Heavy Armor", "body", rnd.Next(14, 19));
-            armors.Add(heavyArmor);
-
-            var shield = new Armor("Shield", "off-hand", 2);
-            armors.Add(shield);
+            var armors = new List<Armor>
+            {
+                padded,
+                leather,
+                studdedLeather,
+                hide,
+                chainShirt,
+                scaleMail,
+                breastplate,
+                halfPlate,
+                ringMail,
+                chainMail,
+                Splint,
+                plate,
+                shield
+            };
 
             return armors;
         }

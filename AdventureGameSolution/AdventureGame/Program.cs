@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace AdventureGame
@@ -19,6 +20,8 @@ namespace AdventureGame
             
             // Ger spelaren lite guld att börja med.
             player.StartingGold(player);
+
+            List<Armor> armors = Armor.MakeList(player);
 
             // Skapar en lista med alla föremål
             var items = Item.MakeItems(player);

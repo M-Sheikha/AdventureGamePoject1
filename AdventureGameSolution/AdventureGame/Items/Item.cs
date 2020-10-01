@@ -20,39 +20,19 @@ namespace AdventureGame
             IsTaken = false;
         }
 
-        public override int RollDice(string dice)
-        {
-            return dice switch
-            {
-                "1d4" => rnd.Next(1, 5),
-                "1d6" => rnd.Next(1, 7),
-                "1d8" => rnd.Next(1, 9),
-                "1d10" => rnd.Next(1, 11),
-                "1d12" => rnd.Next(1, 13),
-                "1d20" => rnd.Next(1, 21),
-                "2d4" => rnd.Next(2, 9),
-                "2d6" => rnd.Next(2, 13),
-                "2d8" => rnd.Next(2, 17),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
         public static List<Item> MakeItems(Player player)
         {
-            List<Item> items = new List<Item>();
             var item = new Item("");
 
             var goldPieces = new Item("Gold Pieces");
+            var potionOfHealing = new Item("Potion of Healing", RollDice("2d4") + 2);
+            var healersKit = new Item("Healer's Kit", RollDice("1d4"));
+
+
+            List<Item> items = new List<Item>();
             items.Add(goldPieces);
-
-            var potionOfHealing = new Item("Potion of Healing", item.RollDice("2d4") + 2);
             items.Add(potionOfHealing);
-
-            var healersKit = new Item("Healer's Kit", item.RollDice("1d4"));
             items.Add(healersKit);
-
-            
-            
 
             return items;
         }

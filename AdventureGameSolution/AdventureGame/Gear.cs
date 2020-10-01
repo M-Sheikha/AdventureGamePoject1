@@ -6,12 +6,12 @@ namespace AdventureGame
 {
     class Gear : Item
     {
-        public string Placement { get; set; }
+        public string Property { get; set; }
         public int AbilityModifier { get; set; }
 
-        public Gear(string name, string placement, int abilityModifier) : base(name)
+        public Gear(string name, string property, int abilityModifier) : base(name)
         {
-            Placement = placement;
+            Property = property;
             AbilityModifier = abilityModifier;
         }
     }

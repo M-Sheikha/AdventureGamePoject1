@@ -23,37 +23,14 @@ namespace AdventureGame
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
 
-        public Creature()
+        public Creature(string name) : base(name)
         {
-
+            
         }
 
-        public Creature(string name, int str, int dex, int con, int hitPoints, int armorClass)
+        public Creature(string name, int str, int dex, int con, int hitPoints, int armorClass) : base(name)
         {
-            Defeated = false;
-            Name = name;
-            Strength = str;
-            Dexterity = dex;
-            Constitution = con;                                  
-            HitPoints = hitPoints;
-            ArmorClass = armorClass;            
-        }
-
-        public override int RollDice(string dice)
-        {
-            return dice switch
-            {
-                "1d4" => rnd.Next(1, 5),
-                "1d6" => rnd.Next(1, 7),
-                "1d8" => rnd.Next(1, 9),
-                "1d10" => rnd.Next(1, 11),
-                "1d12" => rnd.Next(1, 13),
-                "1d20" => rnd.Next(1, 21),
-                "2d4" => rnd.Next(2, 9),
-                "2d6" => rnd.Next(2, 13),
-                "2d8" => rnd.Next(2, 17),
-                _ => throw new NotImplementedException(),
-            };
+            Defeated = false;         
         }
 
         public int AttackRoll(Player player)
@@ -61,10 +38,7 @@ namespace AdventureGame
             return RollDice("1d20") + player.AbilityModifier(player.gear[0].AbilityModifier);
         }
 
-        public int AbilityModifier(int ability)
-        {
-            return (ability - 10) / 2;
-        }
+        
 
         public void PrintMonster(Creature monster)
         {
