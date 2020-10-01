@@ -9,7 +9,6 @@ namespace AdventureGame
 {
     class Player : Entity
     {       
-        public static Random rnd = new Random();
         public static List<Items> inventory = new List<Items>();
         public static List<Items> gear = new List<Items>();
         public string Class { get; set; }
@@ -33,10 +32,10 @@ namespace AdventureGame
             Intelligence = AbilityScore();
             Wisdom = AbilityScore();
             Charisma = AbilityScore();
-            Health = rnd.Next(1, 11) + Modifier(Constitution);
-            MaxHealth = Health;
+            HitPoints = rnd.Next(1, 11) + Modifier(Constitution);
+            MaxHealth = HitPoints;
             Damage = 1 + Modifier(Strength);
-            Protection = 10 + Modifier(Dexterity);
+            ArmorClass = 10 + Modifier(Dexterity);
 
             var goldPieces = new Items("Gold Pieces", null, 0, null, 0, 0);
             goldPieces.Value = StartingGold();
@@ -76,7 +75,7 @@ namespace AdventureGame
         public void PrintCharacter()
         {
             Console.SetCursorPosition(X, Y);
-            Console.Write("☺");
+            Console.Write("☻");
         }
 
         public void PrintEmpty()
@@ -92,9 +91,9 @@ namespace AdventureGame
             top = 2;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"{Name} the {Race} {Class}");            
-            PrintStat("Health", Health);            
+            PrintStat("Hit Points", HitPoints);            
             PrintStat("Damage", Damage);            
-            PrintStat("Protection", Protection);
+            PrintStat("Armor Class", ArmorClass);
             top += 2;
            
             PrintStat("Strength", Strength);            
@@ -182,7 +181,7 @@ namespace AdventureGame
                         if (inventory[index].Placement == "chest" || inventory[index].Placement == "off-hand")
                         {
                             inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
-                            Protection += inventory[index].Value;
+                            ArmorClass += inventory[index].Value;
                         }
                         gear.Add(inventory[index]);
                         inventory.RemoveAt(index);
@@ -238,7 +237,7 @@ namespace AdventureGame
                             {
                                 // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
                                 inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
-                                Protection += inventory[index].Value;
+                                ArmorClass += inventory[index].Value;
                             }
                             gear.Add(inventory[index]);
                             inventory.RemoveAt(index);
@@ -251,7 +250,7 @@ namespace AdventureGame
                             if (playerChoice.ToLower() != "n")
                             {
                                 gear.Remove(_item);
-                                Protection -= _item.Value;
+                                ArmorClass -= _item.Value;
                                 inventory.Add(_item);
                                 Console.SetCursorPosition(left, top);
                                 Console.WriteLine("                                                                                            ");
@@ -261,7 +260,7 @@ namespace AdventureGame
                                 {
                                     // Anropar CalculateProtection som räknar ut hur mycket rustningen skyddar.
                                     inventory[index].Value = Items.CalculateProtection(inventory[index].Name);
-                                    Protection += inventory[index].Value;
+                                    ArmorClass += inventory[index].Value;
                                 }
                                 gear.Add(inventory[index]);
                                 inventory.RemoveAt(index);
@@ -280,15 +279,15 @@ namespace AdventureGame
                 {
                     // Om man inte redan har full health kan man använda healing 
                     // potions m.m. och CalculateHealth räknar ut hur mycket man helas.
-                    if (Health < MaxHealth)
+                    if (HitPoints < MaxHealth)
                     {
                         Console.SetCursorPosition(left, top++);
                         Console.Write($"You used {inventory[index].Name} and was healed ");
                         inventory[index].Health = Items.CalculateHealth(inventory[index].Name);
-                        Health += inventory[index].Health;
-                        if (Health > MaxHealth)
+                        HitPoints += inventory[index].Health;
+                        if (HitPoints > MaxHealth)
                         {
-                            Health = MaxHealth;
+                            HitPoints = MaxHealth;
                             Console.WriteLine("to max health.");
                         }
                         else

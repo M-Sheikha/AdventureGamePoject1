@@ -11,18 +11,25 @@ namespace AdventureGame
         // den andra varelsens egeneskaper under ett möte.
 
         public bool Defeated { get; set; }
+
+        public Monsters()
+        {
+            X = rnd.Next(10, 105);
+            Y = rnd.Next(2, 24);
+        }
+
         public Monsters(string race, int str, int dex, int con, int health, int prot)
         {
-            X = Player.rnd.Next(10, 104);
-            Y = Player.rnd.Next(2, 24);
+            X = rnd.Next(10, 104);
+            Y = rnd.Next(2, 24);
             Defeated = false;
             
             Race = race;
             Strength = str;
             Dexterity = dex;
             Constitution = con;                                  
-            Health = health;
-            Protection = prot;            
+            HitPoints = health;
+            ArmorClass = prot;            
         }
 
         public static List<Monsters> MakeMonsters()
@@ -49,7 +56,7 @@ namespace AdventureGame
             if (!monster.Defeated)
             {
                 Console.SetCursorPosition(X, Y);
-                Console.Write("☻");
+                Console.Write("M");
             }
         }
 
@@ -64,7 +71,5 @@ namespace AdventureGame
 
             }
         }
-
-        
     }
 }

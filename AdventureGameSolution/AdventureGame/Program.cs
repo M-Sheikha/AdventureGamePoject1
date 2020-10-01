@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AdventureGame
 {
@@ -21,7 +22,11 @@ namespace AdventureGame
             var items = Items.MakeItems();
 
             //skapar en lista med alla monster.
-            var monsters = Monsters.MakeMonsters();
+            var monsters = new List<Monsters>();
+            monsters.Add(new Imp());
+            monsters.Add(new Quasit());
+            monsters.Add(new Skeleton());
+            monsters.Add(new Zombie());
 
             // Skapar 10 föremål från listan items.
             Items item1 = items[rnd.Next(items.Count)];
@@ -35,9 +40,19 @@ namespace AdventureGame
             Items item9 = items[rnd.Next(items.Count)];
             Items item10 = items[rnd.Next(items.Count)];
 
-            //skapar 5 monster från listan monsters.
-
+            // skapar 10 monster från listan monsters
             var monster1 = monsters[rnd.Next(monsters.Count)];
+            var monster2 = monsters[rnd.Next(monsters.Count)];
+            var monster3 = monsters[rnd.Next(monsters.Count)];
+            var monster4 = monsters[rnd.Next(monsters.Count)];
+            var monster5 = monsters[rnd.Next(monsters.Count)];
+            var monster6 = monsters[rnd.Next(monsters.Count)];
+            var monster7 = monsters[rnd.Next(monsters.Count)];
+            var monster8 = monsters[rnd.Next(monsters.Count)];
+            var monster9 = monsters[rnd.Next(monsters.Count)];
+            var monster10 = monsters[rnd.Next(monsters.Count)];
+
+
 
             do
             {
@@ -56,7 +71,17 @@ namespace AdventureGame
                 item9.PrintItem(item9);
                 item10.PrintItem(item10);
 
+                // Skriver ut monstren så länge de inte är besegrade.
                 monster1.PrintMonster(monster1);
+                monster2.PrintMonster(monster2);
+                monster3.PrintMonster(monster3);
+                monster4.PrintMonster(monster4);
+                monster5.PrintMonster(monster5);
+                monster6.PrintMonster(monster6);
+                monster7.PrintMonster(monster7);
+                monster8.PrintMonster(monster8);
+                monster9.PrintMonster(monster9);
+                monster10.PrintMonster(monster10);
 
                 // Styr spelaren.
                 player.Move();
@@ -73,11 +98,17 @@ namespace AdventureGame
                 Items.WannaPickMeUp(player, item9);
                 Items.WannaPickMeUp(player, item10);
 
+                // Om spelaren har samma posiiton som monstret sker ett möte.
                 Monsters.WannaFightMe(player, monster1);
-                //Monsters.WannaFightMe(player1, monster2);
-                //Monsters.WannaFightMe(player1, monster3);
-                //Monsters.WannaFightMe(player1, monster4);
-                //Monsters.WannaFightMe(player1, monster5);
+                Monsters.WannaFightMe(player, monster2);
+                Monsters.WannaFightMe(player, monster3);
+                Monsters.WannaFightMe(player, monster4);
+                Monsters.WannaFightMe(player, monster5);
+                Monsters.WannaFightMe(player, monster6);
+                Monsters.WannaFightMe(player, monster7);
+                Monsters.WannaFightMe(player, monster8);
+                Monsters.WannaFightMe(player, monster9);
+                Monsters.WannaFightMe(player, monster10);
 
             } while (true);
 
