@@ -49,7 +49,7 @@ namespace AdventureGame
                 Console.Clear();
                 GUI.PrintEncounter();
                 int left = 10;
-                int top = 2;
+                int top = 4;
                 
 
 
@@ -78,18 +78,19 @@ namespace AdventureGame
 
         public static bool CombatRound(Player player, Creature monster, int left, ref int top)
         {
-            Console.SetCursorPosition(left, top);
+            Console.SetCursorPosition(left, 2);
             Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
-            Console.SetCursorPosition(60, top++);
+            Console.SetCursorPosition(60, 2);
             Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
-            top++;
+            Console.ReadKey();
 
             if (player.Initiative >= monster.Initiative)
             {
                 player.Attack(player, monster, left, ref top);
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
-                top++;
+                Console.SetCursorPosition(60, 2);
+                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 Console.ReadKey();
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
@@ -97,7 +98,8 @@ namespace AdventureGame
                 MonsterAttacks(player, monster, left, ref top);
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
-                top++;
+                Console.SetCursorPosition(left, 2);
+                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 Console.ReadKey();
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
@@ -108,16 +110,18 @@ namespace AdventureGame
             {
                 MonsterAttacks(player, monster, left, ref top);
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
-                top++;
+                //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
+                Console.SetCursorPosition(left, 2);
+                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 Console.ReadKey();
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
                 player.Attack(player, monster, left, ref top);
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
-                top++;
+                //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                Console.SetCursorPosition(60, 2);
+                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 Console.ReadKey();
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
@@ -158,14 +162,14 @@ namespace AdventureGame
 
         public static bool IsDefeated(Player player, Creature monster, int left, ref int top)
         {
-            if (monster.HitPoints < 0)
+            if (monster.HitPoints < 1)
             {
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"You killed the {monster.Name}!");
                 monster.Defeated = true;
                 return true;
             }
-            else if (player.HitPoints < 0)
+            else if (player.HitPoints < 1)
             {
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"The {monster.Name} killed You!");
