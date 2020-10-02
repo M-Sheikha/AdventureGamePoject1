@@ -21,17 +21,18 @@ namespace AdventureGame
             // Ger spelaren lite guld att börja med.
             player.StartingGold(player);
 
-            List<Item> items = Item.MakeList(player);
-            List<Armor> armors = Armor.MakeList(player);
-            List<Weapon> weapons = Weapon.MakeList(player);
+            var items = Item.MakeList();
+            var consumables = Consumable.MakeList();
+            var armors = Armor.MakeList(player);
+            var weapons = Weapon.MakeList(player);
 
             //skapar en lista med alla monster.
             var monsters = Creature.MakeMonsterList();
 
             // Skapar 10 föremål från listan items.
             var item1 = items[rnd.Next(items.Count)];
-            var item2 = items[rnd.Next(items.Count)];
-            var item3 = items[rnd.Next(items.Count)];
+            var item2 = consumables[rnd.Next(items.Count)];
+            var item3 = consumables[rnd.Next(items.Count)];
             var item4 = armors[rnd.Next(armors.Count)];
             var item5 = armors[rnd.Next(armors.Count)];
             var item6 = armors[rnd.Next(armors.Count)];
@@ -40,8 +41,18 @@ namespace AdventureGame
             var item9 = weapons[rnd.Next(weapons.Count)];
             var item10 = weapons[rnd.Next(weapons.Count)];
 
-            player.gear.Add(item7);
-            player.gear.Add(item4);
+            //player.weapon.Add(item7);
+            //player.armor.Add(item4);
+            player.inventory.Add(item1);
+            player.inventory.Add(item2);
+            player.inventory.Add(item3);
+            player.inventory.Add(item4);
+            player.inventory.Add(item5);
+            player.inventory.Add(item6);
+            player.inventory.Add(item7);
+            player.inventory.Add(item8);
+            player.inventory.Add(item9);
+            player.inventory.Add(item10);
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];
@@ -56,31 +67,31 @@ namespace AdventureGame
             do
             {
                 // Skriver ut spelaren till skärmen.
-                player.PrintCharacter();
+                Creature.Print(player);
 
                 // Skriver ut föremålen så länge de inte är tagna.
-                item1.PrintItem(item1);
-                item2.PrintItem(item2);
-                item3.PrintItem(item3);
-                item4.PrintItem(item4);
-                item5.PrintItem(item5);
-                item6.PrintItem(item6);
-                item7.PrintItem(item7);
-                item8.PrintItem(item8);
-                item9.PrintItem(item9);
-                item10.PrintItem(item10);
+                Item.Print(item1);
+                Item.Print(item2);
+                Item.Print(item3);
+                Item.Print(item4);
+                Item.Print(item5);
+                Item.Print(item6);
+                Item.Print(item7);
+                Item.Print(item8);
+                Item.Print(item9);
+                Item.Print(item10);
 
                 // Skriver ut monstren så länge de inte är besegrade.
-                monster1.PrintMonster(monster1);
                 monster1.X = 12;
                 monster1.Y = 2;
-                monster2.PrintMonster(monster2);
-                monster3.PrintMonster(monster3);
-                monster4.PrintMonster(monster4);
-                monster5.PrintMonster(monster5);
-                monster6.PrintMonster(monster6);
-                monster7.PrintMonster(monster7);
-                monster8.PrintMonster(monster8);
+                Creature.Print(monster1);
+                Creature.Print(monster2);
+                Creature.Print(monster3);
+                Creature.Print(monster4);
+                Creature.Print(monster5);
+                Creature.Print(monster6);
+                Creature.Print(monster7);
+                Creature.Print(monster8);
 
                 // Styr spelaren.
                 player.Move(player);

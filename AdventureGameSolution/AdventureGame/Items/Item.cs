@@ -7,46 +7,25 @@ namespace AdventureGame
     {        
         public int Value { get; set; }
         public bool IsTaken { get; set; }
-        public string Damage { get; set; }
-        public int ArmorClass { get; set; }
+        //public string Damage { get; set; }
+        //public int ArmorClass { get; set; }
 
         public Item(string name) : base(name)
         {
+            Token = '●';
             IsTaken = false;
         }
 
-        public Item(string name, int hitPoints) : base(name, hitPoints)
+        public static List<Item> MakeList()
         {
-            IsTaken = false;
-        }
-
-        public static List<Item> MakeList(Player player)
-        {
-            var item = new Item("");
-
             var goldPieces = new Item("Gold Pieces");
-            var potionOfHealing = new Item("Potion of Healing", RollDice("2d4") + 2);
-            var healersKit = new Item("Healer's Kit", RollDice("1d4"));
 
-
-            List<Item> items = new List<Item>();
-            items.Add(goldPieces);
-            items.Add(potionOfHealing);
-            items.Add(healersKit);
+            var items = new List<Item>
+            {
+                goldPieces
+            };
 
             return items;
-        }
-
-        public static int CalculateProtection(string name)
-        {
-            return name switch
-            {
-                "Light Armor" => rnd.Next(1, 3),
-                "Medium Armor" => rnd.Next(2, 6),
-                "Heavy Armor" => rnd.Next(4, 9),
-                "Shield" => 2,
-                _ => throw new NotImplementedException(),
-            };
         }
 
         public static int CalculateHealth(string name)
@@ -59,12 +38,12 @@ namespace AdventureGame
             };
         }
 
-        public void PrintItem(Item item)
+        public static void Print(Item item)
         {
             if (!item.IsTaken)
             {
-                Console.SetCursorPosition(X, Y);
-                Console.Write("●");
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write(item.Token);
             }
         }
 

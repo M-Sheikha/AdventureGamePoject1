@@ -32,7 +32,7 @@ namespace AdventureGame
                 Fight(player, monster);
                 monster.X = 0;
                 monster.Y = 0;
-                monster.Defeated = true;
+                monster.IdDefeated = true;
             }
         }
 
@@ -90,8 +90,8 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
                 Console.SetCursorPosition(60, 2);
-                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 Console.ReadKey();
+                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
@@ -99,11 +99,10 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
                 Console.SetCursorPosition(left, 2);
-                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 Console.ReadKey();
+                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
                 return true;
             }
             else
@@ -112,8 +111,8 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
                 Console.SetCursorPosition(left, 2);
-                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 Console.ReadKey();
+                Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
@@ -121,11 +120,10 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
                 Console.SetCursorPosition(60, 2);
-                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 Console.ReadKey();
+                Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
                 return true;
             }
         }
@@ -166,7 +164,7 @@ namespace AdventureGame
             {
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"You killed the {monster.Name}!");
-                monster.Defeated = true;
+                monster.IdDefeated = true;
                 return true;
             }
             else if (player.HitPoints < 1)
@@ -175,7 +173,7 @@ namespace AdventureGame
                 Console.WriteLine($"The {monster.Name} killed You!");
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine("You lose!");
-                player.Defeated = true;
+                player.IdDefeated = true;
                 return true;
             }
             else

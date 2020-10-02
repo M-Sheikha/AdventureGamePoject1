@@ -5,15 +5,16 @@ using System.Xml.Xsl;
 
 namespace AdventureGame
 {
-    class Creature : Entity
+    abstract class Creature : Entity
     {
         // Varelser har även förmågor (som beror på egenskaperna) och de minskar
         // den andra varelsens egeneskaper under ett möte.
 
         public string InitiativeDice = "1d20";
+        public int HitPoints { get; set; }
 
         public string Race { get; set; }
-        public bool Defeated { get; set; }
+        public bool IdDefeated { get; set; }
         public int Initiative { get; set; }
 
         public int Strength { get; set; }
@@ -25,7 +26,8 @@ namespace AdventureGame
 
         public Creature(string name) : base(name)
         {
-            Defeated = false;         
+            Token = 'M';
+            IdDefeated = false;         
         }
 
         public static List<Creature> MakeMonsterList()
@@ -43,20 +45,26 @@ namespace AdventureGame
             return monsters;
         }
 
-        public int AttackRoll(Player player)
+        public static void Print(Creature creature)
         {
-            if (player.gear[0] is Weapon weapon)
+            if (!creature.IdDefeated)
             {
-                return RollDice("1d20") + weapon.AbilityModifier;
+                Console.SetCursorPosition(creature.X, creature.Y);
+                Console.Write(creature.Token);
             }
-            return 0;
         }
 
-        
+        public int PlayerAttackRoll(Player player)
+        {
+            if (player.weapon.Count > 0)
+                return RollDice("1d20") + player.weapon[0].AbilityModifier;
+            else
+                return RollDice("1d20") + AbilityModifier(player.Strength);
+        }
 
         public void PrintMonster(Creature monster)
         {
-            if (!monster.Defeated)
+            if (!monster.IdDefeated)
             {
                 Console.SetCursorPosition(monster.X, monster.Y);
                 Console.Write("M");

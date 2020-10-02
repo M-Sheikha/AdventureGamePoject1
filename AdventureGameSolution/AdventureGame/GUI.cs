@@ -32,8 +32,11 @@ namespace AdventureGame
             PrintBottomOfFrame();
         }
 
-        public static void PrintCharacterPanel(Player player)
+        public static void CharacterPanel(Player player)
         {
+            left = 10;
+            top = 2;
+            Console.Clear();
             PrintTopOfFrame("CHARACTER");
             PrintSidesOfFrame(4);
             PrintDividingLine("ABILITIES");
@@ -58,23 +61,26 @@ namespace AdventureGame
             PrintStat("Charisma", player.Charisma);
             top += 2;
 
-            if (player.gear.Count > 0)
+            if (player.weapon.Count > 0)
             {
                 Console.SetCursorPosition(left, top++);
-                if (player.gear[0] is Weapon weapon)
-                    Console.Write($"{weapon.Name} +{weapon.Damage} Damage");
-                top += 2;
+                Console.Write($"{player.weapon[0].Name} +{player.weapon[0].Damage} Damage");
+            }
+            else
+                top++;
+            top += 2;
 
-                if (player.gear.Count > 1)
+            if (player.armor.Count > 0)
+            {
+                foreach (var item in player.armor)
                 {
-                    for (int i = 1; i < player.gear.Count; i++)
-                    {
-                        Console.SetCursorPosition(left, top++);
-                        if (player.gear[i] is Armor armor)
-                            Console.Write($"{armor.Name} {armor.ArmorClass} Armor Class");
-                    }
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write($"{item.Name} {item.ArmorClass} Armor Class");
                 }
             }
+            Console.ReadKey();
+            Console.Clear();
+            GUI.PrintWorld();
         }
 
         public static void PrintEncounter()
@@ -185,7 +191,6 @@ namespace AdventureGame
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"{stat}: {_stat}");
         }
-
     }
 
 

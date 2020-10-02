@@ -9,11 +9,10 @@ namespace AdventureGame
         public const int rightBorder = 105;
         public const int topBorder = 2;
         public const int bottomBorder = 24;
-        
         public string Name { get; set; }
+        public char Token { get; set; }
 
         public int ArmorClass { get; set; }
-        public int HitPoints { get; set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -21,13 +20,6 @@ namespace AdventureGame
         public Entity(string name)
         {
             Name = name;
-        }
-
-        public Entity(string name, int hitPoints)
-        {
-            Name = name;
-            HitPoints = hitPoints;
-
         }
 
         public static int AbilityModifier(int ability)
