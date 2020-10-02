@@ -15,8 +15,6 @@ namespace AdventureGame
 
         public Item(string name, int hitPoints) : base(name, hitPoints)
         {
-            X = rnd.Next(10, 104);
-            Y = rnd.Next(2, 24);
             IsTaken = false;
         }
 

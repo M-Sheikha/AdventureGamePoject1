@@ -8,7 +8,6 @@ namespace AdventureGame
     {
         public Bat(string name) : base(name)
         {
-            Name = "Bat";
             ArmorClass = 12;
             HitPoints = 1;
             Strength = 2;

@@ -68,7 +68,7 @@ namespace AdventureGame
             Console.ReadKey();
             Console.Clear();
             if (player.HitPoints >= 0)
-                GUI.PrintField();
+                GUI.PrintWorld();
         }
 
         public static bool CombatRound(Player player, Creature monster)

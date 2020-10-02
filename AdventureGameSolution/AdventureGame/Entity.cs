@@ -5,6 +5,10 @@ namespace AdventureGame
     abstract class Entity
     {
         public static Random rnd = new Random();
+        public const int leftBorder = 10;
+        public const int rightBorder = 105;
+        public const int topBorder = 2;
+        public const int bottomBorder = 24;
         
         public string Name { get; set; }
 
@@ -23,6 +27,7 @@ namespace AdventureGame
         {
             Name = name;
             HitPoints = hitPoints;
+
         }
 
         public static int AbilityModifier(int ability)

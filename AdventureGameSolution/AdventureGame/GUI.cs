@@ -10,14 +10,15 @@ namespace AdventureGame
         public static int width = 100;
         
 
-        public static void PrintField()
+        public static void PrintWorld()
         {
             hight = 25;
+            PrintTopFrame();
             //Skriver ut toppen av ramen
-            Console.Write("\n\t\u2554");
-            for (int i = 0; i < width - 2; i++)
-                Console.Write("\u2550");
-            Console.WriteLine("\u2557");
+            //Console.Write("\n\t\u2554");
+            //for (int i = 0; i < width - 2; i++)
+            //    Console.Write("\u2550");
+            //Console.WriteLine("\u2557");
 
             //Sidor av ramen
             for (int i = 0; i < hight - 2; i++)
@@ -141,7 +142,25 @@ namespace AdventureGame
             Console.WriteLine("\u255D");
         }
 
+        private static void PrintTopFrame()
+        {
+            Console.Write("\n\t\u2554");
+            for (int i = 0; i < width - 2; i++)
+                Console.Write("\u2550");
+            Console.WriteLine("\u2557");
+        }
+
+        private static void PrintTopFrame(string text)
+        {
+            Console.Write($"\n\t\u2554\u2550{text}");
+            for (int i = 0; i < width - text.Length - 3; i++)
+                Console.Write("\u2550");
+            Console.WriteLine("\u2557");
+        }
+
         
+
+
 
     }
 

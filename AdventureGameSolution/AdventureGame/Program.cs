@@ -12,7 +12,7 @@ namespace AdventureGame
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             Random rnd = new Random();
-            GUI.PrintField();
+            GUI.PrintWorld();
             Console.CursorVisible = false;
             
             // Här kan vi implementera en character creation
@@ -26,15 +26,7 @@ namespace AdventureGame
             List<Weapon> weapons = Weapon.MakeList(player);
 
             //skapar en lista med alla monster.
-            var monsters = new List<Creature>
-            {
-                new Bat("Bat"),
-                new BlackBear("Black Bear"),
-                new Imp("Imp"),
-                new Quasit("Quasit"),
-                new Skeleton("Skeleton"),
-                new Zombie("Zombie"),
-            };
+            var monsters = Creature.MakeMonsterList();
 
             // Skapar 10 föremål från listan items.
             var item1 = items[rnd.Next(items.Count)];
@@ -52,29 +44,13 @@ namespace AdventureGame
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];
-            monster1.X = 20;
-            monster1.Y = 6;
             var monster2 = monsters[rnd.Next(monsters.Count)];
-            monster2.X = 40;
-            monster2.Y = 18;
             var monster3 = monsters[rnd.Next(monsters.Count)];
-            monster3.X = 60;
-            monster3.Y = 8;
             var monster4 = monsters[rnd.Next(monsters.Count)];
-            monster4.X = 80;
-            monster4.Y = 12;
             var monster5 = monsters[rnd.Next(monsters.Count)];
-            monster5.X = 95;
-            monster5.Y = 5;
             var monster6 = monsters[rnd.Next(monsters.Count)];
-            monster6.X = 70;
-            monster6.Y = 20;
             var monster7 = monsters[rnd.Next(monsters.Count)];
-            monster7.X = 17;
-            monster7.Y = 11;
             var monster8 = monsters[rnd.Next(monsters.Count)];
-            monster8.X = 18;
-            monster8.Y = 11;
 
             do
             {

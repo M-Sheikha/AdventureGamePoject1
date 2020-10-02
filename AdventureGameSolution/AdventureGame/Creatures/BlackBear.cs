@@ -8,7 +8,6 @@ namespace AdventureGame
     {
         public BlackBear(string name) : base(name)
         {
-            Name = "Black Bear";
             ArmorClass = 11;
             HitPoints = 19;
             Strength = 15;

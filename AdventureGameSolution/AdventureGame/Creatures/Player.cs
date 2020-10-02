@@ -107,7 +107,7 @@ namespace AdventureGame
             }
             Console.ReadKey();
             Console.Clear();
-            GUI.PrintField();
+            GUI.PrintWorld();
         }
 
         private void PrintStat(string stat, int _stat)
@@ -308,13 +308,8 @@ namespace AdventureGame
                 Thread.Sleep(2000);
             }
             Console.Clear();
-            GUI.PrintField();
+            GUI.PrintWorld();
         }
-
-        const int leftBorder = 10;
-        const int rightBorder = 105;
-        const int topBorder = 2;
-        const int bottomBorder = 24;
 
         // Förflyttar spelaren och öppnar Inventory och CharacterPanel.
         public void Move(Player player)

@@ -9,7 +9,6 @@ namespace AdventureGame
     {
         public Imp(string name) : base(name)
         {
-            Name = "Imp";
             ArmorClass = 13;
             HitPoints = 10;
             Strength = 6;

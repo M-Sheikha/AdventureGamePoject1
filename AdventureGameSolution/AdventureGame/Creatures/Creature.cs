@@ -25,12 +25,22 @@ namespace AdventureGame
 
         public Creature(string name) : base(name)
         {
-            
+            Defeated = false;         
         }
 
-        public Creature(string name, int str, int dex, int con, int hitPoints, int armorClass) : base(name)
+        public static List<Creature> MakeMonsterList()
         {
-            Defeated = false;         
+            var monsters = new List<Creature>
+            {
+                new Bat("Bat"),
+                new BlackBear("Black Bear"),
+                new Imp("Imp"),
+                new Quasit("Quasit"),
+                new Skeleton("Skeleton"),
+                new Zombie("Zombie"),
+            };
+
+            return monsters;
         }
 
         public int AttackRoll(Player player)

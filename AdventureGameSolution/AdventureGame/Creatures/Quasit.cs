@@ -8,7 +8,6 @@ namespace AdventureGame
     {
         public Quasit(string name) : base(name)
         {
-            Name = "Quasit";
             ArmorClass = 13;
             HitPoints = 7;
             Strength = 5;
