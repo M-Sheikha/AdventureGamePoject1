@@ -7,6 +7,8 @@ namespace AdventureGame
     {        
         public int Value { get; set; }
         public bool IsTaken { get; set; }
+        public string Damage { get; set; }
+        public int ArmorClass { get; set; }
 
         public Item(string name) : base(name)
         {

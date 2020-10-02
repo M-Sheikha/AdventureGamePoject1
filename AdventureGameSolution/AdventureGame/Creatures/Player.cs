@@ -77,43 +77,10 @@ namespace AdventureGame
         public void CharacterPanel(Player player)
         {
             Console.Clear();
-            
-            left = 10;
-            top = 2;
-            
             GUI.PrintCharacterPanel(player);
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"{Name} the {Race} {Class}");            
-            PrintStat("Armor Class", ArmorClass);
-            PrintStat("Hit Points", HitPoints);           
-            top += 2;
-           
-            PrintStat("Strength", Strength);            
-            PrintStat("Dextrerity", Dexterity);           
-            PrintStat("Constitution", Constitution);            
-            PrintStat("Intelligence", Intelligence);            
-            PrintStat("Wisdom", Wisdom);           
-            PrintStat("Charisma", Charisma);
-            top += 2;
-
-            foreach (var item in gear)
-            {
-                Console.SetCursorPosition(left, top++);
-                Console.Write($"{item.Name} ");
-                if (item is Armor armor)
-                    Console.WriteLine($"+{armor.ArmorClass} Protection");
-                else if (item is Weapon weapon)
-                    Console.WriteLine($"{weapon.Damage} Damage");
-            }
             Console.ReadKey();
             Console.Clear();
             GUI.PrintWorld();
-        }
-
-        private void PrintStat(string stat, int _stat)
-        {
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"{stat}: {_stat}");
         }
 
         public void Inventory(Player player)
@@ -138,7 +105,7 @@ namespace AdventureGame
 
             top += 2;
             Console.SetCursorPosition(left, top++);
-            Console.Write($"Enter a number between 1 and {inventory.Count} to use or to drop an item: ");
+            Console.Write($"Enter a number to use an item. Enter \"drop\" and a number to drop an item: ");
             string choice = Console.ReadLine();
 
             if (choice.ToLower().StartsWith("drop"))

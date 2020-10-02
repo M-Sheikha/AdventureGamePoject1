@@ -41,6 +41,7 @@ namespace AdventureGame
             var item10 = weapons[rnd.Next(weapons.Count)];
 
             player.gear.Add(item7);
+            player.gear.Add(item4);
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];
