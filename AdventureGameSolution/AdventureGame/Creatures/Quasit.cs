@@ -18,17 +18,22 @@ namespace AdventureGame
             Charisma = 10;
         }
 
-        public void Claws(Player player)
+        public void Claws(Player player, int left, ref int top)
         {
-            Console.WriteLine("\n\tThe Quasit tries to claw you!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("The Quasit tries to claw you!");
             if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 int damage = RollDice("1d4") + 3;
-                Console.WriteLine($"\tThe Quasit claws you, dealing {damage} damage!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The Quasit claws you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
             else
-                Console.WriteLine("\tThe Quasit missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("The Quasit missed.");
+            }
         }
     }
 }

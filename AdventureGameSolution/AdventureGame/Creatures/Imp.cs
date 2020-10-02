@@ -19,17 +19,22 @@ namespace AdventureGame
             Charisma = 14;
         }
 
-        public void Sting(Player player)
+        public void Sting(Player player, int left, ref int top)
         {
-            Console.WriteLine("\n\tThe Imp tries to sting you!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("The Imp tries to sting you!");
             if (RollDice("1d20") + 5 >= player.ArmorClass)
             {
                 int damage = RollDice("1d4") + 3;
-                Console.WriteLine($"\tThe Imp stings you, dealing {damage} damage!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The Imp stings you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
             else
-                Console.WriteLine("\tThe Imp missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("The Imp missed.");
+            }
         }
     }
 }

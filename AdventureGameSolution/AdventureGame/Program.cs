@@ -72,6 +72,8 @@ namespace AdventureGame
 
                 // Skriver ut monstren så länge de inte är besegrade.
                 monster1.PrintMonster(monster1);
+                monster1.X = 12;
+                monster1.Y = 2;
                 monster2.PrintMonster(monster2);
                 monster3.PrintMonster(monster3);
                 monster4.PrintMonster(monster4);

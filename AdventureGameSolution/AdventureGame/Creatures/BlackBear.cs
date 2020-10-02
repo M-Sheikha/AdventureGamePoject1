@@ -18,30 +18,40 @@ namespace AdventureGame
             Charisma = 7;
         }
 
-        public void Bite(Player player)
+        public void Bite(Player player, int left, ref int top)
         {
-            Console.WriteLine("\n\tThe Brown Bear tries to bite you!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("The Black Bear tries to bite you!");
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 int damage = RollDice("1d6") + 2;
-                Console.WriteLine($"\tThe Brown Bear bites you, dealing {damage} damage!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The Black Bear bites you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
             else
-                Console.WriteLine("\tThe Brown Bear missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("The Black Bear missed.");
+            }
         }
 
-        public void Claws(Player player)
+        public void Claws(Player player, int left, ref int top)
         {
-            Console.WriteLine("\n\tThe Brown Bear tries to claw you!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("The Black Bear tries to claw you!");
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 int damage = RollDice("2d4") + 2;
-                Console.WriteLine($"\tThe Brown Bear claws you, dealing {damage} damage!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The Black Bear claws you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
             else
-                Console.WriteLine("\tThe Brown Bear missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("\tThe Black Bear missed.");
+            }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace AdventureGame
 
         public static void Fight(Player player, Creature monster)
         {
-            Console.Clear();
+            
             player.Initiative = Entity.RollDice(player.InitiativeDice) + Entity.AbilityModifier(player.Dexterity);
             monster.Initiative = Entity.RollDice(monster.InitiativeDice) + Entity.AbilityModifier(monster.Dexterity);
 
@@ -46,20 +46,25 @@ namespace AdventureGame
 
             do
             {
-                // Skriv ut ramen till skärmen. Låt den vara dynamisk till mängden text.
+                Console.Clear();
+                GUI.PrintEncounter();
+                int left = 10;
+                int top = 2;
+                
+
 
                 if (monster is Bat bat)
-                    areBothAlive = CombatRound(player, bat);
+                    areBothAlive = CombatRound(player, bat, left, ref top);
                 else if (monster is BlackBear blackBear)
-                    areBothAlive = CombatRound(player, blackBear);
+                    areBothAlive = CombatRound(player, blackBear, left, ref top);
                 else if (monster is Imp imp)
-                    areBothAlive = CombatRound(player, imp);
+                    areBothAlive = CombatRound(player, imp, left, ref top);
                 else if (monster is Quasit quasit)
-                    areBothAlive = CombatRound(player, quasit);
+                    areBothAlive = CombatRound(player, quasit, left, ref top);
                 else if (monster is Skeleton skeleton)
-                    areBothAlive = CombatRound(player, skeleton);
+                    areBothAlive = CombatRound(player, skeleton, left, ref top);
                 else if (monster is Zombie zombie)
-                    areBothAlive = CombatRound(player, zombie);
+                    areBothAlive = CombatRound(player, zombie, left, ref top);
                 else
                     throw new NotImplementedException();
 
@@ -71,84 +76,101 @@ namespace AdventureGame
                 GUI.PrintWorld();
         }
 
-        public static bool CombatRound(Player player, Creature monster)
+        public static bool CombatRound(Player player, Creature monster, int left, ref int top)
         {
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
+            Console.SetCursorPosition(60, top++);
+            Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
+            top++;
+
             if (player.Initiative >= monster.Initiative)
             {
-                player.Attack(player, monster);
-                Console.WriteLine($"\tThe {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                player.Attack(player, monster, left, ref top);
+                Console.SetCursorPosition(left, top++);
+                //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                top++;
                 Console.ReadKey();
-                if (IsDefeated(player, monster))
+                if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                MonsterAttacks(player, monster);
-                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
+                MonsterAttacks(player, monster, left, ref top);
+                Console.SetCursorPosition(left, top++);
+                //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
+                top++;
                 Console.ReadKey();
-                if (IsDefeated(player, monster))
+                if (IsDefeated(player, monster, left, ref top))
                     return false;
 
                 return true;
             }
             else
             {
-                MonsterAttacks(player, monster);
-                Console.WriteLine($"\tYour Hit Points are now: {player.HitPoints}");
+                MonsterAttacks(player, monster, left, ref top);
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
+                top++;
                 Console.ReadKey();
-                if (IsDefeated(player, monster))
+                if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                player.Attack(player, monster);
-                Console.WriteLine($"\tThe {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                player.Attack(player, monster, left, ref top);
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
+                top++;
                 Console.ReadKey();
-                if (IsDefeated(player, monster))
+                if (IsDefeated(player, monster, left, ref top))
                     return false;
 
                 return true;
             }
         }
 
-        public static void MonsterAttacks(Player player, Creature monster)
+        public static void MonsterAttacks(Player player, Creature monster, int left, ref int top)
         {
             var whichAction = rnd.Next(1, 3);
 
             if (monster is Bat bat)
-                bat.Bite(player);
+                bat.Bite(player, left, ref top);
             else if (monster is BlackBear blackBear)
             {
                 if (whichAction == 1)
-                    blackBear.Bite(player);
+                    blackBear.Bite(player, left, ref top);
                 else
-                    blackBear.Claws(player);
+                    blackBear.Claws(player, left, ref top);
             }
             else if (monster is Imp imp)
-                imp.Sting(player);
+                imp.Sting(player, left, ref top);
             else if (monster is Quasit quasit)
-                quasit.Claws(player);
+                quasit.Claws(player, left, ref top);
             else if (monster is Skeleton skeleton)
             {
                 if (whichAction == 1)
-                    skeleton.Shortsword(player);
+                    skeleton.Shortsword(player, left, ref top);
                 else
-                    skeleton.Shortbow(player);
+                    skeleton.Shortbow(player, left, ref top);
             }
             else if (monster is Zombie zombie)
-                zombie.Slam(player);
+                zombie.Slam(player, left, ref top);
             else
                 throw new NotImplementedException();
         }
 
-        public static bool IsDefeated(Player player, Creature monster)
+        public static bool IsDefeated(Player player, Creature monster, int left, ref int top)
         {
             if (monster.HitPoints < 0)
             {
-                Console.WriteLine($"\tYou killed the {monster.Name}!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"You killed the {monster.Name}!");
                 monster.Defeated = true;
                 return true;
             }
             else if (player.HitPoints < 0)
             {
-                Console.WriteLine($"\tThe {monster.Name} killed You!");
-                Console.WriteLine("\n\tYou lose!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The {monster.Name} killed You!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("You lose!");
                 player.Defeated = true;
                 return true;
             }

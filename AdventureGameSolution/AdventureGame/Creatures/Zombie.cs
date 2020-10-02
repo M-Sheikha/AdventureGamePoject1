@@ -18,17 +18,22 @@ namespace AdventureGame
             Charisma = 5;
         }
 
-        public void Slam(Player player)
+        public void Slam(Player player, int left, ref int top)
         {
-            Console.WriteLine("\n\tThe Zombie tries to slam you!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("The Zombie tries to slam you!");
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 int damage = RollDice("1d6") + 1;
-                Console.WriteLine($"\tThe Zombie slams you, dealing {damage} damage!");
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The Zombie slams you, dealing {damage} damage!");
                 player.HitPoints -= damage;
             }
             else
-                Console.WriteLine("\tThe Zombie missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("The Zombie missed.");
+            }
         }
     }
 }

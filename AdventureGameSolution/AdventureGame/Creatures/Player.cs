@@ -321,21 +321,26 @@ namespace AdventureGame
             }
         }
 
-        public void Attack(Player player, Creature monster)
+        public void Attack(Player player, Creature monster, int left, ref int top)
         {
             // Lägg till weapon.Modifier på nåt sätt istället för att hårdkoda Strength.
-            Console.WriteLine($"\n\tYou try to hit the {monster.Name} with your {gear[0].Name}!");
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"You try to hit the {monster.Name} with your {gear[0].Name}!");
             if (AttackRoll(player) >= monster.ArmorClass)
             {
                 if (gear[0] is Weapon weapon)
                 {
                     int damage = RollDice(weapon.Damage);
-                    Console.WriteLine($"\tYou hit the {monster.Name} with your {gear[0].Name}, dealing {damage} damage!");
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine($"You hit the {monster.Name} with your {gear[0].Name}, dealing {damage} damage!");
                     monster.HitPoints -= damage;
                 }
             }
             else
-                Console.WriteLine("\tYou missed.");
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("You missed.");
+            }
         }
         
         // === Får den inte att funka ===
