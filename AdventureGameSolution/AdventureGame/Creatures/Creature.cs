@@ -10,7 +10,6 @@ namespace AdventureGame
         // Varelser har även förmågor (som beror på egenskaperna) och de minskar
         // den andra varelsens egeneskaper under ett möte.
 
-        public string InitiativeDice = "1d20";
         public int HitPoints { get; set; }
 
         public string Race { get; set; }

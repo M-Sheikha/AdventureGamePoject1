@@ -23,8 +23,8 @@ namespace AdventureGame
             top++;
             string _class = GetClass();
             player.Class = _class;
-            GetPlayerStats(player, _class);
-            GetRaceBonus(player, race);
+            GetPlayerStats(player);
+            GetRaceBonus(player);
             player.MaxHealth = player.HitPoints;
             player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
             top++;
@@ -132,9 +132,9 @@ namespace AdventureGame
             } while (true);
         }
 
-        private static void GetPlayerStats(Player player, string _class)
+        private static void GetPlayerStats(Player player)
         {
-            switch (_class)
+            switch (player.Class)
             {
                 case "Barbarian":
                     player.Strength = 15;
@@ -217,7 +217,7 @@ namespace AdventureGame
                     player.Charisma = 12;
                     player.HitPoints = 10;
                     break;
-                case "Scorcerer":
+                case "Sorcerer":
                     player.Strength = 8;
                     player.Dexterity = 13;
                     player.Constitution = 14;
@@ -249,9 +249,9 @@ namespace AdventureGame
             }
         }
 
-        private static void GetRaceBonus(Player player, string race)
+        private static void GetRaceBonus(Player player)
         {
-            switch (race)
+            switch (player.Race)
             {
                 case "Dwarf":
                     player.Constitution += 2;

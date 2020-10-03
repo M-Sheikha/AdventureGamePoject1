@@ -15,7 +15,7 @@ namespace AdventureGame
 
             Draw.CharacterCreation();
             var player = Character.Creation();
-            Draw.World();
+            Draw.WorldFrame();
 
             player.StartingGold(player);
 
@@ -46,9 +46,7 @@ namespace AdventureGame
 
             var worldMonsters = new Creature[1];
             for (int i = 0; i < worldMonsters.Length; i++)
-            {
                 worldMonsters[i] = monsters[rnd.Next(monsters.Count)];
-            }
 
             foreach (var monster in worldMonsters)
             {
@@ -86,6 +84,7 @@ namespace AdventureGame
             } while (true);
 
             Console.Clear();
+            Draw.WorldFrame();
             Console.SetCursorPosition(55, 15);
             string endTitle = "GAME OVER!";
             var endTitleArrey = endTitle.ToCharArray();
@@ -94,7 +93,7 @@ namespace AdventureGame
                 Thread.Sleep(100);
                 Console.Write(c);
             }
-            Thread.Sleep(2000);
+            Console.ReadKey();
 
         }
     }

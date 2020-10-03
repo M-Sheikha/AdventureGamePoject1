@@ -50,7 +50,7 @@ namespace AdventureGame
             else
             {
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("\tThe Black Bear missed.");
+                Console.WriteLine("The Black Bear missed.");
             }
         }
     }

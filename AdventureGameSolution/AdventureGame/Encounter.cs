@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace AdventureGame
@@ -7,23 +9,7 @@ namespace AdventureGame
     class Encounter
     {
         public static Random rnd = new Random();
-        // MÖTE ============================================================
-
-        // Vid möte så turas spelaren och varelsen om att använda förmågor.
-
-        // Exempel 1: "Monstret" kan med sin egenskap styrka=10 via förmågan 
-        // "sparka" sänka spelarens egenskap livsstyrka med 10.
-
-        // Exempel 2: "Försäljaren" kan med sin egenskap karisma och pratgladhet
-        // använda förmågan SalesPitch() och sänka spelarens tålamod till 0.
-
-        // Förmågans effektivitet baseras på hur starka egenskaper man har.
-
-        // Om spelarens livsnödvändiga egenskaper, t.ex. livskraft, tar slut (<0)
-        // tar spelet slut.
-
-        // Om varelsens livsnödvändiga egenskaper tar slut vinner spelaren 
-        // och spelet fortsätter.
+        private const int left = 10;
 
         public static void WannaFightMe(Player player, Creature monster)
         {
@@ -36,95 +22,154 @@ namespace AdventureGame
             }
         }
 
-        public static void Fight(Player player, Creature monster)
+        public static void Fight(Player player, Creature creature)
         {
-            
-            player.Initiative = Entity.RollDice(player.InitiativeDice) + Entity.AbilityModifier(player.Dexterity);
-            monster.Initiative = Entity.RollDice(monster.InitiativeDice) + Entity.AbilityModifier(monster.Dexterity);
-
             bool areBothAlive;
+            Console.Clear();
+            int top = 4;
+            var monster = WhatMonster(creature);
+
+            Draw.EncounterFrame(player, monster);
+            Console.SetCursorPosition(left, 2);
+            //Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
+            //Console.SetCursorPosition(60, 2);
+            //Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
+
+            Console.SetCursorPosition(left, top++);
+            if (monster is Imp)
+                Console.WriteLine($"You have encountered an Imp!");
+            else
+                Console.WriteLine($"You have encountered a {monster.Name}!");
+            Console.ReadKey();
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine("Roll for initiative!");
+            Console.ReadKey();
+
+            player.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(player.Dexterity);
+            monster.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(monster.Dexterity);
+
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"You rolled {player.Initiative}.");
+            Console.ReadKey();
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"The {monster.Name} rolled {monster.Initiative}.");
+            Console.ReadKey();
+
+            if (player.Initiative >= monster.Initiative)
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine("You will begin attack!");
+            }
+            else
+            {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine($"The {monster.Name} will begin attack!");
+            }
+            Console.ReadKey();
 
             do
             {
-                Console.Clear();
-                Draw.Encounter();
-                int left = 10;
-                int top = 4;
-                
-
-
-                if (monster is Bat bat)
-                    areBothAlive = CombatRound(player, bat, left, ref top);
-                else if (monster is BlackBear blackBear)
-                    areBothAlive = CombatRound(player, blackBear, left, ref top);
-                else if (monster is Imp imp)
-                    areBothAlive = CombatRound(player, imp, left, ref top);
-                else if (monster is Quasit quasit)
-                    areBothAlive = CombatRound(player, quasit, left, ref top);
-                else if (monster is Skeleton skeleton)
-                    areBothAlive = CombatRound(player, skeleton, left, ref top);
-                else if (monster is Zombie zombie)
-                    areBothAlive = CombatRound(player, zombie, left, ref top);
-                else
-                    throw new NotImplementedException();
+                areBothAlive = CombatRound(player, monster);
 
             } while (areBothAlive);
             
             Console.ReadKey();
             Console.Clear();
             if (player.HitPoints >= 0)
-                Draw.World();
+                Draw.WorldFrame();
         }
 
-        public static bool CombatRound(Player player, Creature monster, int left, ref int top)
+        private static Creature WhatMonster(Creature monster)
         {
-            Console.SetCursorPosition(left, 2);
-            Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
-            Console.SetCursorPosition(60, 2);
-            Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
-            Console.ReadKey();
+            if (monster is Bat bat)
+                return bat;
+            else if (monster is BlackBear blackBear)
+                return blackBear;
+            else if (monster is Imp imp)
+                return imp;
+            else if (monster is Quasit quasit)
+                return quasit;
+            else if (monster is Skeleton skeleton)
+                return skeleton;
+            else if (monster is Zombie zombie)
+                return zombie;
+            else
+                throw new NotImplementedException();
+        }
+
+        public static bool CombatRound(Player player, Creature monster)
+        {
+            int top = 4;
+            Console.Clear();
+            Draw.EncounterFrame(player, monster);
 
             if (player.Initiative >= monster.Initiative)
             {
                 player.Attack(player, monster, left, ref top);
                 top++;
-                Console.ReadKey();
                 Console.SetCursorPosition(60, 2);
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                MonsterAttacks(player, monster, left, ref top);
+                PausForAMoment(player, monster);
+
+                MonsterAttacks(player, monster, ref top);
                 top++;
-                Console.ReadKey();
                 Console.SetCursorPosition(left, 2);
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
+
+                PausForAMoment(player, monster);
+
                 return true;
             }
             else
             {
-                MonsterAttacks(player, monster, left, ref top);
+                MonsterAttacks(player, monster, ref top);
                 top++;
-                Console.ReadKey();
                 Console.SetCursorPosition(left, 2);
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
+                PausForAMoment(player, monster);
+
                 player.Attack(player, monster, left, ref top);
                 top++;
-                Console.ReadKey();
                 Console.SetCursorPosition(60, 2);
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
+
+                PausForAMoment(player, monster);
+
                 return true;
             }
         }
 
-        public static void MonsterAttacks(Player player, Creature monster, int left, ref int top)
+        private static void PausForAMoment(Player player, Creature monster)
+        {
+            do
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key.Equals(ConsoleKey.I))
+                {
+                    Draw.Inventory(player);
+                    Draw.EncounterFrame(player, monster);
+                }
+                else if (keyInfo.Key.Equals(ConsoleKey.C))
+                {
+                    Draw.CharacterPanel(player);
+                    Draw.EncounterFrame(player, monster);
+                }
+                else
+                    break;
+            } while (true);
+        }
+
+        public static void MonsterAttacks(Player player, Creature monster, ref int top)
         {
             var whichAction = rnd.Next(1, 3);
 

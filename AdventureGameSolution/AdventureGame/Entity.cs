@@ -6,7 +6,7 @@ namespace AdventureGame
     {
         public static Random rnd = new Random();
         public const int leftBorder = 10;
-        public const int rightBorder = 105;
+        public const int rightBorder = 106;
         public const int topBorder = 2;
         public const int bottomBorder = 24;
         public string Name { get; set; }
