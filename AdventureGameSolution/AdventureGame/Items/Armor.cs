@@ -35,7 +35,7 @@ namespace AdventureGame
             
             // Heavy Armor
             var ringMail = new Armor("Ring mail", "Body", 14, 0);
-            var chainMail = new Armor("Ring mail", "Body", 16, 13);
+            var chainMail = new Armor("Chain mail", "Body", 16, 13);
             var Splint = new Armor("Splint", "Body", 17, 15);
             var plate = new Armor("Plate", "Body", 18, 15);
 

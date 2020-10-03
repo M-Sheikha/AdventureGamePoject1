@@ -10,13 +10,14 @@ namespace AdventureGame
         { 
             // Den här koden gör att vi kan skriva ut lite fler unicode characters.
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.CursorVisible = false;
 
             Random rnd = new Random();
+            var player = GUI.CharacterCreation();
             GUI.PrintWorld();
-            Console.CursorVisible = false;
             
             // Här kan vi implementera en character creation
-            var player = new Player("Frodo", "Halfling", "Thief");
+            //var player = new Player("Frodo", "Halfling", "Thief");
             
             // Ger spelaren lite guld att börja med.
             player.StartingGold(player);
@@ -31,8 +32,8 @@ namespace AdventureGame
 
             // Skapar 10 föremål från listan items.
             var item1 = items[rnd.Next(items.Count)];
-            var item2 = consumables[rnd.Next(items.Count)];
-            var item3 = consumables[rnd.Next(items.Count)];
+            var item2 = consumables[rnd.Next(consumables.Count)];
+            var item3 = consumables[rnd.Next(consumables.Count)];
             var item4 = armors[rnd.Next(armors.Count)];
             var item5 = armors[rnd.Next(armors.Count)];
             var item6 = armors[rnd.Next(armors.Count)];
@@ -53,6 +54,7 @@ namespace AdventureGame
             player.inventory.Add(item8);
             player.inventory.Add(item9);
             player.inventory.Add(item10);
+            player.inventory.Add(armors[armors.Count - 1]);
 
             // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
             var monster1 = monsters[rnd.Next(monsters.Count)];

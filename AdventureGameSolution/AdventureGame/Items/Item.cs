@@ -7,8 +7,6 @@ namespace AdventureGame
     {        
         public int Value { get; set; }
         public bool IsTaken { get; set; }
-        //public string Damage { get; set; }
-        //public int ArmorClass { get; set; }
 
         public Item(string name) : base(name)
         {
@@ -18,24 +16,29 @@ namespace AdventureGame
 
         public static List<Item> MakeList()
         {
+            var burglarsPack = new Item("Burglar's Pack");
+            var diplomatsPack = new Item("Diplomat's Pack");
+            var dungeoneersPack = new Item("Dungeoneer's Pack");
+            var entertainersPack = new Item("Entertainer's Pack");
+            var explorersPack = new Item("Explorer's Pack");
+            var priestsPack = new Item("Priest's Pack");
+            var scholarsPack = new Item("Scholar's Pack");
+
             var goldPieces = new Item("Gold Pieces");
 
             var items = new List<Item>
             {
-                goldPieces
+                burglarsPack,
+                diplomatsPack,
+                dungeoneersPack,
+                entertainersPack,
+                explorersPack,
+                priestsPack,
+                scholarsPack,
+                goldPieces,
             };
 
             return items;
-        }
-
-        public static int CalculateHealth(string name)
-        {
-            return name switch
-            {
-                "Potion of Healing" => rnd.Next(1, 5) + rnd.Next(1, 5) + 2,
-                "Healer's Kit" => rnd.Next(1, 5),
-                _ => throw new NotImplementedException(),
-            };
         }
 
         public static void Print(Item item)
@@ -52,9 +55,9 @@ namespace AdventureGame
             if (player.X == item.X && player.Y == item.Y)
             {
                 player.inventory.Add(item);
+                item.IsTaken = true;
                 item.X = 0;
                 item.Y = 0;
-                item.IsTaken = true;
             }
         }
     }

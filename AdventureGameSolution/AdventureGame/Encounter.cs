@@ -87,19 +87,17 @@ namespace AdventureGame
             if (player.Initiative >= monster.Initiative)
             {
                 player.Attack(player, monster, left, ref top);
-                Console.SetCursorPosition(left, top++);
-                //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
-                Console.SetCursorPosition(60, 2);
+                top++;
                 Console.ReadKey();
+                Console.SetCursorPosition(60, 2);
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
                 MonsterAttacks(player, monster, left, ref top);
-                Console.SetCursorPosition(left, top++);
-                //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
-                Console.SetCursorPosition(left, 2);
+                top++;
                 Console.ReadKey();
+                Console.SetCursorPosition(left, 2);
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
@@ -108,19 +106,17 @@ namespace AdventureGame
             else
             {
                 MonsterAttacks(player, monster, left, ref top);
-                Console.SetCursorPosition(left, top++);
-                //Console.WriteLine($"Your Hit Points are now: {player.HitPoints}");
-                Console.SetCursorPosition(left, 2);
+                top++;
                 Console.ReadKey();
+                Console.SetCursorPosition(left, 2);
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
                 player.Attack(player, monster, left, ref top);
-                Console.SetCursorPosition(left, top++);
-                //Console.WriteLine($"The {monster.Name}'s Hit Points are now: {monster.HitPoints}");
-                Console.SetCursorPosition(60, 2);
+                top++;
                 Console.ReadKey();
+                Console.SetCursorPosition(60, 2);
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
