@@ -13,6 +13,7 @@ namespace AdventureGame
         {
             Damage = damage;
             AbilityModifier = abilityModifier;
+            Value = 1;
         }
 
         public static List<Weapon> MakeList(Player player)

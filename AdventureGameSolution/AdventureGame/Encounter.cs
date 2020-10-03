@@ -47,7 +47,7 @@ namespace AdventureGame
             do
             {
                 Console.Clear();
-                GUI.PrintEncounter();
+                Draw.Encounter();
                 int left = 10;
                 int top = 4;
                 
@@ -73,7 +73,7 @@ namespace AdventureGame
             Console.ReadKey();
             Console.Clear();
             if (player.HitPoints >= 0)
-                GUI.PrintWorld();
+                Draw.World();
         }
 
         public static bool CombatRound(Player player, Creature monster, int left, ref int top)

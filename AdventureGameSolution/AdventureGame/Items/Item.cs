@@ -54,6 +54,8 @@ namespace AdventureGame
         {
             if (player.X == item.X && player.Y == item.Y)
             {
+                if (item.Name.Equals("Gold Pieces") || item is Consumable)
+                    item.Value = rnd.Next(1, 11);
                 player.inventory.Add(item);
                 item.IsTaken = true;
                 item.X = 0;
