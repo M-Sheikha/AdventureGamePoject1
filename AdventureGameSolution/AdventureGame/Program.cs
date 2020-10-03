@@ -30,41 +30,35 @@ namespace AdventureGame
             //skapar en lista med alla monster.
             var monsters = Creature.MakeMonsterList();
 
-            // Skapar 10 föremål från listan items.
-            var item1 = items[rnd.Next(items.Count)];
-            var item2 = consumables[rnd.Next(consumables.Count)];
-            var item3 = consumables[rnd.Next(consumables.Count)];
-            var item4 = armors[rnd.Next(armors.Count)];
-            var item5 = armors[rnd.Next(armors.Count)];
-            var item6 = armors[rnd.Next(armors.Count)];
-            var item7 = weapons[rnd.Next(weapons.Count)];
-            var item8 = weapons[rnd.Next(weapons.Count)];
-            var item9 = weapons[rnd.Next(weapons.Count)];
-            var item10 = weapons[rnd.Next(weapons.Count)];
+            var wItems = new Item[10];
+            wItems[0] = items[rnd.Next(items.Count)];
+            wItems[1] = consumables[rnd.Next(consumables.Count)];
+            wItems[2] = consumables[rnd.Next(consumables.Count)];
+            wItems[3] = armors[rnd.Next(armors.Count)];
+            wItems[4] = armors[rnd.Next(armors.Count)];
+            wItems[5] = armors[rnd.Next(armors.Count)];
+            wItems[6] = weapons[rnd.Next(weapons.Count)];
+            wItems[7] = weapons[rnd.Next(weapons.Count)];
+            wItems[8] = weapons[rnd.Next(weapons.Count)];
+            wItems[9] = weapons[rnd.Next(weapons.Count)];
 
-            //player.weapon.Add(item7);
-            //player.armor.Add(item4);
-            player.inventory.Add(item1);
-            player.inventory.Add(item2);
-            player.inventory.Add(item3);
-            player.inventory.Add(item4);
-            player.inventory.Add(item5);
-            player.inventory.Add(item6);
-            player.inventory.Add(item7);
-            player.inventory.Add(item8);
-            player.inventory.Add(item9);
-            player.inventory.Add(item10);
-            player.inventory.Add(armors[armors.Count - 1]);
+            foreach (var item in wItems)
+            {
+                item.X = rnd.Next(10, 105);
+                item.Y = rnd.Next(2, 24);
+            }
 
-            // skapar 8 monster från listan monsters ===FUNKAR INTE SOM VI VILL===
-            var monster1 = monsters[rnd.Next(monsters.Count)];
-            var monster2 = monsters[rnd.Next(monsters.Count)];
-            var monster3 = monsters[rnd.Next(monsters.Count)];
-            var monster4 = monsters[rnd.Next(monsters.Count)];
-            var monster5 = monsters[rnd.Next(monsters.Count)];
-            var monster6 = monsters[rnd.Next(monsters.Count)];
-            var monster7 = monsters[rnd.Next(monsters.Count)];
-            var monster8 = monsters[rnd.Next(monsters.Count)];
+            var wMonsters = new Creature[1];
+            for (int i = 0; i < wMonsters.Length; i++)
+            {
+                wMonsters[i] = monsters[rnd.Next(monsters.Count)];
+            }
+
+            foreach (var monster in wMonsters)
+            {
+                monster.X = rnd.Next(10, 105);
+                monster.Y = rnd.Next(2, 24);
+            }
 
             do
             {
@@ -72,55 +66,25 @@ namespace AdventureGame
                 Creature.Print(player);
 
                 // Skriver ut föremålen så länge de inte är tagna.
-                Item.Print(item1);
-                Item.Print(item2);
-                Item.Print(item3);
-                Item.Print(item4);
-                Item.Print(item5);
-                Item.Print(item6);
-                Item.Print(item7);
-                Item.Print(item8);
-                Item.Print(item9);
-                Item.Print(item10);
+                foreach (var item in wItems)
+                    Item.Print(item);
 
                 // Skriver ut monstren så länge de inte är besegrade.
-                monster1.X = 12;
-                monster1.Y = 2;
-                Creature.Print(monster1);
-                Creature.Print(monster2);
-                Creature.Print(monster3);
-                Creature.Print(monster4);
-                Creature.Print(monster5);
-                Creature.Print(monster6);
-                Creature.Print(monster7);
-                Creature.Print(monster8);
+                foreach (var monster in wMonsters)
+                    Creature.Print(monster);
 
                 // Styr spelaren.
                 player.Move(player);
 
                 // Om spelaren har samma posiiton som föremålet plockas det upp.
-                Item.WannaPickMeUp(player, item1);
-                Item.WannaPickMeUp(player, item2);
-                Item.WannaPickMeUp(player, item3);
-                Item.WannaPickMeUp(player, item4);
-                Item.WannaPickMeUp(player, item5);
-                Item.WannaPickMeUp(player, item6);
-                Item.WannaPickMeUp(player, item7);
-                Item.WannaPickMeUp(player, item8);
-                Item.WannaPickMeUp(player, item9);
-                Item.WannaPickMeUp(player, item10);
+                foreach (var item in wItems)
+                    Item.WannaPickMeUp(player, item);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.
-                Encounter.WannaFightMe(player, monster1);
-                Encounter.WannaFightMe(player, monster2);
-                Encounter.WannaFightMe(player, monster3);
-                Encounter.WannaFightMe(player, monster4);
-                Encounter.WannaFightMe(player, monster5);
-                Encounter.WannaFightMe(player, monster6);
-                Encounter.WannaFightMe(player, monster7);
-                Encounter.WannaFightMe(player, monster8);
+                foreach (var monster in wMonsters)
+                    Encounter.WannaFightMe(player, monster);
 
-                if (player.HitPoints < 0)
+                if (player.HitPoints <= 0)
                     break;
 
             } while (true);
