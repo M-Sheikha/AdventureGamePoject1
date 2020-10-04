@@ -18,21 +18,36 @@ namespace AdventureGame
             Charisma = 10;
         }
 
-        public void Claws(Player player, int left, ref int top)
+        public void Claws(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Quasit tries to claw you!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Quasit tries to claw you!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
-                int damage = RollDice("1d4") + 3;
+                monster.Damage = RollDice("1d4") + 3;
+                string resultText = $"The Quasit claws you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Quasit claws you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Quasit missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Quasit missed.");
+                Console.WriteLine(resultText);
             }
         }
     }

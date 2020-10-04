@@ -18,39 +18,69 @@ namespace AdventureGame
             Charisma = 7;
         }
 
-        public void Bite(Player player, int left, ref int top)
+        public void Bite(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Black Bear tries to bite you!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Black Bear tries to bite you!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
-                int damage = RollDice("1d6") + 2;
+                monster.Damage = RollDice("1d6") + 2;
+                string resultText = $"The Black Bear bites you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Black Bear bites you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Black Bear missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Black Bear missed.");
+                Console.WriteLine(resultText);
             }
         }
 
-        public void Claws(Player player, int left, ref int top)
+        public void Claws(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Black Bear tries to claw you!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Black Bear tries to claw you!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
-                int damage = RollDice("2d4") + 2;
+                monster.Damage = RollDice("2d4") + 2;
+                string resultText = $"The Black Bear claws you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Black Bear claws you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Black Bear missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Black Bear missed.");
+                Console.WriteLine(resultText);
             }
         }
     }

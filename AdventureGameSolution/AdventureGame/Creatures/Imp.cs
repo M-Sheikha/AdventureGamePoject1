@@ -19,21 +19,36 @@ namespace AdventureGame
             Charisma = 14;
         }
 
-        public void Sting(Player player, int left, ref int top)
+        public void Sting(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Imp tries to sting you!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Imp tries to sting you!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 5 >= player.ArmorClass)
             {
-                int damage = RollDice("1d4") + 3;
+                monster.Damage = RollDice("1d4") + 3;
+                string resultText = $"The Imp stings you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Imp stings you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Imp missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Imp missed.");
+                Console.WriteLine(resultText);
             }
         }
     }

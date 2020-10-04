@@ -18,21 +18,37 @@ namespace AdventureGame
             Charisma = 4;
         }
 
-        public void Bite(Player player, int left, ref int top)
+        public void Bite(Player player, Creature monster, ref int top)
         {
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Bat tries to bite you!");
+            string tryText = "The Bat tries to bite you!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 0 >= player.ArmorClass)
             {
-                int damage = 1;
+                monster.Damage = 1;
+                string resultText = $"The Bat bites you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
+
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Bat bites you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Bat missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Bat missed.");
+                Console.WriteLine(resultText);
             }
         }
     }

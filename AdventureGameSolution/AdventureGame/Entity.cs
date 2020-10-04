@@ -4,6 +4,7 @@ namespace AdventureGame
 {    
     abstract class Entity
     {
+        public const int left = 10;
         public static Random rnd = new Random();
         public const int leftBorder = 10;
         public const int rightBorder = 106;

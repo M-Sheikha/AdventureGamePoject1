@@ -26,8 +26,8 @@ namespace AdventureGame
             TopOfFrame();
             SidesOfFrame(worldHeight);
             BottomOfFrame();
-            Console.WriteLine("\tPress (C) For Characterpanel");
-            Console.WriteLine("\tPress (I) For Inventory");
+            Console.WriteLine("\tPress (C) for Character panel");
+            Console.WriteLine("\tPress (I) for Inventory");
         }
 
         public static void CharacterPanel(Player player)
@@ -131,6 +131,12 @@ namespace AdventureGame
                         Console.WriteLine($"You dropped {player.inventory[index].Name}");
                         player.inventory.RemoveAt(index);
                         Thread.Sleep(time);
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(left, top);
+                        Console.WriteLine("You have to enter a valid command!");
+                        Thread.Sleep(time * 2);
                     }
                 }
                 else if (int.TryParse(choice, out int index))
@@ -364,21 +370,6 @@ namespace AdventureGame
             Console.Clear();
         }
 
-        private static void Stat(string stat, int _stat)
-        {
-            Console.SetCursorPosition(left, top++);
-            Console.WriteLine($"{stat}: {_stat}");
-        }
-
-        private static void Stat(string stat, int _stat, int abilityModifier)
-        {
-            Console.SetCursorPosition(left, top++);
-            if (abilityModifier >= 0)
-                Console.WriteLine($"{stat}: {_stat} (+{abilityModifier})");
-            else
-                Console.WriteLine($"{stat}: {_stat} ({abilityModifier})");
-        }
-
         public static void EncounterFrame(Player player, Creature monster)
         {
             top = 2;
@@ -391,6 +382,16 @@ namespace AdventureGame
             Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
             Console.SetCursorPosition(60, 2);
             Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
+        }
+
+        public static void Help()
+        {
+            Console.SetCursorPosition(8, 13);
+            Console.WriteLine("Press (C) for Character panel");
+            Console.SetCursorPosition(8, 14);
+            Console.WriteLine("Press (I) for Inventory");
+            Console.SetCursorPosition(8, 15);
+            Console.WriteLine("Press (Enter) to continue");
         }
 
         private static void TopOfFrame()
@@ -478,6 +479,21 @@ namespace AdventureGame
             for (int i = 0; i < worldWidth / 2; i++)
                 Console.Write("\u2550");
             Console.WriteLine("\u2563");
+        }
+
+        private static void Stat(string stat, int _stat)
+        {
+            Console.SetCursorPosition(left, top++);
+            Console.WriteLine($"{stat}: {_stat}");
+        }
+
+        private static void Stat(string stat, int _stat, int abilityModifier)
+        {
+            Console.SetCursorPosition(left, top++);
+            if (abilityModifier >= 0)
+                Console.WriteLine($"{stat}: {_stat} (+{abilityModifier})");
+            else
+                Console.WriteLine($"{stat}: {_stat} ({abilityModifier})");
         }
     }
 

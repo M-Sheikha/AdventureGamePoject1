@@ -87,27 +87,52 @@ namespace AdventureGame
         {
             Console.SetCursorPosition(left, top++);
             if (player.weapon.Count > 0)
-                Console.WriteLine($"You try to hit the {monster.Name} with your {player.weapon[0].Name}!");
-            else
-                Console.WriteLine($"You try to hit the {monster.Name} with your fists!");
-            if (PlayerAttackRoll(player) >= monster.ArmorClass)
             {
-                int damage;
-                if (player.weapon.Count > 0)
-                {
-                    damage = RollDice(player.weapon[0].Damage) + player.weapon[0].AbilityModifier;
-                }
+                string tryText = $"You try to hit the {monster.Name} with your {player.weapon[0].Name}!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine1 = tryText;
                 else
-                    damage = 1 + AbilityModifier(player.Strength);
-
-                Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"You hit the {monster.Name}, dealing {damage} damage!");
-                monster.HitPoints -= damage;
+                    Encounter.remeberLine3 = tryText;
+                Console.WriteLine(tryText);
             }
             else
             {
+                string tryText = $"You try to hit the {monster.Name} with your fists!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine1 = tryText;
+                else
+                    Encounter.remeberLine3 = tryText;
+                Console.WriteLine(tryText);
+
+            }
+
+            if (PlayerAttackRoll(player) >= monster.ArmorClass)
+            {
+                if (player.weapon.Count > 0)
+                {
+                    player.Damage = RollDice(player.weapon[0].Damage) + player.weapon[0].AbilityModifier;
+                }
+                else
+                    player.Damage = 1 + AbilityModifier(player.Strength);
+
+                string resultText = $"You hit the {monster.Name}, dealing {player.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("You missed.");
+                Console.WriteLine(resultText);
+                monster.HitPoints -= player.Damage;
+            }
+            else
+            {
+                string resultText = "You missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine(resultText);
             }
         }
     }

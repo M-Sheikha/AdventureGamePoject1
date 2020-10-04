@@ -18,39 +18,69 @@ namespace AdventureGame
             Charisma = 5;
         }
 
-        public void Shortsword(Player player, int left, ref int top)
+        public void Shortsword(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Skeleton tries to hit you with its shortsword!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Skeleton tries to hit you with its shortsword!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
-                int damage = RollDice("1d6") + 2;
+                monster.Damage = RollDice("1d6") + 2;
+                string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Skeleton hits you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Skeleton missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Skeleton missed.");
+                Console.WriteLine(resultText);
             }
         }
 
-        public void Shortbow(Player player, int left, ref int top)
+        public void Shortbow(Player player, Creature monster, ref int top)
         {
+            string tryText = "The Skeleton tries to hit you with its shortbow!";
+            if (Encounter.firstTime)
+                Encounter.remeberLine1 = tryText;
+            else
+                Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
-            Console.WriteLine("The Skeleton tries to hit you with its shortbow!");
+            Console.WriteLine(tryText);
             if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
-                int damage = RollDice("1d6") + 2;
+                monster.Damage = RollDice("1d6") + 2;
+                string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine($"The Skeleton hits you, dealing {damage} damage!");
-                player.HitPoints -= damage;
+                Console.WriteLine(resultText);
+                player.HitPoints -= monster.Damage;
             }
             else
             {
+                string resultText = "The Skeleton missed.";
+                if (Encounter.firstTime)
+                    Encounter.remeberLine2 = resultText;
+                else
+                    Encounter.remeberLine4 = resultText;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine("The Skeleton missed.");
+                Console.WriteLine(resultText);
             }
         }
     }

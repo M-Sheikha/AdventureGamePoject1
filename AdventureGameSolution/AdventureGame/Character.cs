@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace AdventureGame
 {
@@ -13,9 +14,7 @@ namespace AdventureGame
         public static Player Creation()
         {
             top = 2;
-            Console.SetCursorPosition(left, top++);
-            Console.Write("What is your characters name? ");
-            string name = Console.ReadLine();
+            string name = GetName();
             var player = new Player(name);
             top++;
             string race = GetRace();
@@ -32,6 +31,49 @@ namespace AdventureGame
             Console.WriteLine($"Welcome to the Adventure Game, {player.Name} the {player.Race} {player.Class}!");
             Thread.Sleep(3000);
             return player;
+        }
+
+        private static string GetName()
+        {
+            Console.SetCursorPosition(left, top++);
+            Console.Write("What is your characters name? ");
+            do
+            {
+                string name = Console.ReadLine();
+                if (int.TryParse(name, out _))
+                {
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a valid name.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("What is your characters name? ");
+                }
+                else if (name.Length < 1)
+                {
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a name.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("What is your characters name? ");
+                }
+                else
+                    return name.First().ToString().ToUpper() + name.Substring(1);
+
+            } while (true);
+            
+
         }
 
         private static string GetRace()

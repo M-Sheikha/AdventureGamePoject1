@@ -23,6 +23,8 @@ namespace AdventureGame
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
 
+        public int Damage { get; set; }
+
         public Creature(string name) : base(name)
         {
             Token = 'M';

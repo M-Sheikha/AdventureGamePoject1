@@ -10,6 +10,14 @@ namespace AdventureGame
     {
         public static Random rnd = new Random();
         private const int left = 10;
+        private static int top;
+
+        public static bool firstTime;
+
+        public static string remeberLine1 = "";
+        public static string remeberLine2 = "";
+        public static string remeberLine3 = "";
+        public static string remeberLine4 = "";
 
         public static void WannaFightMe(Player player, Creature monster)
         {
@@ -26,21 +34,18 @@ namespace AdventureGame
         {
             bool areBothAlive;
             Console.Clear();
-            int top = 4;
+            top = 4;
             var monster = WhatMonster(creature);
 
             Draw.EncounterFrame(player, monster);
             Console.SetCursorPosition(left, 2);
-            //Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
-            //Console.SetCursorPosition(60, 2);
-            //Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
 
             Console.SetCursorPosition(left, top++);
             if (monster is Imp)
                 Console.WriteLine($"You have encountered an Imp!");
             else
                 Console.WriteLine($"You have encountered a {monster.Name}!");
-            Console.ReadKey();
+            Console.ReadLine();
             Console.SetCursorPosition(left, top++);
             Console.WriteLine("Roll for initiative!");
             Console.ReadKey();
@@ -99,12 +104,15 @@ namespace AdventureGame
 
         public static bool CombatRound(Player player, Creature monster)
         {
-            int top = 4;
             Console.Clear();
             Draw.EncounterFrame(player, monster);
+            Draw.Help();
 
+            top = 4;
             if (player.Initiative >= monster.Initiative)
             {
+                firstTime = true;
+
                 player.Attack(player, monster, left, ref top);
                 top++;
                 Console.SetCursorPosition(60, 2);
@@ -112,7 +120,7 @@ namespace AdventureGame
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                PausForAMoment(player, monster);
+                PausForAFirstMoment(player, monster);
 
                 MonsterAttacks(player, monster, ref top);
                 top++;
@@ -121,12 +129,13 @@ namespace AdventureGame
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                PausForAMoment(player, monster);
-
+                PausForASecondMoment(player, monster);
                 return true;
             }
             else
             {
+                firstTime = true;
+
                 MonsterAttacks(player, monster, ref top);
                 top++;
                 Console.SetCursorPosition(left, 2);
@@ -134,7 +143,7 @@ namespace AdventureGame
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                PausForAMoment(player, monster);
+                PausForAFirstMoment(player, monster);
 
                 player.Attack(player, monster, left, ref top);
                 top++;
@@ -143,26 +152,84 @@ namespace AdventureGame
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
 
-                PausForAMoment(player, monster);
-
+                PausForASecondMoment(player, monster);
                 return true;
             }
         }
 
-        private static void PausForAMoment(Player player, Creature monster)
+        private static void PausForAFirstMoment(Player player, Creature monster)
+        {
+            do
+            {
+                firstTime = false;
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key.Equals(ConsoleKey.I))
+                {
+                    top = 4;
+                    Draw.Inventory(player);
+                    Draw.EncounterFrame(player, monster);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine1);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine2);
+                    Draw.Help();
+                    top++;
+                }
+                else if (keyInfo.Key.Equals(ConsoleKey.C))
+                {
+                    top = 4;
+                    Draw.CharacterPanel(player);
+                    Draw.EncounterFrame(player, monster);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine1);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine2);
+                    Draw.Help();
+                    top++;
+                }
+                else
+                    break;
+            } while (true);
+        }
+
+        private static void PausForASecondMoment(Player player, Creature monster)
         {
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
+                    top = 4;
                     Draw.Inventory(player);
                     Draw.EncounterFrame(player, monster);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine1);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine2);
+                    top++;
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine3);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine4);
+                    Draw.Help();
+                    top++;
                 }
                 else if (keyInfo.Key.Equals(ConsoleKey.C))
                 {
+                    top = 4;
                     Draw.CharacterPanel(player);
                     Draw.EncounterFrame(player, monster);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine1);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine2);
+                    top++;
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine3);
+                    Console.SetCursorPosition(left, top++);
+                    Console.WriteLine(remeberLine4);
+                    Draw.Help();
+                    top++;
                 }
                 else
                     break;
@@ -174,27 +241,27 @@ namespace AdventureGame
             var whichAction = rnd.Next(1, 3);
 
             if (monster is Bat bat)
-                bat.Bite(player, left, ref top);
+                bat.Bite(player, bat, ref top);
             else if (monster is BlackBear blackBear)
             {
                 if (whichAction == 1)
-                    blackBear.Bite(player, left, ref top);
+                    blackBear.Bite(player, blackBear, ref top);
                 else
-                    blackBear.Claws(player, left, ref top);
+                    blackBear.Claws(player, blackBear, ref top);
             }
             else if (monster is Imp imp)
-                imp.Sting(player, left, ref top);
+                imp.Sting(player, imp, ref top);
             else if (monster is Quasit quasit)
-                quasit.Claws(player, left, ref top);
+                quasit.Claws(player, quasit, ref top);
             else if (monster is Skeleton skeleton)
             {
                 if (whichAction == 1)
-                    skeleton.Shortsword(player, left, ref top);
+                    skeleton.Shortsword(player, skeleton, ref top);
                 else
-                    skeleton.Shortbow(player, left, ref top);
+                    skeleton.Shortbow(player, skeleton, ref top);
             }
             else if (monster is Zombie zombie)
-                zombie.Slam(player, left, ref top);
+                zombie.Slam(player, zombie, ref top);
             else
                 throw new NotImplementedException();
         }
@@ -203,6 +270,7 @@ namespace AdventureGame
         {
             if (monster.HitPoints < 1)
             {
+                Thread.Sleep(2000);
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"You killed the {monster.Name}!");
                 monster.IdDefeated = true;
@@ -210,16 +278,14 @@ namespace AdventureGame
             }
             else if (player.HitPoints < 1)
             {
+                Thread.Sleep(2000);
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"The {monster.Name} killed You!");
-                Console.SetCursorPosition(left, top++);
-                Console.WriteLine("You lose!");
                 player.IdDefeated = true;
                 return true;
             }
             else
                 return false;
         }
-
     }
 }
