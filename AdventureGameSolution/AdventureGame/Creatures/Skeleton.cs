@@ -6,8 +6,9 @@ namespace AdventureGame
 {
     class Skeleton : Creature
     {
-        public Skeleton(string name) : base(name)
+        public Skeleton()
         {
+            Name = "Skeleton";
             ArmorClass = 13;
             HitPoints = 13;
             Strength = 10;
@@ -21,7 +22,7 @@ namespace AdventureGame
         public void Shortsword(Player player, Creature monster, ref int top)
         {
             string tryText = "The Skeleton tries to hit you with its shortsword!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -32,7 +33,7 @@ namespace AdventureGame
             {
                 monster.Damage = RollDice("1d6") + 2;
                 string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -43,7 +44,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Skeleton missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -55,7 +56,7 @@ namespace AdventureGame
         public void Shortbow(Player player, Creature monster, ref int top)
         {
             string tryText = "The Skeleton tries to hit you with its shortbow!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -66,7 +67,7 @@ namespace AdventureGame
             {
                 monster.Damage = RollDice("1d6") + 2;
                 string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -77,7 +78,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Skeleton missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

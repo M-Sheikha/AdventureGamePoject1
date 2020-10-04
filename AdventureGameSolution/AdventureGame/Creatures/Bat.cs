@@ -6,8 +6,9 @@ namespace AdventureGame
 {
     class Bat : Creature
     {
-        public Bat(string name) : base(name)
+        public Bat()
         {
+            Name = "Bat";
             ArmorClass = 12;
             HitPoints = 1;
             Strength = 2;
@@ -22,7 +23,7 @@ namespace AdventureGame
         {
             Console.SetCursorPosition(left, top++);
             string tryText = "The Bat tries to bite you!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -32,7 +33,7 @@ namespace AdventureGame
             {
                 monster.Damage = 1;
                 string resultText = $"The Bat bites you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -44,7 +45,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Bat missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

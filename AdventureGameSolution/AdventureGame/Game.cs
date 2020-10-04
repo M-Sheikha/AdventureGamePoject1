@@ -90,15 +90,8 @@ namespace AdventureGame
 
             Console.Clear();
             Draw.WorldFrame();
-            string endTitle = "G A M E   O V E R !";
-            var endTitleArrey = endTitle.ToCharArray();
-            Console.SetCursorPosition(40, 11);
-            foreach (var c in endTitleArrey)
-            {
-                Thread.Sleep(100);
-                Console.Write(c);
-            }
-            Console.ReadKey();
+            Draw.GameOver();
+            Console.ReadLine();
 
         }
     }

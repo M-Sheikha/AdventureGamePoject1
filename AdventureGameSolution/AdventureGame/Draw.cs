@@ -390,8 +390,14 @@ namespace AdventureGame
             Console.WriteLine("Press (C) for Character panel");
             Console.SetCursorPosition(8, 14);
             Console.WriteLine("Press (I) for Inventory");
-            Console.SetCursorPosition(8, 15);
-            Console.WriteLine("Press (Enter) to continue");
+        }
+
+        public static void UndrawHelp()
+        {
+            Console.SetCursorPosition(8, 13);
+            Console.WriteLine("                              ");
+            Console.SetCursorPosition(8, 14);
+            Console.WriteLine("                              ");
         }
 
         private static void TopOfFrame()
@@ -494,6 +500,18 @@ namespace AdventureGame
                 Console.WriteLine($"{stat}: {_stat} (+{abilityModifier})");
             else
                 Console.WriteLine($"{stat}: {_stat} ({abilityModifier})");
+        }
+
+        public static void GameOver()
+        {
+            string gameOver = "G A M E   O V E R !";
+            var gameOverArray = gameOver.ToCharArray();
+            Console.SetCursorPosition(49, 11);
+            foreach (var letter in gameOverArray)
+            {
+                Thread.Sleep(100);
+                Console.Write(letter);
+            }
         }
     }
 

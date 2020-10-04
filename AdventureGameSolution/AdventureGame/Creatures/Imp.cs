@@ -7,8 +7,9 @@ namespace AdventureGame
 {
     class Imp : Creature
     {
-        public Imp(string name) : base(name)
+        public Imp()
         {
+            Name = "Imp";
             ArmorClass = 13;
             HitPoints = 10;
             Strength = 6;
@@ -22,7 +23,7 @@ namespace AdventureGame
         public void Sting(Player player, Creature monster, ref int top)
         {
             string tryText = "The Imp tries to sting you!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -33,7 +34,7 @@ namespace AdventureGame
             {
                 monster.Damage = RollDice("1d4") + 3;
                 string resultText = $"The Imp stings you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -44,7 +45,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Imp missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

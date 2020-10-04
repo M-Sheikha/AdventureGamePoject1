@@ -6,8 +6,9 @@ namespace AdventureGame
 {
     class Quasit : Creature
     {
-        public Quasit(string name) : base(name)
+        public Quasit()
         {
+            Name = "Quasit";
             ArmorClass = 13;
             HitPoints = 7;
             Strength = 5;
@@ -21,7 +22,7 @@ namespace AdventureGame
         public void Claws(Player player, Creature monster, ref int top)
         {
             string tryText = "The Quasit tries to claw you!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -32,7 +33,7 @@ namespace AdventureGame
             {
                 monster.Damage = RollDice("1d4") + 3;
                 string resultText = $"The Quasit claws you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -43,7 +44,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Quasit missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

@@ -18,6 +18,11 @@ namespace AdventureGame
         public int X { get; set; }
         public int Y { get; set; }
 
+        public Entity()
+        {
+
+        }
+
         public Entity(string name)
         {
             Name = name;

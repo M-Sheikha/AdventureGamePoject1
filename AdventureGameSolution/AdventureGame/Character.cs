@@ -3,6 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.ComponentModel;
 
 namespace AdventureGame
 {
@@ -14,14 +15,12 @@ namespace AdventureGame
         public static Player Creation()
         {
             top = 2;
-            string name = GetName();
-            var player = new Player(name);
+            var player = new Player();
+            player.Name = GetName();
             top++;
-            string race = GetRace();
-            player.Race = race;
+            player.Race = GetRace();
             top++;
-            string _class = GetClass();
-            player.Class = _class;
+            player.Class = GetClass();
             GetPlayerStats(player);
             GetRaceBonus(player);
             player.MaxHealth = player.HitPoints;
@@ -88,38 +87,137 @@ namespace AdventureGame
             Console.Write("Which race are you? ");
             do
             {
-                int.TryParse(Console.ReadLine(), out int choice);
-                if (choice > 0 && choice < 10)
+                string playerChoice = Console.ReadLine();
+                if (int.TryParse(playerChoice, out int choice))
                 {
-                    return choice switch
+                    if (choice > 0 && choice < 10)
                     {
-                        1 => "Dwarf",
-                        2 => "Elf",
-                        3 => "Hafling",
-                        4 => "Human",
-                        5 => "Dragonborn",
-                        6 => "Gnome",
-                        7 => "Half-Elf",
-                        8 => "Half-Orc",
-                        9 => "Tiefling",
-                        _ => throw new NotImplementedException()
-                    };
+                        return choice switch
+                        {
+                            1 => "Dwarf",
+                            2 => "Elf",
+                            3 => "Hafling",
+                            4 => "Human",
+                            5 => "Dragonborn",
+                            6 => "Gnome",
+                            7 => "Half-Elf",
+                            8 => "Half-Orc",
+                            9 => "Tiefling",
+                            _ => throw new NotImplementedException()
+                        };
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(left, top);
+                        Console.WriteLine("You have to choose between 1-9");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(left, top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, --top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, top++);
+                        Console.Write("Which race are you? ");
+                    }
                 }
                 else
                 {
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to choose between 1-9");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("Which race are you? ");
+                    string race = TypeInRace(playerChoice.ToLower());
+                    if (race.Length > 2)
+                    {
+                        return race;
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(left, top);
+                        Console.WriteLine("You have to enter a valid command.");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(left, top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, --top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, top++);
+                        Console.Write("Which race are you? ");
+                    }
                 }
+                
             } while (true);
+        }
+
+        private static string TypeInRace(string race)
+        {
+            switch (race)
+            {
+                case "dw":
+                case "dwa":
+                case "dwar":
+                case "dwarf":
+                    return "Dwarf";
+                case "e":
+                case "el":
+                case "elf":
+                    return "Elf";
+                case "halfl":
+                case "halfli":
+                case "halflin":
+                case "halfling":
+                    return "Halfling";
+                case "hu":
+                case "hum":
+                case "huma":
+                case "human":
+                    return "Human";
+                case "dr":
+                case "dra":
+                case "drag":
+                case "drado":
+                case "dragon":
+                case "dragonb":
+                case "dragonbo":
+                case "dragonbor":
+                case "dragonborn":
+                    return "dragonborn";
+                case "g":
+                case "gn":
+                case "gno":
+                case "gnom":
+                case "gnome":
+                    return "Gnome";
+                case "half-e":
+                case "half-el":
+                case "half-elf":
+                case "half e":
+                case "half el":
+                case "half elf":
+                case "halfe":
+                case "halfel":
+                case "halfelf":
+                    return "Half-Elf";
+                case "half-o":
+                case "half-or":
+                case "half-orc":
+                case "half o":
+                case "half or":
+                case "half orc":
+                case "halfo":
+                case "halfor":
+                case "halforc":
+                    return "Half-Orc";
+                case "t":
+                case "ti":
+                case "tie":
+                case "tief":
+                case "tiefl":
+                case "tiefli":
+                case "tieflin":
+                case "tiefling":
+                    return "Tiefling";
+                default:
+                    return "";
+            }
         }
 
         private static string GetClass()

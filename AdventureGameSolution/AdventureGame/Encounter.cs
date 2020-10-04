@@ -12,7 +12,7 @@ namespace AdventureGame
         private const int left = 10;
         private static int top;
 
-        public static bool firstMoment;
+        public static bool firstPartOfRound;
 
         public static string remeberLine1 = "";
         public static string remeberLine2 = "";
@@ -104,12 +104,11 @@ namespace AdventureGame
         {
             Console.Clear();
             Draw.EncounterFrame(player, monster);
-            Draw.Help();
 
             top = 4;
             if (player.Initiative >= monster.Initiative)
             {
-                firstMoment = true;
+                firstPartOfRound = true;
 
                 player.Attack(player, monster, left, ref top);
                 top++;
@@ -117,22 +116,23 @@ namespace AdventureGame
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
+                Draw.Help();
                 PausForAFirstMoment(player, monster);
-
+                Draw.UndrawHelp();
                 MonsterAttacks(player, monster, ref top);
                 top++;
                 Console.SetCursorPosition(left, 2);
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
+                Draw.Help();
                 PausForASecondMoment(player, monster);
+                Draw.UndrawHelp();
                 return true;
             }
             else
             {
-                firstMoment = true;
+                firstPartOfRound = true;
 
                 MonsterAttacks(player, monster, ref top);
                 top++;
@@ -140,17 +140,18 @@ namespace AdventureGame
                 Console.WriteLine($"{player.Name}: {player.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
+                Draw.Help();
                 PausForAFirstMoment(player, monster);
-
+                Draw.UndrawHelp();
                 player.Attack(player, monster, left, ref top);
                 top++;
                 Console.SetCursorPosition(60, 2);
                 Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
                 if (IsDefeated(player, monster, left, ref top))
                     return false;
-
+                Draw.Help();
                 PausForASecondMoment(player, monster);
+                Draw.UndrawHelp();
                 return true;
             }
         }
@@ -159,7 +160,7 @@ namespace AdventureGame
         {
             do
             {
-                firstMoment = false;
+                firstPartOfRound = false;
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {

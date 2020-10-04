@@ -35,38 +35,38 @@ namespace AdventureGame
 
         public int Damage { get; set; }
 
-        public Creature(string name) : base(name)
+        public Creature()
         {
             Token = 'M';
             IsDefeated = false;         
         }
 
-        public static List<Creature> MakeMonsterList()
-        {
-            var monsters = new List<Creature>
-            {
-                new Bat("Bat"),
-                new BlackBear("Black Bear"),
-                new Imp("Imp"),
-                new Quasit("Quasit"),
-                new Skeleton("Skeleton"),
-                new Zombie("Zombie"),
-            };
+        //public static List<Creature> MakeMonsterList()
+        //{
+        //    var monsters = new List<Creature>
+        //    {
+        //        new Bat("Bat"),
+        //        new BlackBear("Black Bear"),
+        //        new Imp("Imp"),
+        //        new Quasit("Quasit"),
+        //        new Skeleton("Skeleton"),
+        //        new Zombie("Zombie"),
+        //    };
 
-            return monsters;
-        }
+        //    return monsters;
+        //}
 
         public static Creature CreateRandomMonster()
         {
             var randomMonster = rnd.Next(6);
             return randomMonster switch
             {
-                (int)Monster.Bat => new Bat("Bat"),
-                (int)Monster.BlackBear => new BlackBear("Black Bear"),
-                (int)Monster.Imp => new Imp("Imp"),
-                (int)Monster.Quasit => new Quasit("Quasit"),
-                (int)Monster.Skeleton => new Skeleton("Skeleton"),
-                (int)Monster.Zombie => new Zombie("Zombie"),
+                (int)Monster.Bat => new Bat(),
+                (int)Monster.BlackBear => new BlackBear(),
+                (int)Monster.Imp => new Imp(),
+                (int)Monster.Quasit => new Quasit(),
+                (int)Monster.Skeleton => new Skeleton(),
+                (int)Monster.Zombie => new Zombie(),
                 _ => throw new NotImplementedException()
             };
         }

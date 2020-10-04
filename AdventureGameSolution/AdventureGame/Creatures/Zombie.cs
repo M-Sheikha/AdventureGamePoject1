@@ -6,8 +6,9 @@ namespace AdventureGame
 {
     class Zombie : Creature
     {
-        public Zombie(string name) : base(name)
+        public Zombie()
         {
+            Name = "Zombie";
             ArmorClass = 8;
             HitPoints = 22;
             Strength = 13;
@@ -21,7 +22,7 @@ namespace AdventureGame
         public void Slam(Player player, Creature monster, ref int top)
         {
             string tryText = "The Zombie tries to slam you!";
-            if (Encounter.firstMoment)
+            if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
@@ -32,7 +33,7 @@ namespace AdventureGame
             {
                 monster.Damage = RollDice("1d6") + 1;
                 string resultText = $"The Zombie slams you, dealing {monster.Damage} damage!";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -43,7 +44,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Zombie missed.";
-                if (Encounter.firstMoment)
+                if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
