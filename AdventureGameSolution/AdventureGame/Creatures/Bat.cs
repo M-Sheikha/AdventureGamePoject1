@@ -22,16 +22,17 @@ namespace AdventureGame
         {
             Console.SetCursorPosition(left, top++);
             string tryText = "The Bat tries to bite you!";
-            if (Encounter.firstTime)
+            if (Encounter.firstMoment)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.WriteLine(tryText);
+            Console.ReadKey();
             if (RollDice("1d20") + 0 >= player.ArmorClass)
             {
                 monster.Damage = 1;
                 string resultText = $"The Bat bites you, dealing {monster.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -43,7 +44,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Bat missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

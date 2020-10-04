@@ -9,6 +9,7 @@ namespace AdventureGame
     {
         static void Main(string[] args)
         {
+            Console.Title = "The Adventure Game";
             Game.Start();
         }
     }

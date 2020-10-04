@@ -22,17 +22,18 @@ namespace AdventureGame
         public void Sting(Player player, Creature monster, ref int top)
         {
             string tryText = "The Imp tries to sting you!";
-            if (Encounter.firstTime)
+            if (Encounter.firstMoment)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
+            Console.ReadKey();
             if (RollDice("1d20") + 5 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("1d4") + 3;
                 string resultText = $"The Imp stings you, dealing {monster.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -43,7 +44,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Imp missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

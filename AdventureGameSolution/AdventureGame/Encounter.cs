@@ -12,7 +12,7 @@ namespace AdventureGame
         private const int left = 10;
         private static int top;
 
-        public static bool firstTime;
+        public static bool firstMoment;
 
         public static string remeberLine1 = "";
         public static string remeberLine2 = "";
@@ -26,7 +26,7 @@ namespace AdventureGame
                 Fight(player, monster);
                 monster.X = 0;
                 monster.Y = 0;
-                monster.IdDefeated = true;
+                monster.IsDefeated = true;
             }
         }
 
@@ -38,7 +38,6 @@ namespace AdventureGame
             var monster = WhatMonster(creature);
 
             Draw.EncounterFrame(player, monster);
-            Console.SetCursorPosition(left, 2);
 
             Console.SetCursorPosition(left, top++);
             if (monster is Imp)
@@ -75,7 +74,6 @@ namespace AdventureGame
             do
             {
                 areBothAlive = CombatRound(player, monster);
-
             } while (areBothAlive);
             
             Console.ReadKey();
@@ -111,7 +109,7 @@ namespace AdventureGame
             top = 4;
             if (player.Initiative >= monster.Initiative)
             {
-                firstTime = true;
+                firstMoment = true;
 
                 player.Attack(player, monster, left, ref top);
                 top++;
@@ -134,7 +132,7 @@ namespace AdventureGame
             }
             else
             {
-                firstTime = true;
+                firstMoment = true;
 
                 MonsterAttacks(player, monster, ref top);
                 top++;
@@ -161,7 +159,7 @@ namespace AdventureGame
         {
             do
             {
-                firstTime = false;
+                firstMoment = false;
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
@@ -270,18 +268,18 @@ namespace AdventureGame
         {
             if (monster.HitPoints < 1)
             {
-                Thread.Sleep(2000);
+                Console.ReadKey();
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"You killed the {monster.Name}!");
-                monster.IdDefeated = true;
+                monster.IsDefeated = true;
                 return true;
             }
             else if (player.HitPoints < 1)
             {
-                Thread.Sleep(2000);
+                Console.ReadKey();
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"The {monster.Name} killed You!");
-                player.IdDefeated = true;
+                player.IsDefeated = true;
                 return true;
             }
             else

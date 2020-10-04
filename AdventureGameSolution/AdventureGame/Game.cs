@@ -23,7 +23,7 @@ namespace AdventureGame
             var consumables = Consumable.MakeList();
             var armors = Armor.MakeList(player);
             var weapons = Weapon.MakeList(player);
-            var monsters = Creature.MakeMonsterList();
+            var monsters = new List<Creature>();
 
 
             var worldItems = new Item[10];
@@ -44,15 +44,20 @@ namespace AdventureGame
                 item.Y = rnd.Next(2, 24);
             }
 
-            var worldMonsters = new Creature[1];
-            for (int i = 0; i < worldMonsters.Length; i++)
-                worldMonsters[i] = monsters[rnd.Next(monsters.Count)];
-
-            foreach (var monster in worldMonsters)
+            for (int i = 0; i < 10; i++)
             {
-                monster.X = rnd.Next(10, 105);
+                var monster = Creature.CreateRandomMonster();
+                // använd const istället för magiska siffror.
+                monster.X = rnd.Next(10, 106);
                 monster.Y = rnd.Next(2, 24);
+                monsters.Add(monster);
             }
+
+            //foreach (var monster in worldMonsters)
+            //{
+            //    monster.X = rnd.Next(10, 105);
+            //    monster.Y = rnd.Next(2, 24);
+            //}
 
             do
             {
@@ -64,7 +69,7 @@ namespace AdventureGame
                     Item.Print(item);
 
                 // Skriver ut monstren så länge de inte är besegrade.
-                foreach (var monster in worldMonsters)
+                foreach (var monster in monsters)
                     Creature.Print(monster);
 
                 // Styr spelaren.
@@ -75,7 +80,7 @@ namespace AdventureGame
                     Item.WannaPickMeUp(player, item);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.
-                foreach (var monster in worldMonsters)
+                foreach (var monster in monsters)
                     Encounter.WannaFightMe(player, monster);
 
                 if (player.HitPoints <= 0)
@@ -85,9 +90,9 @@ namespace AdventureGame
 
             Console.Clear();
             Draw.WorldFrame();
-            Console.SetCursorPosition(55, 15);
-            string endTitle = "GAME OVER!";
+            string endTitle = "G A M E   O V E R !";
             var endTitleArrey = endTitle.ToCharArray();
+            Console.SetCursorPosition(40, 11);
             foreach (var c in endTitleArrey)
             {
                 Thread.Sleep(100);

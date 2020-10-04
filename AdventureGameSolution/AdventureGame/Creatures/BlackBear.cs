@@ -21,17 +21,18 @@ namespace AdventureGame
         public void Bite(Player player, Creature monster, ref int top)
         {
             string tryText = "The Black Bear tries to bite you!";
-            if (Encounter.firstTime)
+            if (Encounter.firstMoment)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
+            Console.ReadKey();
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("1d6") + 2;
                 string resultText = $"The Black Bear bites you, dealing {monster.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -42,7 +43,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Black Bear missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -54,17 +55,18 @@ namespace AdventureGame
         public void Claws(Player player, Creature monster, ref int top)
         {
             string tryText = "The Black Bear tries to claw you!";
-            if (Encounter.firstTime)
+            if (Encounter.firstMoment)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
+            Console.ReadKey();
             if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("2d4") + 2;
                 string resultText = $"The Black Bear claws you, dealing {monster.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -75,7 +77,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Black Bear missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

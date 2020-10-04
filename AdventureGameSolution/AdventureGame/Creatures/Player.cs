@@ -89,20 +89,22 @@ namespace AdventureGame
             if (player.weapon.Count > 0)
             {
                 string tryText = $"You try to hit the {monster.Name} with your {player.weapon[0].Name}!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine1 = tryText;
                 else
                     Encounter.remeberLine3 = tryText;
                 Console.WriteLine(tryText);
+                Console.ReadKey();
             }
             else
             {
                 string tryText = $"You try to hit the {monster.Name} with your fists!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine1 = tryText;
                 else
                     Encounter.remeberLine3 = tryText;
                 Console.WriteLine(tryText);
+                Console.ReadKey();
 
             }
 
@@ -116,7 +118,7 @@ namespace AdventureGame
                     player.Damage = 1 + AbilityModifier(player.Strength);
 
                 string resultText = $"You hit the {monster.Name}, dealing {player.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -127,7 +129,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "You missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;

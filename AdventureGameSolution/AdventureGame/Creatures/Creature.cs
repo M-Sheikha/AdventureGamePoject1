@@ -5,6 +5,16 @@ using System.Xml.Xsl;
 
 namespace AdventureGame
 {
+    public enum Monster : int
+    {
+        Bat,
+        BlackBear,
+        Imp,
+        Quasit,
+        Skeleton,
+        Zombie
+    }
+
     abstract class Creature : Entity
     {
         // Varelser har även förmågor (som beror på egenskaperna) och de minskar
@@ -13,7 +23,7 @@ namespace AdventureGame
         public int HitPoints { get; set; }
 
         public string Race { get; set; }
-        public bool IdDefeated { get; set; }
+        public bool IsDefeated { get; set; }
         public int Initiative { get; set; }
 
         public int Strength { get; set; }
@@ -28,7 +38,7 @@ namespace AdventureGame
         public Creature(string name) : base(name)
         {
             Token = 'M';
-            IdDefeated = false;         
+            IsDefeated = false;         
         }
 
         public static List<Creature> MakeMonsterList()
@@ -46,9 +56,25 @@ namespace AdventureGame
             return monsters;
         }
 
+        public static Creature CreateRandomMonster()
+        {
+            var randomMonster = rnd.Next(6);
+            return randomMonster switch
+            {
+                (int)Monster.Bat => new Bat("Bat"),
+                (int)Monster.BlackBear => new BlackBear("Black Bear"),
+                (int)Monster.Imp => new Imp("Imp"),
+                (int)Monster.Quasit => new Quasit("Quasit"),
+                (int)Monster.Skeleton => new Skeleton("Skeleton"),
+                (int)Monster.Zombie => new Zombie("Zombie"),
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        // Lägg i Draw.
         public static void Print(Creature creature)
         {
-            if (!creature.IdDefeated)
+            if (!creature.IsDefeated)
             {
                 Console.SetCursorPosition(creature.X, creature.Y);
                 Console.Write(creature.Token);
@@ -65,7 +91,7 @@ namespace AdventureGame
 
         public void PrintMonster(Creature monster)
         {
-            if (!monster.IdDefeated)
+            if (!monster.IsDefeated)
             {
                 Console.SetCursorPosition(monster.X, monster.Y);
                 Console.Write("M");

@@ -21,17 +21,18 @@ namespace AdventureGame
         public void Claws(Player player, Creature monster, ref int top)
         {
             string tryText = "The Quasit tries to claw you!";
-            if (Encounter.firstTime)
+            if (Encounter.firstMoment)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
+            Console.ReadKey();
             if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("1d4") + 3;
                 string resultText = $"The Quasit claws you, dealing {monster.Damage} damage!";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
@@ -42,7 +43,7 @@ namespace AdventureGame
             else
             {
                 string resultText = "The Quasit missed.";
-                if (Encounter.firstTime)
+                if (Encounter.firstMoment)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
