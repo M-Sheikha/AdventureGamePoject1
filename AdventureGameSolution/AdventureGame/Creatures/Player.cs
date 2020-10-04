@@ -73,7 +73,7 @@ namespace AdventureGame
                     }
                     break;
                 case ConsoleKey.I:
-                    Draw.Inventory(player);
+                    Inventory.ShowInventory(player);
                     Draw.WorldFrame();
                     break;
                 case ConsoleKey.C:

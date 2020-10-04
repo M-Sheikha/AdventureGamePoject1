@@ -234,42 +234,150 @@ namespace AdventureGame
             Console.Write("What class are you? ");
             do
             {
-                int.TryParse(Console.ReadLine(), out int choice);
-                if (choice > 0 && choice < 14)
+                string playerChoice = Console.ReadLine();
+                if (int.TryParse(playerChoice, out int choice))
                 {
-                    return choice switch
+                    if (choice > 0 && choice < 14)
                     {
-                        1 => "Barbarian",
-                        2 => "Bard",
-                        3 => "Cleric",
-                        4 => "Druid",
-                        5 => "Fighter",
-                        6 => "Monk",
-                        7 => "Paladin",
-                        8 => "Ranger",
-                        9 => "Rouge",
-                        10 => "Sorcerer",
-                        11 => "Warlock",
-                        12 => "Wizard",
-                        _ => throw new NotImplementedException()
-                    };
+                        return choice switch
+                        {
+                            1 => "Barbarian",
+                            2 => "Bard",
+                            3 => "Cleric",
+                            4 => "Druid",
+                            5 => "Fighter",
+                            6 => "Monk",
+                            7 => "Paladin",
+                            8 => "Ranger",
+                            9 => "Rouge",
+                            10 => "Sorcerer",
+                            11 => "Warlock",
+                            12 => "Wizard",
+                            _ => throw new NotImplementedException()
+                        };
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(left, top);
+                        Console.WriteLine("You have to choose between 1-12");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(left, top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, --top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, top++);
+                        Console.Write("What class are you? ");
+
+                    }
                 }
                 else
                 {
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to choose between 1-12");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("What class are you? ");
-
-                }
+                    string _class = TypeInClass(playerChoice.ToLower());
+                    if (_class.Length > 3)
+                        return _class;
+                    else
+                    {
+                        Console.SetCursorPosition(left, top);
+                        Console.WriteLine("You have to enter a valid command");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(left, top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, --top);
+                        for (int i = 0; i < 80; i++)
+                            Console.Write(" ");
+                        Console.SetCursorPosition(left, top++);
+                        Console.Write("What class are you? ");
+                    }
+                } 
             } while (true);
+        }
+
+        private static string TypeInClass(string _class)
+        {
+            switch (_class)
+            {
+                case "barb":
+                case "barba":
+                case "barbar":
+                case "barbari":
+                case "barbaria":
+                case "barbarian":
+                    return "Barbarian";
+                case "bard":
+                    return "Bard";
+                case "c":
+                case "cl":
+                case "cle":
+                case "cler":
+                case "cleri":
+                case "cleric":
+                    return "Cleric";
+                case "d":
+                case "dr":
+                case "dru":
+                case "drui":
+                case "druid":
+                    return "Druid";
+                case "f":
+                case "fi":
+                case "fig":
+                case "figh":
+                case "fight":
+                case "fighte":
+                case "fighter":
+                    return "Fighter";
+                case "m":
+                case "mo":
+                case "mon":
+                case "monk":
+                    return "Monk";
+                case "p":
+                case "pa":
+                case "pal":
+                case "pala":
+                case "palad":
+                case "paladi":
+                case "paladin":
+                    return "Paladin";
+                case "ra":
+                case "ran":
+                case "rang":
+                case "range":
+                case "ranger":
+                    return "Ranger";
+                case "ro":
+                case "rou":
+                case "roug":
+                case "rouge":
+                    return "Rouge";
+                case "s":
+                case "so":
+                case "sor":
+                case "sorc":
+                case "sorce":
+                case "sorcer":
+                case "sorcere":
+                case "sorcerer":
+                    return "Sorcerer";
+                case "wa":
+                case "war":
+                case "warl":
+                case "warlo":
+                case "warloc":
+                case "warlock":
+                    return "Warlock";
+                case "wi":
+                case "wiz":
+                case "wiza":
+                case "wizar":
+                case "wizard":
+                    return "Wizard";
+                default:
+                    return "";
+            }
         }
 
         private static void GetPlayerStats(Player player)
