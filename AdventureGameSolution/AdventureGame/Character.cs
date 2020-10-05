@@ -7,6 +7,35 @@ using System.ComponentModel;
 
 namespace AdventureGame
 {
+    public enum Races : int
+    {
+        Dwarf = 1,
+        Elf = 2,
+        Halfling = 3,
+        Human = 4,
+        Dragonborn = 5,
+        Gnome = 6,
+        HalfElf = 7,
+        HalfOrc = 8,
+        Tiefling = 9
+    }
+
+    public enum Classes : int
+    {
+        Barbarian = 1,
+        Bard = 2,
+        Cleric = 3,
+        Druid = 4,
+        Fighter = 5,
+        Monk = 6,
+        Paladin = 7,
+        Ranger = 8,
+        Rouge = 9,
+        Sorcerer = 10,
+        Warlock = 11,
+        Wizard = 12
+    }
+
     class Character
     {
         const int left = 10;
@@ -28,7 +57,7 @@ namespace AdventureGame
             player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
             top++;
             Console.SetCursorPosition(left, top);
-            Console.WriteLine($"Welcome to the Adventure Game, {player.Name} the {player.Race} {player.Class}!");
+            Console.WriteLine($"Welcome to The Adventure Game {player.Name}, the {player.Race} {player.Class}!");
             Console.CursorVisible = false;
             Thread.Sleep(3000);
             return player;
@@ -40,9 +69,11 @@ namespace AdventureGame
             Console.Write("What is your characters name? ");
             do
             {
+                Console.CursorVisible = true;
                 string name = Console.ReadLine();
                 if (int.TryParse(name, out _))
                 {
+                    Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
                     Console.WriteLine("You have to enter a valid name.");
                     Thread.Sleep(2000);
@@ -57,6 +88,7 @@ namespace AdventureGame
                 }
                 else if (name.Length < 1)
                 {
+                    Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
                     Console.WriteLine("You have to enter a name.");
                     Thread.Sleep(2000);
@@ -73,8 +105,6 @@ namespace AdventureGame
                     return name.First().ToString().ToUpper() + name.Substring(1);
 
             } while (true);
-            
-
         }
 
         private static string GetRace()
@@ -89,66 +119,140 @@ namespace AdventureGame
             Console.Write("Which race are you? ");
             do
             {
+                Console.CursorVisible = true;
                 string playerChoice = Console.ReadLine();
-                if (int.TryParse(playerChoice, out int choice))
+                if (playerChoice.Equals(""))
+                {
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a race.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("Which race are you? ");
+                }
+                else if (int.TryParse(playerChoice, out int choice))
                 {
                     if (choice > 0 && choice < 10)
                     {
                         return choice switch
                         {
-                            1 => "Dwarf",
-                            2 => "Elf",
-                            3 => "Hafling",
-                            4 => "Human",
-                            5 => "Dragonborn",
-                            6 => "Gnome",
-                            7 => "Half-Elf",
-                            8 => "Half-Orc",
-                            9 => "Tiefling",
+                            (int)Races.Dwarf => "Dwarf",
+                            (int)Races.Elf => "Elf",
+                            (int)Races.Halfling => "Halfling",
+                            (int)Races.Human => "Human",
+                            (int)Races.Dragonborn => "Dragonborn",
+                            (int)Races.Gnome => "Gnome",
+                            (int)Races.HalfElf => "Half-Elf",
+                            (int)Races.HalfOrc => "Half-Orc",
+                            (int)Races.Tiefling => "Tiefling",
                             _ => throw new NotImplementedException()
                         };
                     }
-                    else
-                    {
-                        Console.SetCursorPosition(left, top);
-                        Console.WriteLine("You have to choose between 1-9");
-                        Thread.Sleep(2000);
-                        Console.SetCursorPosition(left, top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, --top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, top++);
-                        Console.Write("Which race are you? ");
-                    }
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a number between 1-9.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("Which race are you? ");                    
                 }
                 else
                 {
-                    string race = TypeInRace(playerChoice.ToLower());
+                    string race = TypeInRace(playerChoice);
                     if (race.Length > 2)
-                    {
                         return race;
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(left, top);
-                        Console.WriteLine("You have to enter a valid command.");
-                        Thread.Sleep(2000);
-                        Console.SetCursorPosition(left, top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, --top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, top++);
-                        Console.Write("Which race are you? ");
-                    }
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter an existing race.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("Which race are you? ");
                 }
-                
+
+
+
+                //string playerChoice = Console.ReadLine();
+                //if (int.TryParse(playerChoice, out int choice))
+                //{
+                //    foreach (var race in Enum.GetValues(typeof(Races)))
+                //    {
+                //        if (true)
+                //    }
+
+                //    if (choice > 0 && choice < 10)
+                //    {
+                //        return choice switch
+                //        {
+                //            1 => "Dwarf",
+                //            2 => "Elf",
+                //            3 => "Hafling",
+                //            4 => "Human",
+                //            5 => "Dragonborn",
+                //            6 => "Gnome",
+                //            7 => "Half-Elf",
+                //            8 => "Half-Orc",
+                //            9 => "Tiefling",
+                //            _ => throw new NotImplementedException()
+                //        };
+                //    }
+                //    else
+                //    {
+                //        Console.SetCursorPosition(left, top);
+                //        Console.WriteLine("You have to choose between 1-9");
+                //        Thread.Sleep(2000);
+                //        Console.SetCursorPosition(left, top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, --top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, top++);
+                //        Console.Write("Which race are you? ");
+                //    }
+                //}
+                //else
+                //{
+                //    string race = TypeInRace(playerChoice.ToLower());
+                //    if (race.Length > 2)
+                //    {
+                //        return race;
+                //    }
+                //    else
+                //    {
+                //        Console.SetCursorPosition(left, top);
+                //        Console.WriteLine("You have to enter a valid command.");
+                //        Thread.Sleep(2000);
+                //        Console.SetCursorPosition(left, top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, --top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, top++);
+                //        Console.Write("Which race are you? ");
+                //    }
+                //}
+
             } while (true);
         }
-
+        
         private static string TypeInRace(string race)
         {
             switch (race)
@@ -236,64 +340,134 @@ namespace AdventureGame
             Console.Write("What class are you? ");
             do
             {
+                Console.CursorVisible = true;
                 string playerChoice = Console.ReadLine();
-                if (int.TryParse(playerChoice, out int choice))
+                if (playerChoice.Equals(""))
                 {
-                    if (choice > 0 && choice < 14)
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a class.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("What class are you? ");
+                }
+                else if (int.TryParse(playerChoice, out int choice))
+                {
+
+                    if (choice > 0 && choice < 13)
                     {
                         return choice switch
                         {
-                            1 => "Barbarian",
-                            2 => "Bard",
-                            3 => "Cleric",
-                            4 => "Druid",
-                            5 => "Fighter",
-                            6 => "Monk",
-                            7 => "Paladin",
-                            8 => "Ranger",
-                            9 => "Rouge",
-                            10 => "Sorcerer",
-                            11 => "Warlock",
-                            12 => "Wizard",
+                            (int)Classes.Barbarian => "Barbarian",
+                            (int)Classes.Bard => "Bard",
+                            (int)Classes.Cleric => "Cleric",
+                            (int)Classes.Druid => "Druid",
+                            (int)Classes.Fighter => "Fighter",
+                            (int)Classes.Monk => "Monk",
+                            (int)Classes.Paladin => "Paladin",
+                            (int)Classes.Ranger => "Ranger",
+                            (int)Classes.Rouge => "Rouge",
+                            (int)Classes.Sorcerer => "Sorcerer",
+                            (int)Classes.Warlock => "Warlock",
+                            (int)Classes.Wizard => "Wizard",
                             _ => throw new NotImplementedException()
                         };
                     }
-                    else
-                    {
-                        Console.SetCursorPosition(left, top);
-                        Console.WriteLine("You have to choose between 1-12");
-                        Thread.Sleep(2000);
-                        Console.SetCursorPosition(left, top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, --top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, top++);
-                        Console.Write("What class are you? ");
-
-                    }
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter a number between 1-12.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("What class are you? ");
                 }
                 else
                 {
-                    string _class = TypeInClass(playerChoice.ToLower());
-                    if (_class.Length > 3)
-                        return _class;
-                    else
-                    {
-                        Console.SetCursorPosition(left, top);
-                        Console.WriteLine("You have to enter a valid command");
-                        Thread.Sleep(2000);
-                        Console.SetCursorPosition(left, top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, --top);
-                        for (int i = 0; i < 80; i++)
-                            Console.Write(" ");
-                        Console.SetCursorPosition(left, top++);
-                        Console.Write("What class are you? ");
-                    }
-                } 
+                    foreach (var _class in Enum.GetValues(typeof(Classes)))
+                        if (_class.ToString().ToLower().Contains(playerChoice))
+                            return _class.ToString();
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(left, top);
+                    Console.WriteLine("You have to enter an existing class.");
+                    Thread.Sleep(2000);
+                    Console.SetCursorPosition(left, top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, --top);
+                    for (int i = 0; i < 80; i++)
+                        Console.Write(" ");
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write("What class are you? ");
+                }
+                
+                //if (int.TryParse(playerChoice, out int choice))
+                //{
+                //    if (choice > 0 && choice < 14)
+                //    {
+                //        return choice switch
+                //        {
+                //            1 => "Barbarian",
+                //            2 => "Bard",
+                //            3 => "Cleric",
+                //            4 => "Druid",
+                //            5 => "Fighter",
+                //            6 => "Monk",
+                //            7 => "Paladin",
+                //            8 => "Ranger",
+                //            9 => "Rouge",
+                //            10 => "Sorcerer",
+                //            11 => "Warlock",
+                //            12 => "Wizard",
+                //            _ => throw new NotImplementedException()
+                //        };
+                //    }
+                //    else
+                //    {
+                //        Console.SetCursorPosition(left, top);
+                //        Console.WriteLine("You have to choose between 1-12");
+                //        Thread.Sleep(2000);
+                //        Console.SetCursorPosition(left, top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, --top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, top++);
+                //        Console.Write("What class are you? ");
+
+                //    }
+                //}
+                //else
+                //{
+                //    string _class = TypeInClass(playerChoice.ToLower());
+                //    if (_class.Length > 3)
+                //        return _class;
+                //    else
+                //    {
+                //        Console.SetCursorPosition(left, top);
+                //        Console.WriteLine("You have to enter a valid command");
+                //        Thread.Sleep(2000);
+                //        Console.SetCursorPosition(left, top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, --top);
+                //        for (int i = 0; i < 80; i++)
+                //            Console.Write(" ");
+                //        Console.SetCursorPosition(left, top++);
+                //        Console.Write("What class are you? ");
+                //    }
+                //} 
             } while (true);
         }
 
