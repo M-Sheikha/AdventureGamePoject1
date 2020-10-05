@@ -22,8 +22,8 @@ namespace AdventureGame
         public Player()
         {
             Token = '☻';
-            X = 10;
-            Y = 2;
+            X = 58;
+            Y = 12;
         }
 
         public void StartingGold(Player player)
@@ -95,7 +95,7 @@ namespace AdventureGame
                 else
                     Encounter.remeberLine3 = tryText;
                 Console.WriteLine(tryText);
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
             else
             {
@@ -105,7 +105,7 @@ namespace AdventureGame
                 else
                     Encounter.remeberLine3 = tryText;
                 Console.WriteLine(tryText);
-                Console.ReadKey();
+                Console.ReadKey(true);
 
             }
 

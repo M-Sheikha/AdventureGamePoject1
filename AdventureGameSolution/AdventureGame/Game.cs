@@ -14,8 +14,8 @@ namespace AdventureGame
 
             Draw.CharacterCreation();
             var player = Character.Creation();
+            Draw.WelcomeMessage(player);
             Draw.WorldFrame();
-
             player.StartingGold(player);
             
 
@@ -69,19 +69,22 @@ namespace AdventureGame
                 monsters.Add(monster);
             }
 
+            Draw.Everything(player, monsters, consumables);
+
             do
             {
                 // Skriver ut spelaren till skärmen.
-                Creature.Print(player);
-
-                // Skriver ut föremålen så länge de inte är tagna.
-                foreach (var item in consumables)
-                    Item.Print(item);
+                Draw.Player(player);
 
                 // Skriver ut monstren så länge de inte är besegrade.
                 foreach (var monster in monsters)
-                    Creature.Print(monster);
+                    Draw.Monster(monster);
 
+                // Skriver ut föremålen så länge de inte är tagna.
+                foreach (var item in consumables)
+                    Draw.Item(item);
+
+                
                 // Styr spelaren.
                 player.Move(player);
 

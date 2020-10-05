@@ -4,47 +4,46 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Bat : Creature
+    class Zombie : Creature
     {
-        public Bat()
+        public Zombie()
         {
-            Name = "Bat";
-            ArmorClass = 12;
-            HitPoints = 1;
-            Strength = 2;
-            Dexterity = 15;
-            Constitution = 8;
-            Intelligence = 2;
-            Wisdom = 12;
-            Charisma = 4;
+            Name = "Zombie";
+            ArmorClass = 8;
+            HitPoints = 22;
+            Strength = 13;
+            Dexterity = 6;
+            Constitution = 16;
+            Intelligence = 3;
+            Wisdom = 6;
+            Charisma = 5;
         }
 
-        public void Bite(Player player, Creature monster, ref int top)
+        public void Slam(Player player, Creature monster, ref int top)
         {
-            Console.SetCursorPosition(left, top++);
-            string tryText = "The Bat tries to bite you!";
+            string tryText = "The Zombie tries to slam you!";
             if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
+            Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
-            if (RollDice("1d20") + 0 >= player.ArmorClass)
+            Console.ReadKey(true);
+            if (RollDice("1d20") + 3 >= player.ArmorClass)
             {
-                monster.Damage = 1;
-                string resultText = $"The Bat bites you, dealing {monster.Damage} damage!";
+                monster.Damage = RollDice("1d6") + 1;
+                string resultText = $"The Zombie slams you, dealing {monster.Damage} damage!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
-
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine(resultText);
                 player.HitPoints -= monster.Damage;
             }
             else
             {
-                string resultText = "The Bat missed.";
+                string resultText = "The Zombie missed.";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else

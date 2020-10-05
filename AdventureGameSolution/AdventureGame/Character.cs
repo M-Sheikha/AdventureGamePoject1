@@ -57,8 +57,8 @@ namespace AdventureGame
             player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
             top++;
             Console.SetCursorPosition(left, top);
-            Console.WriteLine($"Welcome to The Adventure Game {player.Name}, the {player.Race} {player.Class}!");
             Console.CursorVisible = false;
+            Console.WriteLine($"Welcome {player.Name}, the {player.Race} {player.Class}!");
             Thread.Sleep(3000);
             return player;
         }
@@ -169,9 +169,23 @@ namespace AdventureGame
                 }
                 else
                 {
-                    string race = TypeInRace(playerChoice);
-                    if (race.Length > 2)
-                        return race;
+                    var races = new string[]
+                    {
+                        "Dwarf",
+                        "Elf",
+                        "Halfling",
+                        "Human",
+                        "Dragonborn",
+                        "Gnome",
+                        "HalfElf",
+                        "HalfOrc",
+                        "Tiefling"
+                    };
+
+                    foreach (var race in races)
+                        if (race.ToLower().Contains(playerChoice))
+                            return race.ToString();
+
                     Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
                     Console.WriteLine("You have to enter an existing race.");
@@ -184,6 +198,22 @@ namespace AdventureGame
                         Console.Write(" ");
                     Console.SetCursorPosition(left, top++);
                     Console.Write("Which race are you? ");
+
+                    //string race = TypeInRace(playerChoice);
+                    //if (race.Length > 2)
+                    //    return race;
+                    //Console.CursorVisible = false;
+                    //Console.SetCursorPosition(left, top);
+                    //Console.WriteLine("You have to enter an existing race.");
+                    //Thread.Sleep(2000);
+                    //Console.SetCursorPosition(left, top);
+                    //for (int i = 0; i < 80; i++)
+                    //    Console.Write(" ");
+                    //Console.SetCursorPosition(left, --top);
+                    //for (int i = 0; i < 80; i++)
+                    //    Console.Write(" ");
+                    //Console.SetCursorPosition(left, top++);
+                    //Console.Write("Which race are you? ");
                 }
 
 
@@ -257,6 +287,7 @@ namespace AdventureGame
         {
             switch (race)
             {
+                case "d":
                 case "dw":
                 case "dwa":
                 case "dwar":
@@ -266,6 +297,10 @@ namespace AdventureGame
                 case "el":
                 case "elf":
                     return "Elf";
+                case "h":
+                case "ha":
+                case "hal":
+                case "half":
                 case "halfl":
                 case "halfli":
                 case "halflin":
@@ -471,90 +506,90 @@ namespace AdventureGame
             } while (true);
         }
 
-        private static string TypeInClass(string _class)
-        {
-            switch (_class)
-            {
-                case "barb":
-                case "barba":
-                case "barbar":
-                case "barbari":
-                case "barbaria":
-                case "barbarian":
-                    return "Barbarian";
-                case "bard":
-                    return "Bard";
-                case "c":
-                case "cl":
-                case "cle":
-                case "cler":
-                case "cleri":
-                case "cleric":
-                    return "Cleric";
-                case "d":
-                case "dr":
-                case "dru":
-                case "drui":
-                case "druid":
-                    return "Druid";
-                case "f":
-                case "fi":
-                case "fig":
-                case "figh":
-                case "fight":
-                case "fighte":
-                case "fighter":
-                    return "Fighter";
-                case "m":
-                case "mo":
-                case "mon":
-                case "monk":
-                    return "Monk";
-                case "p":
-                case "pa":
-                case "pal":
-                case "pala":
-                case "palad":
-                case "paladi":
-                case "paladin":
-                    return "Paladin";
-                case "ra":
-                case "ran":
-                case "rang":
-                case "range":
-                case "ranger":
-                    return "Ranger";
-                case "ro":
-                case "rou":
-                case "roug":
-                case "rouge":
-                    return "Rouge";
-                case "s":
-                case "so":
-                case "sor":
-                case "sorc":
-                case "sorce":
-                case "sorcer":
-                case "sorcere":
-                case "sorcerer":
-                    return "Sorcerer";
-                case "wa":
-                case "war":
-                case "warl":
-                case "warlo":
-                case "warloc":
-                case "warlock":
-                    return "Warlock";
-                case "wi":
-                case "wiz":
-                case "wiza":
-                case "wizar":
-                case "wizard":
-                    return "Wizard";
-                default:
-                    return "";
-            }
-        }
+        //private static string TypeInClass(string _class)
+        //{
+        //    switch (_class)
+        //    {
+        //        case "barb":
+        //        case "barba":
+        //        case "barbar":
+        //        case "barbari":
+        //        case "barbaria":
+        //        case "barbarian":
+        //            return "Barbarian";
+        //        case "bard":
+        //            return "Bard";
+        //        case "c":
+        //        case "cl":
+        //        case "cle":
+        //        case "cler":
+        //        case "cleri":
+        //        case "cleric":
+        //            return "Cleric";
+        //        case "d":
+        //        case "dr":
+        //        case "dru":
+        //        case "drui":
+        //        case "druid":
+        //            return "Druid";
+        //        case "f":
+        //        case "fi":
+        //        case "fig":
+        //        case "figh":
+        //        case "fight":
+        //        case "fighte":
+        //        case "fighter":
+        //            return "Fighter";
+        //        case "m":
+        //        case "mo":
+        //        case "mon":
+        //        case "monk":
+        //            return "Monk";
+        //        case "p":
+        //        case "pa":
+        //        case "pal":
+        //        case "pala":
+        //        case "palad":
+        //        case "paladi":
+        //        case "paladin":
+        //            return "Paladin";
+        //        case "ra":
+        //        case "ran":
+        //        case "rang":
+        //        case "range":
+        //        case "ranger":
+        //            return "Ranger";
+        //        case "ro":
+        //        case "rou":
+        //        case "roug":
+        //        case "rouge":
+        //            return "Rouge";
+        //        case "s":
+        //        case "so":
+        //        case "sor":
+        //        case "sorc":
+        //        case "sorce":
+        //        case "sorcer":
+        //        case "sorcere":
+        //        case "sorcerer":
+        //            return "Sorcerer";
+        //        case "wa":
+        //        case "war":
+        //        case "warl":
+        //        case "warlo":
+        //        case "warloc":
+        //        case "warlock":
+        //            return "Warlock";
+        //        case "wi":
+        //        case "wiz":
+        //        case "wiza":
+        //        case "wizar":
+        //        case "wizard":
+        //            return "Wizard";
+        //        default:
+        //            return "";
+        //    }
+        //}
 
         private static void GetPlayerStats(Player player)
         {

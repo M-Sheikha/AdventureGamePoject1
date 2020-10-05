@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AdventureGame
@@ -59,16 +60,11 @@ namespace AdventureGame
             Stat("Charisma", player.Charisma, Entity.AbilityModifier(player.Charisma));
             top += 2;
 
-            //if (player.weapon.Count > 0)
-            //{
             Console.SetCursorPosition(left, top++);
             if (player.Weapon.AbilityModifier >= 0)
                 Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
             else
                 Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (-{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
-            //}
-            //else
-            //    top++;
             top += 2;
 
             if (player.armor.Count > 0)
@@ -84,7 +80,7 @@ namespace AdventureGame
                         Console.Write($"{item.Name} = {item.ArmorClass} Armor Class");
                 }
             }
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
         }
 
@@ -232,6 +228,23 @@ namespace AdventureGame
                 Console.WriteLine($"{stat}: {_stat} ({abilityModifier})");
         }
 
+        public static void WelcomeMessage(Player player)
+        {
+            Draw.WorldFrame();
+            var welcomeMessage = "T H E   A D V E N T U R E   G A M E !";
+            var welcomMessageArray = welcomeMessage.ToCharArray();
+            Console.SetCursorPosition(40, 12);
+            foreach (var letter in welcomMessageArray)
+            {
+                Thread.Sleep(50);
+                Console.Write(letter);
+            }
+            Thread.Sleep(1500);
+            Console.SetCursorPosition(47, 13);
+            Console.WriteLine("Press any key to begin.");
+            Console.ReadKey(true);
+        }
+
         public static void GameOver()
         {
             string gameOver = "G A M E   O V E R !";
@@ -242,6 +255,53 @@ namespace AdventureGame
                 Thread.Sleep(100);
                 Console.Write(letter);
             }
+        }
+
+        public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables)
+        {
+
+            for (int i = 0; i < consumables.Count; i++)
+            {
+                Monster(monsters[i]);
+                Thread.Sleep(50);
+                Item(consumables[i]);
+                Thread.Sleep(50);
+            }
+            Player(player);
+        }
+
+        public static void Monster(Creature monster)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (!monster.IsDefeated)
+            {
+                Console.SetCursorPosition(monster.X, monster.Y);
+                Console.Write(monster.Token);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void Player(Player player)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            if (!player.IsDefeated)
+            {
+                Console.SetCursorPosition(player.X, player.Y);
+                Console.Write(player.Token);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+
+        public static void Item(Item item)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (!item.IsTaken)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write(item.Token);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 

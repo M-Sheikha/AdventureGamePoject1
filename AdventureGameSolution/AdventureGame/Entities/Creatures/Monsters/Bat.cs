@@ -4,46 +4,47 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Quasit : Creature
+    class Bat : Creature
     {
-        public Quasit()
+        public Bat()
         {
-            Name = "Quasit";
-            ArmorClass = 13;
-            HitPoints = 7;
-            Strength = 5;
-            Dexterity = 17;
-            Constitution = 10;
-            Intelligence = 7;
-            Wisdom = 10;
-            Charisma = 10;
+            Name = "Bat";
+            ArmorClass = 12;
+            HitPoints = 1;
+            Strength = 2;
+            Dexterity = 15;
+            Constitution = 8;
+            Intelligence = 2;
+            Wisdom = 12;
+            Charisma = 4;
         }
 
-        public void Claws(Player player, Creature monster, ref int top)
+        public void Bite(Player player, Creature monster, ref int top)
         {
-            string tryText = "The Quasit tries to claw you!";
+            Console.SetCursorPosition(left, top++);
+            string tryText = "The Bat tries to bite you!";
             if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
-            Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
-            if (RollDice("1d20") + 4 >= player.ArmorClass)
+            Console.ReadKey(true);
+            if (RollDice("1d20") + 0 >= player.ArmorClass)
             {
-                monster.Damage = RollDice("1d4") + 3;
-                string resultText = $"The Quasit claws you, dealing {monster.Damage} damage!";
+                monster.Damage = 1;
+                string resultText = $"The Bat bites you, dealing {monster.Damage} damage!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
                     Encounter.remeberLine4 = resultText;
+
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine(resultText);
                 player.HitPoints -= monster.Damage;
             }
             else
             {
-                string resultText = "The Quasit missed.";
+                string resultText = "The Bat missed.";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else

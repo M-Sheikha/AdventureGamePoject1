@@ -48,15 +48,6 @@ namespace AdventureGame
             return items;
         }
 
-        public static void Print(Item item)
-        {
-            if (!item.IsTaken)
-            {
-                Console.SetCursorPosition(item.X, item.Y);
-                Console.Write(item.Token);
-            }
-        }
-
         public static void WannaPickMeUp(Player player, Item item)
         {
             if (player.X.Equals(item.X) && player.Y.Equals(item.Y))

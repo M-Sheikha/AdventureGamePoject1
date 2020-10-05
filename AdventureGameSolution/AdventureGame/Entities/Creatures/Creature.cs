@@ -71,16 +71,6 @@ namespace AdventureGame
             };
         }
 
-        // Lägg i Draw.
-        public static void Print(Creature creature)
-        {
-            if (!creature.IsDefeated)
-            {
-                Console.SetCursorPosition(creature.X, creature.Y);
-                Console.Write(creature.Token);
-            }
-        }
-
         public int PlayerAttackRoll(Player player)
         {
             if (player.weapon.Count > 0)

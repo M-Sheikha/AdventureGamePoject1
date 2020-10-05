@@ -29,7 +29,7 @@ namespace AdventureGame
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
+            Console.ReadKey(true);
             if (RollDice("1d20") + 5 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("1d4") + 3;

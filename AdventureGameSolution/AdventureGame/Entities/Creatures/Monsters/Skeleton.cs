@@ -4,35 +4,35 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class BlackBear : Creature
+    class Skeleton : Creature
     {
-        public BlackBear()
+        public Skeleton()
         {
-            Name = "Black Bear";
-            ArmorClass = 11;
-            HitPoints = 19;
-            Strength = 15;
-            Dexterity = 10;
-            Constitution = 14;
-            Intelligence = 2;
-            Wisdom = 12;
-            Charisma = 7;
+            Name = "Skeleton";
+            ArmorClass = 13;
+            HitPoints = 13;
+            Strength = 10;
+            Dexterity = 14;
+            Constitution = 15;
+            Intelligence = 6;
+            Wisdom = 8;
+            Charisma = 5;
         }
 
-        public void Bite(Player player, Creature monster, ref int top)
+        public void Shortsword(Player player, Creature monster, ref int top)
         {
-            string tryText = "The Black Bear tries to bite you!";
+            string tryText = "The Skeleton tries to hit you with its shortsword!";
             if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
-            if (RollDice("1d20") + 3 >= player.ArmorClass)
+            Console.ReadKey(true);
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
                 monster.Damage = RollDice("1d6") + 2;
-                string resultText = $"The Black Bear bites you, dealing {monster.Damage} damage!";
+                string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
@@ -43,7 +43,7 @@ namespace AdventureGame
             }
             else
             {
-                string resultText = "The Black Bear missed.";
+                string resultText = "The Skeleton missed.";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
@@ -53,20 +53,20 @@ namespace AdventureGame
             }
         }
 
-        public void Claws(Player player, Creature monster, ref int top)
+        public void Shortbow(Player player, Creature monster, ref int top)
         {
-            string tryText = "The Black Bear tries to claw you!";
+            string tryText = "The Skeleton tries to hit you with its shortbow!";
             if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
-            if (RollDice("1d20") + 3 >= player.ArmorClass)
+            Console.ReadKey(true);
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
-                monster.Damage = RollDice("2d4") + 2;
-                string resultText = $"The Black Bear claws you, dealing {monster.Damage} damage!";
+                monster.Damage = RollDice("1d6") + 2;
+                string resultText = $"The Skeleton hits you, dealing {monster.Damage} damage!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
@@ -77,7 +77,7 @@ namespace AdventureGame
             }
             else
             {
-                string resultText = "The Black Bear missed.";
+                string resultText = "The Skeleton missed.";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else

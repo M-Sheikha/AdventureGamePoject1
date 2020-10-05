@@ -18,7 +18,7 @@ namespace AdventureGame
                 Console.Clear();
                 Draw.InventoryFrame(player);
                 bool isCommandValid = false;
-                int time = 1000;
+                int time = 1500;
                 top = 2;
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine("You are carrying the following items:");
@@ -46,7 +46,7 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 Console.Write($"Enter an item to use. Start with \"drop\" to drop an item: ");
                 Console.CursorVisible = true;
-                string choice = Console.ReadLine();
+                var choice = Console.ReadLine();
                 if (choice.ToLower().StartsWith("drop"))
                 {
                     var itemToDrop = choice.Substring(4).ToLower().Trim();                    
@@ -74,7 +74,7 @@ namespace AdventureGame
                         {
                             Console.SetCursorPosition(left, top);
                             Console.WriteLine($"You have to enter a number between 1 and {player.inventory.Count}!");
-                            Thread.Sleep(time * 2);
+                            Thread.Sleep(time);
                         }
                     }
                     else
@@ -83,17 +83,18 @@ namespace AdventureGame
                         {
                             if (item.Name.ToLower().Contains(itemToDrop))
                             {
+                                isCommandValid = true;
                                 Console.SetCursorPosition(left, top);
-                                Console.Write($"Do you want to drop {player.inventory[index].Name}?(y/n) ");
+                                Console.Write($"Do you want to drop {item.Name}?(y/n) ");
                                 choice = Console.ReadLine();
-                                if (choice.ToLower().Equals("y"))
+                                if (!choice.ToLower().Equals("n"))
                                 {
                                     Console.CursorVisible = false;
                                     Console.SetCursorPosition(left, top);
                                     for (int i = 0; i < 80; i++)
                                         Console.Write(" ");
                                     Console.SetCursorPosition(left, top);
-                                    Console.WriteLine($"You dropped {player.inventory[index].Name}.");
+                                    Console.WriteLine($"You dropped {item.Name}.");
                                     player.inventory.RemoveAt(index);
                                     Thread.Sleep(time);
                                 }
@@ -104,7 +105,7 @@ namespace AdventureGame
                         {
                             Console.SetCursorPosition(left, top);
                             Console.WriteLine("You have to enter a valid command!");
-                            Thread.Sleep(time * 2);
+                            Thread.Sleep(time);
                         }
                     }
                 }
@@ -148,7 +149,7 @@ namespace AdventureGame
                                     Console.SetCursorPosition(left, top);
                                     Console.Write($"Do you want to equip {weapon.Name}?(y/n) ");
                                     choice = Console.ReadLine();
-                                    if (choice.ToLower().Equals("y"))
+                                    if (!choice.ToLower().Equals("n"))
                                     {
                                         Console.CursorVisible = false;
                                         Console.SetCursorPosition(left, top);
@@ -168,7 +169,7 @@ namespace AdventureGame
                                         Console.SetCursorPosition(left, top);
                                         Console.Write($"You already have an Off-hand item equipped. Do you want to swap?(y/n): ");
                                         choice = Console.ReadLine();
-                                        if (choice.ToLower().Equals("y"))
+                                        if (!choice.ToLower().Equals("n"))
                                         {
                                             Console.CursorVisible = false;
                                             player.ArmorClass -= player.armor[armorIndex].ArmorClass;
@@ -189,7 +190,7 @@ namespace AdventureGame
                                         Console.SetCursorPosition(left, top);
                                         Console.Write($"You already have a weapon equipped. Do you want to swap?(y/n): ");
                                         choice = Console.ReadLine();
-                                        if (choice.ToLower().Equals("y"))
+                                        if (!choice.ToLower().Equals("n"))
                                         {
                                             Console.CursorVisible = false;
                                             player.inventory.Add(player.Weapon);
@@ -214,7 +215,7 @@ namespace AdventureGame
                                     Console.CursorVisible = false;
                                     Console.SetCursorPosition(left, top);
                                     Console.WriteLine($"You can't equip {armor.Name} because your Strength is to low.");
-                                    Thread.Sleep(time * 2);
+                                    Thread.Sleep(time);
                                 }
                                 else
                                 {
@@ -242,7 +243,7 @@ namespace AdventureGame
                                         Console.SetCursorPosition(left, top);
                                         Console.Write($"Do you want to equip {armor.Name}?(y/n) ");
                                         choice = Console.ReadLine();
-                                        if (choice.ToLower().Equals("y"))
+                                        if (!choice.ToLower().Equals("n"))
                                         {
                                             Console.CursorVisible = false;
                                             Console.SetCursorPosition(left, top);
@@ -266,7 +267,7 @@ namespace AdventureGame
                                             Console.SetCursorPosition(left, top);
                                             Console.Write($"You already have an {armor.Property} item equipped. Do you want to swap?(y/n): ");
                                             choice = Console.ReadLine();
-                                            if (choice.ToLower().Equals("y"))
+                                            if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
                                                 player.ArmorClass -= player.armor[armorIndex].ArmorClass - player.armor[armorIndex].DexterityModifier;
@@ -289,7 +290,7 @@ namespace AdventureGame
                                             Console.SetCursorPosition(left, top);
                                             Console.Write($"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ");
                                             choice = Console.ReadLine();
-                                            if (choice.ToLower().Equals("y"))
+                                            if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
                                                 player.inventory.Add(player.weapon[0]);
@@ -321,7 +322,7 @@ namespace AdventureGame
                                     Console.SetCursorPosition(left, top);
                                     Console.Write($"Do you want to use {consumable.Name}?(y/n) ");
                                     choice = Console.ReadLine();
-                                    if (choice.ToLower().Equals("y"))
+                                    if (!choice.ToLower().Equals("n"))
                                     {
                                         Console.CursorVisible = false;
                                         Console.SetCursorPosition(left, top);
@@ -365,14 +366,14 @@ namespace AdventureGame
                             Console.CursorVisible = false;
                             Console.SetCursorPosition(left, top);
                             Console.WriteLine($"You have to enter a number between 1 and {player.inventory.Count}!");
-                            Thread.Sleep(time * 2);
+                            Thread.Sleep(time);
                         }
                     }
                     else
                     {
                         foreach (var item in player.inventory.ToList())
                         {
-                            if (item.Name.ToLower().Contains(choice))
+                            if (item.Name.ToLower().Contains(choice) && !choice.Equals(""))
                             {
                                 isCommandValid = true;
                                 if (item is Weapon weapon)
@@ -401,7 +402,7 @@ namespace AdventureGame
                                         Console.SetCursorPosition(left, top);
                                         Console.Write($"Do you want to equip {weapon.Name}?(y/n) ");
                                         choice = Console.ReadLine();
-                                        if (choice.ToLower().Equals("y"))
+                                        if (!choice.ToLower().Equals("n"))
                                         {
                                             Console.CursorVisible = false;
                                             Console.SetCursorPosition(left, top);
@@ -421,7 +422,7 @@ namespace AdventureGame
                                             Console.SetCursorPosition(left, top);
                                             Console.Write($"You already have an Off-hand item equipped. Do you want to swap?(y/n): ");
                                             choice = Console.ReadLine();
-                                            if (choice.ToLower().Equals("y"))
+                                            if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
                                                 player.ArmorClass -= player.armor[armorIndex].ArmorClass;
@@ -442,7 +443,7 @@ namespace AdventureGame
                                             Console.SetCursorPosition(left, top);
                                             Console.Write($"You already have a weapon equipped. Do you want to swap?(y/n): ");
                                             choice = Console.ReadLine();
-                                            if (choice.ToLower().Equals("y"))
+                                            if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
                                                 player.inventory.Add(player.Weapon);
@@ -467,7 +468,7 @@ namespace AdventureGame
                                         Console.CursorVisible = false;
                                         Console.SetCursorPosition(left, top);
                                         Console.WriteLine($"You can't equip {armor.Name} because your Strength is to low.");
-                                        Thread.Sleep(time * 2);
+                                        Thread.Sleep(time);
                                     }
                                     else
                                     {
@@ -495,7 +496,7 @@ namespace AdventureGame
                                             Console.SetCursorPosition(left, top);
                                             Console.Write($"Do you want to equip {armor.Name}?(y/n) ");
                                             choice = Console.ReadLine();
-                                            if (choice.ToLower().Equals("y"))
+                                            if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
                                                 Console.SetCursorPosition(left, top);
@@ -519,7 +520,7 @@ namespace AdventureGame
                                                 Console.SetCursorPosition(left, top);
                                                 Console.Write($"You already have an {armor.Property} item equipped. Do you want to swap?(y/n): ");
                                                 choice = Console.ReadLine();
-                                                if (choice.ToLower().Equals("y"))
+                                                if (!choice.ToLower().Equals("n"))
                                                 {
                                                     Console.CursorVisible = false;
                                                     player.ArmorClass -= player.armor[armorIndex].ArmorClass - player.armor[armorIndex].DexterityModifier;
@@ -542,7 +543,7 @@ namespace AdventureGame
                                                 Console.SetCursorPosition(left, top);
                                                 Console.Write($"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ");
                                                 choice = Console.ReadLine();
-                                                if (choice.ToLower().Equals("y"))
+                                                if (!choice.ToLower().Equals("n"))
                                                 {
                                                     Console.CursorVisible = false;
                                                     player.inventory.Add(player.weapon[0]);
@@ -573,7 +574,7 @@ namespace AdventureGame
                                         Console.SetCursorPosition(left, top);
                                         Console.Write($"Do you want to use {consumable.Name}?(y/n) ");
                                         choice = Console.ReadLine();
-                                        if (choice.ToLower().Equals("y"))
+                                        if (!choice.ToLower().Equals("n"))
                                         {
                                             Console.CursorVisible = false;
                                             Console.SetCursorPosition(left, top);
@@ -614,13 +615,14 @@ namespace AdventureGame
                             }
                         }
 
-                        if (!isCommandValid)
+                        if (choice.Equals(""))
+                            break;
+                        else if (!isCommandValid)
                         {
                             Console.SetCursorPosition(left, top);
                             Console.WriteLine("You have to enter a valid command!");
-                            Thread.Sleep(time * 2);
+                            Thread.Sleep(time);
                         }
-
                     }
 
                     //else if (choice.Length > 0)

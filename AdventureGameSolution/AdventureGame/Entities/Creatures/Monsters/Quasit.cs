@@ -4,35 +4,35 @@ using System.Text;
 
 namespace AdventureGame
 {
-    class Zombie : Creature
+    class Quasit : Creature
     {
-        public Zombie()
+        public Quasit()
         {
-            Name = "Zombie";
-            ArmorClass = 8;
-            HitPoints = 22;
-            Strength = 13;
-            Dexterity = 6;
-            Constitution = 16;
-            Intelligence = 3;
-            Wisdom = 6;
-            Charisma = 5;
+            Name = "Quasit";
+            ArmorClass = 13;
+            HitPoints = 7;
+            Strength = 5;
+            Dexterity = 17;
+            Constitution = 10;
+            Intelligence = 7;
+            Wisdom = 10;
+            Charisma = 10;
         }
 
-        public void Slam(Player player, Creature monster, ref int top)
+        public void Claws(Player player, Creature monster, ref int top)
         {
-            string tryText = "The Zombie tries to slam you!";
+            string tryText = "The Quasit tries to claw you!";
             if (Encounter.firstPartOfRound)
                 Encounter.remeberLine1 = tryText;
             else
                 Encounter.remeberLine3 = tryText;
             Console.SetCursorPosition(left, top++);
             Console.WriteLine(tryText);
-            Console.ReadKey();
-            if (RollDice("1d20") + 3 >= player.ArmorClass)
+            Console.ReadKey(true);
+            if (RollDice("1d20") + 4 >= player.ArmorClass)
             {
-                monster.Damage = RollDice("1d6") + 1;
-                string resultText = $"The Zombie slams you, dealing {monster.Damage} damage!";
+                monster.Damage = RollDice("1d4") + 3;
+                string resultText = $"The Quasit claws you, dealing {monster.Damage} damage!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else
@@ -43,7 +43,7 @@ namespace AdventureGame
             }
             else
             {
-                string resultText = "The Zombie missed.";
+                string resultText = "The Quasit missed.";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine2 = resultText;
                 else

@@ -44,20 +44,20 @@ namespace AdventureGame
                 Console.WriteLine($"You have encountered an Imp!");
             else
                 Console.WriteLine($"You have encountered a {monster.Name}!");
-            Console.ReadLine();
+            Console.ReadKey(true);
             Console.SetCursorPosition(left, top++);
             Console.WriteLine("Roll for initiative!");
-            Console.ReadKey();
+            Console.ReadKey(true);
 
             player.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(player.Dexterity);
             monster.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(monster.Dexterity);
 
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"You rolled {player.Initiative}.");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"The {monster.Name} rolled {monster.Initiative}.");
-            Console.ReadKey();
+            Console.ReadKey(true);
 
             if (player.Initiative >= monster.Initiative)
             {
@@ -69,14 +69,14 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"The {monster.Name} will begin attack!");
             }
-            Console.ReadKey();
+            Console.ReadKey(true);
 
             do
             {
                 areBothAlive = CombatRound(player, monster);
             } while (areBothAlive);
-            
-            Console.ReadKey();
+
+            Console.ReadKey(true);
             Console.Clear();
             if (player.HitPoints >= 0)
                 Draw.WorldFrame();
@@ -161,7 +161,7 @@ namespace AdventureGame
             do
             {
                 firstPartOfRound = false;
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
                     top = 4;
@@ -195,7 +195,7 @@ namespace AdventureGame
         {
             do
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
                     top = 4;
@@ -269,7 +269,7 @@ namespace AdventureGame
         {
             if (monster.HitPoints < 1)
             {
-                Console.ReadKey();
+                Console.ReadKey(true);
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"You killed the {monster.Name}!");
                 monster.IsDefeated = true;
@@ -277,7 +277,7 @@ namespace AdventureGame
             }
             else if (player.HitPoints < 1)
             {
-                Console.ReadKey();
+                Console.ReadKey(true);
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine($"The {monster.Name} killed You!");
                 player.IsDefeated = true;
