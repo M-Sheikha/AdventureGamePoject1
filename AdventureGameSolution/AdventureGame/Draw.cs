@@ -15,6 +15,7 @@ namespace AdventureGame
 
         public static void CharacterCreation()
         {
+            Console.CursorVisible = true;
             TopOfFrame("CARACTER CREATION");
             SidesOfFrame(15);
             BottomOfFrame();
@@ -22,6 +23,7 @@ namespace AdventureGame
 
         public static void WorldFrame()
         {
+            Console.CursorVisible = false;
             Console.Clear();
             TopOfFrame();
             SidesOfFrame(worldHeight);
@@ -32,6 +34,7 @@ namespace AdventureGame
 
         public static void CharacterPanel(Player player)
         {
+            Console.CursorVisible = false;
             Console.Clear();
             TopOfFrame("CHARACTER");
             SidesOfFrame(4);
@@ -56,13 +59,16 @@ namespace AdventureGame
             Stat("Charisma", player.Charisma, Entity.AbilityModifier(player.Charisma));
             top += 2;
 
-            if (player.weapon.Count > 0)
-            {
-                Console.SetCursorPosition(left, top++);
-                Console.Write($"{player.weapon[0].Name} - {player.weapon[0].Damage} Damage");
-            }
+            //if (player.weapon.Count > 0)
+            //{
+            Console.SetCursorPosition(left, top++);
+            if (player.Weapon.AbilityModifier >= 0)
+                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
             else
-                top++;
+                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (-{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
+            //}
+            //else
+            //    top++;
             top += 2;
 
             if (player.armor.Count > 0)
@@ -71,11 +77,11 @@ namespace AdventureGame
                 {
                     Console.SetCursorPosition(left, top++);
                     if (item.Property.Equals("Off-hand"))
-                        Console.Write($"{item.Name} -  +{item.ArmorClass} Armor Class");
+                        Console.Write($"{item.Name} =  +{item.ArmorClass} Armor Class");
                     else if (item.DexterityModifier > 0)
-                        Console.Write($"{item.Name} - {item.ArmorClass} (+{item.DexterityModifier}) Armor Class");
+                        Console.Write($"{item.Name} = {item.ArmorClass} (+{item.DexterityModifier} Dex) Armor Class");
                     else
-                        Console.Write($"{item.Name} - {item.ArmorClass} Armor Class");
+                        Console.Write($"{item.Name} = {item.ArmorClass} Armor Class");
                 }
             }
             Console.ReadKey();
@@ -83,7 +89,8 @@ namespace AdventureGame
         }
 
         public static void InventoryFrame(Player player)
-        {             
+        {
+            Console.CursorVisible = true;
             Console.Clear();
             TopOfFrame("INVENTORY");
             SidesOfFrame(player.inventory.Count + 2);
@@ -94,6 +101,7 @@ namespace AdventureGame
 
         public static void EncounterFrame(Player player, Creature monster)
         {
+            Console.CursorVisible = false;
             top = 2;
             TopOfFrameWithDivider("ENCOUNTER");
             SidesOfFrameWithDivider(1);

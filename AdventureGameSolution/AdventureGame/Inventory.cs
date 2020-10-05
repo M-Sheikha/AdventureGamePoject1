@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -30,13 +31,13 @@ namespace AdventureGame
                         Console.Write($"{item.Value} ");
                     Console.Write(item.Name);
                     if (item is Weapon weapon)
-                        Console.WriteLine($" - {weapon.Damage} Damage - {weapon.Property}");
+                        Console.WriteLine($" = {weapon.Damage} Damage => {weapon.Property}");
                     else if (item is Armor armor)
                     {
                         if (armor.DexterityModifier > 0)
-                            Console.WriteLine($" - {armor.ArmorClass} (+{armor.DexterityModifier} Dex) Armor Class - {armor.Property}");
+                            Console.WriteLine($" = {armor.ArmorClass} (+{armor.DexterityModifier} Dex) Armor Class => {armor.Property}");
                         else
-                            Console.WriteLine($" - {armor.ArmorClass} Armor Class - {armor.Property}");
+                            Console.WriteLine($" = {armor.ArmorClass} Armor Class => {armor.Property}");
                     }
                     else
                         Console.WriteLine();
@@ -47,11 +48,8 @@ namespace AdventureGame
                 string choice = Console.ReadLine();
                 if (choice.ToLower().StartsWith("drop"))
                 {
-                    var item = choice.Substring(4).ToLower();                    
-
-                    //var charArray = choice.ToLower().Split('p');
-                    //if (int.TryParse(charArray[1], out int index))
-                    if (int.TryParse(item, out int index))
+                    var itemToDrop = choice.Substring(4).ToLower().Trim();                    
+                    if (int.TryParse(itemToDrop, out int index))
                     {
                         index--;
                         Console.SetCursorPosition(left, top);
@@ -59,15 +57,24 @@ namespace AdventureGame
                         player.inventory.RemoveAt(index);
                         Thread.Sleep(time);
                     }
-                    else if (item)
-                    {
-
-                    }
                     else
                     {
-                        Console.SetCursorPosition(left, top);
-                        Console.WriteLine("You have to enter a valid command!");
-                        Thread.Sleep(time * 2);
+                        foreach (var item in player.inventory.ToList())
+                        {
+                            if (item.Name.ToLower().StartsWith(itemToDrop))
+                            {
+                                Console.SetCursorPosition(left, top);
+                                Console.WriteLine($"You dropped {item.Name}");
+                                player.inventory.Remove(item);
+                                Thread.Sleep(time);
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(left, top);
+                                Console.WriteLine("You have to enter a valid command!");
+                                Thread.Sleep(time * 2);
+                            }
+                        }
                     }
                 }
                 else if (int.TryParse(choice, out int index))
@@ -84,8 +91,8 @@ namespace AdventureGame
                         if (player.inventory[index] is Weapon weapon)
                         {
                             // OM det är "Main hand" så kolla efter ett annat Weapon.
-                            if (player.weapon.Count > 0)
-                                // You already have a weapon equipped.
+                            if (!player.Weapon.Name.Equals("Unarmed"))
+                                // You already have a weapon equipped. (You are not unarmed).
                                 isEquippable = false;
                             // OM det är "Two-handed" så kolla efter ett annat Weapon OCH efter en "Off-hand" Armor.
                             else if (weapon.Property.Equals("Two-handed") && player.armor.Count > 0)
@@ -106,7 +113,7 @@ namespace AdventureGame
                             {
                                 Console.SetCursorPosition(left, top);
                                 Console.WriteLine($"You equipped {weapon.Name}.");
-                                player.weapon.Add(weapon);
+                                player.Weapon = weapon;
                                 player.inventory.RemoveAt(index);
                                 Thread.Sleep(time);
                             }
@@ -127,7 +134,7 @@ namespace AdventureGame
                                             Console.Write(" ");
                                         Console.SetCursorPosition(left, top);
                                         Console.WriteLine($"You equipped {weapon.Name}.");
-                                        player.weapon.Insert(0, weapon);
+                                        player.Weapon = weapon;
                                         player.inventory.RemoveAt(index);
                                         Thread.Sleep(time);
                                     }
@@ -139,14 +146,14 @@ namespace AdventureGame
                                     choice = Console.ReadLine();
                                     if (choice.ToLower().Equals("y"))
                                     {
-                                        player.inventory.Add(player.weapon[0]);
-                                        player.weapon.RemoveAt(0);
+                                        player.inventory.Add(player.Weapon);
                                         Console.SetCursorPosition(left, top);
                                         for (int i = 0; i < 80; i++)
                                             Console.Write(" ");
                                         Console.SetCursorPosition(left, top);
                                         Console.WriteLine($"You equipped {weapon.Name}.");
-                                        player.weapon.Insert(0, weapon);
+                                        player.Weapon = weapon;
+                                        // player.weapon.Insert(0, weapon);
                                         player.inventory.RemoveAt(index);
                                         Thread.Sleep(time);
                                     }
@@ -254,6 +261,7 @@ namespace AdventureGame
                             {
                                 Console.SetCursorPosition(left, top++);
                                 Console.Write($"You used {consumable.Name} and was healed ");
+                                consumable.HitPoints = Entity.RollDice(consumable.Dice) + consumable.ExtraHealth;
                                 player.HitPoints += consumable.HitPoints;
                                 if (player.HitPoints >= player.MaxHealth)
                                 {
@@ -297,7 +305,7 @@ namespace AdventureGame
                 else
                     break;
             } while (true);
-
+            Console.CursorVisible = false;
             Console.Clear();
         }
     }

@@ -165,7 +165,7 @@ namespace AdventureGame
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
                     top = 4;
-                    Draw.InventoryFrame(player);
+                    Inventory.ShowInventory(player);
                     Draw.EncounterFrame(player, monster);
                     Console.SetCursorPosition(left, top++);
                     Console.WriteLine(remeberLine1);
@@ -199,7 +199,7 @@ namespace AdventureGame
                 if (keyInfo.Key.Equals(ConsoleKey.I))
                 {
                     top = 4;
-                    Draw.InventoryFrame(player);
+                    Inventory.ShowInventory(player);
                     Draw.EncounterFrame(player, monster);
                     Console.SetCursorPosition(left, top++);
                     Console.WriteLine(remeberLine1);

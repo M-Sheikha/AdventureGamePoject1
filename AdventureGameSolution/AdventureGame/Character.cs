@@ -23,11 +23,13 @@ namespace AdventureGame
             player.Class = GetClass();
             GetPlayerStats(player);
             GetRaceBonus(player);
-            player.MaxHealth = player.HitPoints;
+            player.Weapon = new Weapon("Unarmed", "", Entity.AbilityModifier(player.Strength), "Str", "1");
+            player.MaxHealth = player.HitPoints + 20;
             player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
             top++;
             Console.SetCursorPosition(left, top);
             Console.WriteLine($"Welcome to the Adventure Game, {player.Name} the {player.Race} {player.Class}!");
+            Console.CursorVisible = false;
             Thread.Sleep(3000);
             return player;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureGame
 {
@@ -7,6 +8,12 @@ namespace AdventureGame
     {        
         public int Value { get; set; }
         public bool IsTaken { get; set; }
+
+        public Item()
+        {
+            Token = '●';
+            IsTaken = false;
+        }
 
         public Item(string name) : base(name)
         {
@@ -52,14 +59,39 @@ namespace AdventureGame
 
         public static void WannaPickMeUp(Player player, Item item)
         {
-            if (player.X == item.X && player.Y == item.Y)
+            if (player.X.Equals(item.X) && player.Y.Equals(item.Y))
             {
                 if (item.Name.Equals("Gold Pieces") || item is Consumable)
+                {
                     item.Value = rnd.Next(1, 11);
-                player.inventory.Add(item);
-                item.IsTaken = true;
-                item.X = 0;
-                item.Y = 0;
+                    bool notThere = true;
+                    foreach (var valueItem in player.inventory.ToList())
+                    {
+                        if (valueItem.Name.Equals(item.Name))
+                        {
+                            valueItem.Value += item.Value;
+                            item.IsTaken = true;
+                            item.X = 0;
+                            item.Y = 0;
+                            notThere = false;
+                        }
+                    }
+
+                    if (notThere)
+                    {
+                        player.inventory.Add(item);
+                        item.IsTaken = true;
+                        item.X = 0;
+                        item.Y = 0;
+                    }
+                }
+                else
+                {
+                    player.inventory.Add(item);
+                    item.IsTaken = true;
+                    item.X = 0;
+                    item.Y = 0;
+                }
             }
         }
     }

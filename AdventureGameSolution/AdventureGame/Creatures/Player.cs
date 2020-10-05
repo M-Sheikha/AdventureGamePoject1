@@ -13,7 +13,8 @@ namespace AdventureGame
         public List<Item> inventory = new List<Item>();
         public List<Weapon> weapon = new List<Weapon>();
         public List<Armor> armor = new List<Armor>();
-        
+
+        public Weapon Weapon { get; set; }
         public string Class { get; set; }
         public int MaxHealth { get; set; }
         public int Unarmored { get; set; }
