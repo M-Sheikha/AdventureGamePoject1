@@ -5,7 +5,7 @@ using System.Xml.Xsl;
 
 namespace AdventureGame
 {
-    public enum Monster : int
+    public enum Monsters : int
     {
         Bat,
         BlackBear,
@@ -61,12 +61,12 @@ namespace AdventureGame
             var randomMonster = rnd.Next(6);
             return randomMonster switch
             {
-                (int)Monster.Bat => new Bat(),
-                (int)Monster.BlackBear => new BlackBear(),
-                (int)Monster.Imp => new Imp(),
-                (int)Monster.Quasit => new Quasit(),
-                (int)Monster.Skeleton => new Skeleton(),
-                (int)Monster.Zombie => new Zombie(),
+                (int)Monsters.Bat => new Bat(),
+                (int)Monsters.BlackBear => new BlackBear(),
+                (int)Monsters.Imp => new Imp(),
+                (int)Monsters.Quasit => new Quasit(),
+                (int)Monsters.Skeleton => new Skeleton(),
+                (int)Monsters.Zombie => new Zombie(),
                 _ => throw new NotImplementedException()
             };
         }
