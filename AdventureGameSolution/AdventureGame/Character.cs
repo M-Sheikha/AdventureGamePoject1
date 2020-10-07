@@ -53,7 +53,7 @@ namespace AdventureGame
             GetPlayerStats(player);
             GetRaceBonus(player);
             player.Weapon = new Weapon("Unarmed", "", Entity.AbilityModifier(player.Strength), "Str", "1");
-            player.MaxHealth = player.HitPoints + 20;
+            player.MaxHealth = player.HitPoints;
             player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
             top++;
             Console.SetCursorPosition(left, top);
@@ -177,14 +177,14 @@ namespace AdventureGame
                         "Human",
                         "Dragonborn",
                         "Gnome",
-                        "HalfElf",
-                        "HalfOrc",
+                        "Half-Elf",
+                        "Half-Orc",
                         "Tiefling"
                     };
 
                     foreach (var race in races)
-                        if (race.ToLower().Contains(playerChoice))
-                            return race.ToString();
+                        if (race.ToLower().Contains(playerChoice.ToLower()))
+                            return race;
 
                     Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
@@ -430,7 +430,7 @@ namespace AdventureGame
                 else
                 {
                     foreach (var _class in Enum.GetValues(typeof(Classes)))
-                        if (_class.ToString().ToLower().Contains(playerChoice))
+                        if (_class.ToString().ToLower().Contains(playerChoice.ToLower()))
                             return _class.ToString();
                     Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
@@ -716,8 +716,6 @@ namespace AdventureGame
                     player.Constitution += 2;
                     break;
                 case "Elf":
-                    player.Dexterity += 2;
-                    break;
                 case "Hafling":
                     player.Dexterity += 2;
                     break;
