@@ -72,42 +72,32 @@ namespace AdventureGame
             {
                 Console.CursorVisible = true;
                 string name = Console.ReadLine();
-                if (int.TryParse(name, out _))
-                {
-                    Console.CursorVisible = false;
-                    Console.SetCursorPosition(left, top);
-                    string message = "You have to enter a valid name.";
-                    Console.WriteLine(message);
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < message.Length; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < question.Length + name.Length; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write(question);
-                }
+                if (int.TryParse(name, out _))                
+                    TypeOver(question, "You have to enter a valid name.", name);                               
                 else if (name.Length < 1)
-                {
-                    Console.CursorVisible = false;
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to enter a name.");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("What is your characters name? ");
-                }
+                    TypeOver(question, "You have to enter a name.", name);
                 else
                     return name.First().ToString().ToUpper() + name.Substring(1);
 
             } while (true);
         }
+
+        private static void TypeOver(string question, string errorMessage, string name)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(left, top);        
+            Console.WriteLine(errorMessage);
+            Thread.Sleep(2000);
+            Console.SetCursorPosition(left, top);
+            for (int i = 0; i < errorMessage.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(left, --top);
+            for (int i = 0; i < question.Length + name.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(left, top++);
+            Console.Write(question + " ");
+        }
+
 
         private static string GetRace()
         {
