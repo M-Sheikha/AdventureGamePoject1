@@ -261,7 +261,7 @@ namespace AdventureGame
         {
             string win = "Y O U   W I N !";
             var winArray = win.ToCharArray();
-            Console.SetCursorPosition(47, 12);
+            Console.SetCursorPosition(51, 12);
             foreach (var letter in winArray)
             {
                 Thread.Sleep(100);
