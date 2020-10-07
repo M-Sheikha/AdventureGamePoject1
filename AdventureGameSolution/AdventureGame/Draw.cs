@@ -257,6 +257,18 @@ namespace AdventureGame
             }
         }
 
+        public static void Win()
+        {
+            string win = "Y O U   W I N !";
+            var winArray = win.ToCharArray();
+            Console.SetCursorPosition(47, 12);
+            foreach (var letter in winArray)
+            {
+                Thread.Sleep(100);
+                Console.Write(letter);
+            }
+        }
+
         public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables, Item[] items)
         {
 

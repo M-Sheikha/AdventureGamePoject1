@@ -11,6 +11,7 @@ namespace AdventureGame
         public const int rightBorder = 106;
         public const int topBorder = 2;
         public const int bottomBorder = 24;
+        public static bool AreAllMonstersDead = true;
 
         public static void Start()
         {
@@ -70,7 +71,7 @@ namespace AdventureGame
             do
             {
                 // Skriver ut spelaren till skärmen.
-                Draw.Monster(player);
+                Draw.Player(player);
 
                 // Skriver ut monstren så länge de inte är besegrade.
                 foreach (var monster in monsters)
@@ -101,11 +102,20 @@ namespace AdventureGame
                 if (player.HitPoints <= 0)
                     break;
 
-            } while (true);
+                foreach (var monster in monsters)               
+                    if (monster.HitPoints > 0)                    
+                        AreAllMonstersDead = true;
+                    
+                
+
+            } while (!AreAllMonstersDead);
 
             Console.Clear();
             Draw.WorldFrame();
-            Draw.GameOver();
+            if (AreAllMonstersDead)            
+                Draw.Win();            
+            else            
+                Draw.GameOver();                        
             Console.ReadLine();
 
         }
