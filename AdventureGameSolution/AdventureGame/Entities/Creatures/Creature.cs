@@ -17,9 +17,6 @@ namespace AdventureGame
 
     abstract class Creature : Entity
     {
-        // Varelser har även förmågor (som beror på egenskaperna) och de minskar
-        // den andra varelsens egeneskaper under ett möte.
-
         public int HitPoints { get; set; }
         public int ArmorClass { get; set; }
         public int Damage { get; set; }
@@ -34,7 +31,6 @@ namespace AdventureGame
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
-        
 
         public Creature() : base()
         {
@@ -55,24 +51,5 @@ namespace AdventureGame
                 _ => throw new NotImplementedException()
             };
         }
-
-        public int PlayerAttackRoll(Player player)
-        {
-            if (!player.Weapon.Equals("Unarmed"))
-                return RollDice("1d20") + player.Weapon.AbilityModifier;
-            else
-                return RollDice("1d20") + GetAbilityModifier(player.Strength);
-        }
-
-        public void PrintMonster(Creature monster)
-        {
-            if (!monster.IsDefeated)
-            {
-                Console.SetCursorPosition(monster.X, monster.Y);
-                Console.Write("M");
-            }
-        }
-
-        
     }
 }

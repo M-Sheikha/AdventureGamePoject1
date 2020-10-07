@@ -35,7 +35,7 @@ namespace AdventureGame
                     else if (item is Armor armor)
                     {
                         if (armor.AbilityModifier > 0)
-                            Console.WriteLine($" = {armor.ArmorClass} (+{armor.AbilityModifier} Dex) Armor Class => {armor.Placement}");
+                            Console.WriteLine($" = {armor.ArmorClass} (+{armor.AbilityModifier} {armor.AbilityModifierName}) Armor Class => {armor.Placement}");
                         else
                             Console.WriteLine($" = {armor.ArmorClass} Armor Class => {armor.Placement}");
                     }
@@ -44,7 +44,7 @@ namespace AdventureGame
                 }
                 top += 2;
                 Console.SetCursorPosition(left, top++);
-                Console.Write($"Enter an item to use. Start with \"drop\" to drop an item: ");
+                Console.Write($"Enter an item to use it. Start with \"drop\" to drop an item: ");
                 Console.CursorVisible = true;
                 var choice = Console.ReadLine();
                 if (choice.ToLower().StartsWith("drop"))
@@ -56,14 +56,12 @@ namespace AdventureGame
                         if (index >= 0 && index < player.Inventory.Count)
                         {
                             Console.SetCursorPosition(left, top);
-                            Console.Write($"Do you want to drop {player.Inventory[index].Name}?(y/n) ");
+                            string question = $"Do you want to drop {player.Inventory[index].Name}?(y/n) ";
+                            Console.Write(question);
                             choice = Console.ReadLine();
-                            if (choice.ToLower().Equals("y"))
+                            if (choice.ToLower().StartsWith("y"))
                             {
-                                Console.CursorVisible = false;
-                                Console.SetCursorPosition(left, top);
-                                for (int i = 0; i < 80; i++)
-                                    Console.Write(" ");
+                                TypeOver(question, choice);
                                 Console.SetCursorPosition(left, top);
                                 Console.WriteLine($"You dropped {player.Inventory[index].Name}.");
                                 player.Inventory.RemoveAt(index);
@@ -85,14 +83,12 @@ namespace AdventureGame
                             {
                                 isCommandValid = true;
                                 Console.SetCursorPosition(left, top);
-                                Console.Write($"Do you want to drop {item.Name}?(y/n) ");
+                                string question = $"Do you want to drop {item.Name}?(y/n) ";
+                                Console.Write(question);
                                 choice = Console.ReadLine();
-                                if (!choice.ToLower().Equals("n"))
+                                if (!choice.ToLower().StartsWith("n"))
                                 {
-                                    Console.CursorVisible = false;
-                                    Console.SetCursorPosition(left, top);
-                                    for (int i = 0; i < 80; i++)
-                                        Console.Write(" ");
+                                    TypeOver(question, choice);
                                     Console.SetCursorPosition(left, top);
                                     Console.WriteLine($"You dropped {item.Name}.");
                                     player.Inventory.RemoveAt(index);
@@ -118,6 +114,7 @@ namespace AdventureGame
 
                     if (int.TryParse(choice, out int index))
                     {
+                        // Kommer åt index position.
                         index--;
 
                         if (index >= 0 && index < player.Inventory.Count)
@@ -147,14 +144,12 @@ namespace AdventureGame
                                 if (isEquippable)
                                 {
                                     Console.SetCursorPosition(left, top);
-                                    Console.Write($"Do you want to equip {weapon.Name}?(y/n) ");
+                                    string question = $"Do you want to equip {weapon.Name}?(y/n) ";
+                                    Console.Write(question);
                                     choice = Console.ReadLine();
-                                    if (!choice.ToLower().Equals("n"))
+                                    if (!choice.ToLower().StartsWith("n"))
                                     {
-                                        Console.CursorVisible = false;
-                                        Console.SetCursorPosition(left, top);
-                                        for (int i = 0; i < 80; i++)
-                                            Console.Write(" ");
+                                        TypeOver(question, choice);
                                         Console.SetCursorPosition(left, top);
                                         Console.WriteLine($"You equipped {weapon.Name}.");
                                         player.Weapon = weapon;
@@ -167,17 +162,15 @@ namespace AdventureGame
                                     if (isShield)
                                     {
                                         Console.SetCursorPosition(left, top);
-                                        Console.Write($"You already have an Off-hand item equipped. Do you want to swap?(y/n): ");
+                                        string question = $"You already have an Off-hand item equipped. Do you want to swap?(y/n): ";
+                                        Console.Write(question);
                                         choice = Console.ReadLine();
-                                        if (!choice.ToLower().Equals("n"))
+                                        if (!choice.ToLower().StartsWith("n"))
                                         {
-                                            Console.CursorVisible = false;
+                                            TypeOver(question, choice);
                                             player.ArmorClass -= player.Armor[armorIndex].ArmorClass;
                                             player.Inventory.Add(player.Armor[armorIndex]);
                                             player.Armor.RemoveAt(armorIndex);
-                                            Console.SetCursorPosition(left, top);
-                                            for (int i = 0; i < 80; i++)
-                                                Console.Write(" ");
                                             Console.SetCursorPosition(left, top);
                                             Console.WriteLine($"You equipped {weapon.Name}.");
                                             player.Weapon = weapon;
@@ -188,15 +181,13 @@ namespace AdventureGame
                                     else
                                     {
                                         Console.SetCursorPosition(left, top);
-                                        Console.Write($"You already have a weapon equipped. Do you want to swap?(y/n): ");
+                                        string question = $"You already have a weapon equipped. Do you want to swap?(y/n): ";
+                                        Console.Write(question);
                                         choice = Console.ReadLine();
-                                        if (!choice.ToLower().Equals("n"))
+                                        if (!choice.ToLower().StartsWith("n"))
                                         {
-                                            Console.CursorVisible = false;
+                                            TypeOver(question, choice);
                                             player.Inventory.Add(player.Weapon);
-                                            Console.SetCursorPosition(left, top);
-                                            for (int i = 0; i < 80; i++)
-                                                Console.Write(" ");
                                             Console.SetCursorPosition(left, top);
                                             Console.WriteLine($"You equipped {weapon.Name}.");
                                             player.Weapon = weapon;
@@ -241,14 +232,12 @@ namespace AdventureGame
                                     if (isEquippable)
                                     {
                                         Console.SetCursorPosition(left, top);
-                                        Console.Write($"Do you want to equip {armor.Name}?(y/n) ");
+                                        string question = $"Do you want to equip {armor.Name}?(y/n) ";
+                                        Console.Write(question);
                                         choice = Console.ReadLine();
-                                        if (!choice.ToLower().Equals("n"))
+                                        if (!choice.ToLower().StartsWith("n"))
                                         {
-                                            Console.CursorVisible = false;
-                                            Console.SetCursorPosition(left, top);
-                                            for (int i = 0; i < 80; i++)
-                                                Console.Write(" ");
+                                            TypeOver(question, choice);
                                             Console.SetCursorPosition(left, top);
                                             Console.WriteLine($"You equipped {armor.Name}.");
                                             player.Armor.Add(armor);
@@ -265,17 +254,15 @@ namespace AdventureGame
                                         if (isEqual)
                                         {
                                             Console.SetCursorPosition(left, top);
-                                            Console.Write($"You already have an {armor.Placement} item equipped. Do you want to swap?(y/n): ");
+                                            string question = $"You already have an {armor.Placement} item equipped. Do you want to swap?(y/n): ";
+                                            Console.Write(question);
                                             choice = Console.ReadLine();
-                                            if (!choice.ToLower().Equals("n"))
+                                            if (!choice.ToLower().StartsWith("n"))
                                             {
-                                                Console.CursorVisible = false;
+                                                TypeOver(question, choice);
                                                 player.ArmorClass -= player.Armor[armorIndex].ArmorClass - player.Armor[armorIndex].AbilityModifier;
                                                 player.Inventory.Add(player.Armor[armorIndex]);
                                                 player.Armor.RemoveAt(armorIndex);
-                                                Console.SetCursorPosition(left, top);
-                                                for (int i = 0; i < 80; i++)
-                                                    Console.Write(" ");
                                                 Console.SetCursorPosition(left, top);
                                                 Console.Write($"You equipped {armor.Name}.");
                                                 player.Armor.Add(armor);
@@ -288,16 +275,14 @@ namespace AdventureGame
                                         else
                                         {
                                             Console.SetCursorPosition(left, top);
-                                            Console.Write($"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ");
+                                            string question = $"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ";
+                                            Console.Write(question);
                                             choice = Console.ReadLine();
-                                            if (!choice.ToLower().Equals("n"))
+                                            if (!choice.ToLower().StartsWith("n"))
                                             {
-                                                Console.CursorVisible = false;
+                                                TypeOver(question, choice);
                                                 player.Inventory.Add(player.Weapon);
                                                 player.Weapon = new Weapon("Unarmed", "", Entity.GetAbilityModifier(player.Strength), "Str", "1");
-                                                Console.SetCursorPosition(left, top);
-                                                for (int i = 0; i < 80; i++)
-                                                    Console.Write(" ");
                                                 Console.SetCursorPosition(left, top);
                                                 Console.Write($"You equipped {armor.Name}.");
                                                 player.Armor.Add(armor);
@@ -320,14 +305,12 @@ namespace AdventureGame
                                 if (player.HitPoints < player.MaxHealth)
                                 {
                                     Console.SetCursorPosition(left, top);
-                                    Console.Write($"Do you want to use {consumable.Name}?(y/n) ");
+                                    string question = $"Do you want to use {consumable.Name}?(y/n) ";
+                                    Console.Write(question);
                                     choice = Console.ReadLine();
-                                    if (!choice.ToLower().Equals("n"))
+                                    if (!choice.ToLower().StartsWith("n"))
                                     {
-                                        Console.CursorVisible = false;
-                                        Console.SetCursorPosition(left, top);
-                                        for (int i = 0; i < 80; i++)
-                                            Console.Write(" ");
+                                        TypeOver(question, choice);
                                         Console.SetCursorPosition(left, top++);
                                         Console.Write($"You used {consumable.Name} and was healed ");
                                         consumable.HitPoints = Entity.RollDice(consumable.Dice) + consumable.ExtraHealth;
@@ -400,14 +383,12 @@ namespace AdventureGame
                                     if (isEquippable)
                                     {
                                         Console.SetCursorPosition(left, top);
-                                        Console.Write($"Do you want to equip {weapon.Name}?(y/n) ");
+                                        string question = $"Do you want to equip {weapon.Name}?(y/n) ";
+                                        Console.Write(question);
                                         choice = Console.ReadLine();
-                                        if (!choice.ToLower().Equals("n"))
+                                        if (!choice.ToLower().StartsWith("n"))
                                         {
-                                            Console.CursorVisible = false;
-                                            Console.SetCursorPosition(left, top);
-                                            for (int i = 0; i < 80; i++)
-                                                Console.Write(" ");
+                                            TypeOver(question, choice);
                                             Console.SetCursorPosition(left, top);
                                             Console.WriteLine($"You equipped {weapon.Name}.");
                                             player.Weapon = weapon;
@@ -420,17 +401,15 @@ namespace AdventureGame
                                         if (isShield)
                                         {
                                             Console.SetCursorPosition(left, top);
-                                            Console.Write($"You already have an Off-hand item equipped. Do you want to swap?(y/n): ");
+                                            string question = $"You already have an Off-hand item equipped. Do you want to swap?(y/n): ";
+                                            Console.Write(question);
                                             choice = Console.ReadLine();
-                                            if (!choice.ToLower().Equals("n"))
+                                            if (!choice.ToLower().StartsWith("n"))
                                             {
-                                                Console.CursorVisible = false;
+                                                TypeOver(question, choice);
                                                 player.ArmorClass -= player.Armor[armorIndex].ArmorClass;
                                                 player.Inventory.Add(player.Armor[armorIndex]);
                                                 player.Armor.RemoveAt(armorIndex);
-                                                Console.SetCursorPosition(left, top);
-                                                for (int i = 0; i < 80; i++)
-                                                    Console.Write(" ");
                                                 Console.SetCursorPosition(left, top);
                                                 Console.WriteLine($"You equipped {weapon.Name}.");
                                                 player.Weapon = weapon;
@@ -441,19 +420,16 @@ namespace AdventureGame
                                         else
                                         {
                                             Console.SetCursorPosition(left, top);
-                                            Console.Write($"You already have a weapon equipped. Do you want to swap?(y/n): ");
+                                            string question = $"You already have a weapon equipped. Do you want to swap?(y/n): ";
+                                            Console.Write(question);
                                             choice = Console.ReadLine();
-                                            if (!choice.ToLower().Equals("n"))
+                                            if (!choice.ToLower().StartsWith("n"))
                                             {
-                                                Console.CursorVisible = false;
+                                                TypeOver(question, choice);
                                                 player.Inventory.Add(player.Weapon);
-                                                Console.SetCursorPosition(left, top);
-                                                for (int i = 0; i < 80; i++)
-                                                    Console.Write(" ");
                                                 Console.SetCursorPosition(left, top);
                                                 Console.WriteLine($"You equipped {weapon.Name}.");
                                                 player.Weapon = weapon;
-                                                // player.weapon.Insert(0, weapon);
                                                 player.Inventory.RemoveAt(index);
                                                 Thread.Sleep(time);
                                             }
@@ -472,7 +448,7 @@ namespace AdventureGame
                                     }
                                     else
                                     {
-                                        // OM det är en "Body" så kolla efter en annan "Body". === Equals() ===
+                                        // OM det är en "Body armor" så kolla efter en annan "Body armor".
                                         foreach (var _item in player.Armor)
                                         {
                                             if (_item.Placement.Equals(armor.Placement))
@@ -494,14 +470,12 @@ namespace AdventureGame
                                         if (isEquippable)
                                         {
                                             Console.SetCursorPosition(left, top);
-                                            Console.Write($"Do you want to equip {armor.Name}?(y/n) ");
+                                            string question = $"Do you want to equip {armor.Name}?(y/n) ";
+                                            Console.Write(question);
                                             choice = Console.ReadLine();
-                                            if (!choice.ToLower().Equals("n"))
+                                            if (!choice.ToLower().StartsWith("n"))
                                             {
-                                                Console.CursorVisible = false;
-                                                Console.SetCursorPosition(left, top);
-                                                for (int i = 0; i < 80; i++)
-                                                    Console.Write(" ");
+                                                TypeOver(question, choice);
                                                 Console.SetCursorPosition(left, top);
                                                 Console.WriteLine($"You equipped {armor.Name}.");
                                                 player.Armor.Add(armor);
@@ -518,17 +492,15 @@ namespace AdventureGame
                                             if (isEqual)
                                             {
                                                 Console.SetCursorPosition(left, top);
-                                                Console.Write($"You already have an {armor.Placement} item equipped. Do you want to swap?(y/n): ");
+                                                string question = $"You already have an {armor.Placement} item equipped. Do you want to swap?(y/n): ";
+                                                Console.Write(question);
                                                 choice = Console.ReadLine();
-                                                if (!choice.ToLower().Equals("n"))
+                                                if (!choice.ToLower().StartsWith("n"))
                                                 {
-                                                    Console.CursorVisible = false;
+                                                    TypeOver(question, choice);
                                                     player.ArmorClass -= player.Armor[armorIndex].ArmorClass - player.Armor[armorIndex].AbilityModifier;
                                                     player.Inventory.Add(player.Armor[armorIndex]);
                                                     player.Armor.RemoveAt(armorIndex);
-                                                    Console.SetCursorPosition(left, top);
-                                                    for (int i = 0; i < 80; i++)
-                                                        Console.Write(" ");
                                                     Console.SetCursorPosition(left, top);
                                                     Console.Write($"You equipped {armor.Name}.");
                                                     player.Armor.Add(armor);
@@ -541,16 +513,14 @@ namespace AdventureGame
                                             else
                                             {
                                                 Console.SetCursorPosition(left, top);
-                                                Console.Write($"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ");
+                                                string question = $"You already have a Two-handed weapon equipped. Do you want to swap?(y/n): ";
+                                                Console.Write(question);
                                                 choice = Console.ReadLine();
-                                                if (!choice.ToLower().Equals("n"))
+                                                if (!choice.ToLower().StartsWith("n"))
                                                 {
-                                                    Console.CursorVisible = false;
+                                                    TypeOver(question, choice);
                                                     player.Inventory.Add(player.Weapon);
                                                     player.Weapon = new Weapon("Unarmed", "", Entity.GetAbilityModifier(player.Strength), "Str", "1");
-                                                    Console.SetCursorPosition(left, top);
-                                                    for (int i = 0; i < 80; i++)
-                                                        Console.Write(" ");
                                                     Console.SetCursorPosition(left, top);
                                                     Console.Write($"You equipped {armor.Name}.");
                                                     player.Armor.Add(armor);
@@ -572,14 +542,12 @@ namespace AdventureGame
                                     if (player.HitPoints < player.MaxHealth)
                                     {
                                         Console.SetCursorPosition(left, top);
-                                        Console.Write($"Do you want to use {consumable.Name}?(y/n) ");
+                                        string question = $"Do you want to use {consumable.Name}?(y/n) ";
+                                        Console.Write(question);
                                         choice = Console.ReadLine();
-                                        if (!choice.ToLower().Equals("n"))
+                                        if (!choice.ToLower().StartsWith("n"))
                                         {
-                                            Console.CursorVisible = false;
-                                            Console.SetCursorPosition(left, top);
-                                            for (int i = 0; i < 80; i++)
-                                                Console.Write(" ");
+                                            TypeOver(question, choice);
                                             Console.SetCursorPosition(left, top++);
                                             Console.Write($"You used {consumable.Name} and was healed ");
                                             consumable.HitPoints = Entity.RollDice(consumable.Dice) + consumable.ExtraHealth;
@@ -619,26 +587,26 @@ namespace AdventureGame
                             break;
                         else if (!isCommandValid)
                         {
+                            Console.CursorVisible = false;
                             Console.SetCursorPosition(left, top);
                             Console.WriteLine("You have to enter a valid command!");
                             Thread.Sleep(time);
                         }
                     }
-
-                    //else if (choice.Length > 0)
-                    //{
-                    //    Console.SetCursorPosition(left, top);
-                    //    Console.WriteLine("You have to enter a valid command!");
-                    //    Thread.Sleep(time * 2);
-                    //}
-                    //else
-                    //    break;
                 }
 
                 
             } while (true);
             Console.CursorVisible = false;
             Console.Clear();
+        }
+
+        private static void TypeOver(string question, string choice)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(left, top);
+            for (int i = 0; i < question.Length + choice.Length; i++)
+                Console.Write(" ");
         }
     }
 }

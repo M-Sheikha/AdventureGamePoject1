@@ -29,8 +29,8 @@ namespace AdventureGame
             TopOfFrame();
             SidesOfFrame(worldHeight);
             BottomOfFrame();
-            Console.WriteLine("\tPress (C) for Character panel");
-            Console.WriteLine("\tPress (I) for Inventory");
+            //Console.WriteLine("\tPress (C) for Character panel");
+            //Console.WriteLine("\tPress (I) for Inventory");
         }
 
         public static void CharacterPanel(Player player)
@@ -110,19 +110,19 @@ namespace AdventureGame
             Console.WriteLine($"{monster.Name}: {monster.HitPoints} Hit Points");
         }
 
-        public static void Help()
+        public static void Help(int left, int top)
         {
-            Console.SetCursorPosition(8, 13);
+            Console.SetCursorPosition(left, top++);
             Console.WriteLine("Press (C) for Character panel");
-            Console.SetCursorPosition(8, 14);
+            Console.SetCursorPosition(left, top);
             Console.WriteLine("Press (I) for Inventory");
         }
 
-        public static void UndrawHelp()
+        public static void UndrawHelp(int left, int top)
         {
-            Console.SetCursorPosition(8, 13);
+            Console.SetCursorPosition(left, top++);
             Console.WriteLine("                              ");
-            Console.SetCursorPosition(8, 14);
+            Console.SetCursorPosition(left, top);
             Console.WriteLine("                              ");
         }
 
@@ -230,7 +230,7 @@ namespace AdventureGame
 
         public static void WelcomeMessage(Player player)
         {
-            Draw.WorldFrame();
+            WorldFrame();
             var welcomeMessage = "T H E   A D V E N T U R E   G A M E !";
             var welcomMessageArray = welcomeMessage.ToCharArray();
             Console.SetCursorPosition(40, 12);
@@ -269,20 +269,20 @@ namespace AdventureGame
             }
         }
 
-        public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables, Item[] items)
-        {
+        //public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables, Item[] items)
+        //{
 
-            for (int i = 0; i < consumables.Count; i++)
-            {
-                //Monster(monsters[i]);
-                Thread.Sleep(50);
-                Item(consumables[i]);
-                Thread.Sleep(50);
-                Item(items[i]);
-                Thread.Sleep(50);
-            }
-            Player(player);
-        }
+        //    for (int i = 0; i < consumables.Count; i++)
+        //    {
+        //        //Monster(monsters[i]);
+        //        Thread.Sleep(50);
+        //        Item(consumables[i]);
+        //        Thread.Sleep(50);
+        //        Item(items[i]);
+        //        Thread.Sleep(50);
+        //    }
+        //    Player(player);
+        //}
 
         public static void Monster(Creature monster)
         {
@@ -306,7 +306,6 @@ namespace AdventureGame
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-
         public static void Item(Item item)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -316,6 +315,12 @@ namespace AdventureGame
                 Console.Write(item.Token);
             }
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void Empty(Player player)
+        {
+            Console.SetCursorPosition(player.X, player.Y);
+            Console.Write(" ");
         }
     }
 

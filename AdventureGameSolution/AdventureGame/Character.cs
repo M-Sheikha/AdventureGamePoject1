@@ -73,31 +73,15 @@ namespace AdventureGame
                 Console.Write(question);
                 Console.CursorVisible = true;
                 string name = Console.ReadLine();
-                if (int.TryParse(name, out _))                
+                if (name.Equals(""))
+                        TypeOver(question, "You have to enter a name.", name);
+                    else if (int.TryParse(name, out _))                
                     TypeOver(question, "You have to enter a valid name.", name);                               
-                else if (name.Length < 1)
-                    TypeOver(question, "You have to enter a name.", name);
                 else
                     return name.First().ToString().ToUpper() + name.Substring(1);
 
             } while (true);
         }
-
-        private static void TypeOver(string question, string errorMessage, string name)
-        {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(left, top);        
-            Console.WriteLine(errorMessage);
-            Thread.Sleep(2000);
-            Console.SetCursorPosition(left, top);
-            for (int i = 0; i < errorMessage.Length; i++)
-                Console.Write(" ");
-            Console.SetCursorPosition(left, --top);
-            for (int i = 0; i < question.Length + name.Length; i++)
-                Console.Write(" ");
-            Console.SetCursorPosition(left, top++);
-        }
-
 
         private static string GetRace()
         {
@@ -214,6 +198,21 @@ namespace AdventureGame
                     TypeOver(question, "You have to enter an existing class.", playerChoice);
                 }
             } while (true);
+        }
+
+        private static void TypeOver(string question, string errorMessage, string text)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine(errorMessage);
+            Thread.Sleep(2000);
+            Console.SetCursorPosition(left, top);
+            for (int i = 0; i < errorMessage.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(left, --top);
+            for (int i = 0; i < question.Length + text.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(left, top++);
         }
 
         private static void GetPlayerStats(Player player)

@@ -11,6 +11,8 @@ namespace AdventureGame
         public const int rightBorder = 106;
         public const int topBorder = 2;
         public const int bottomBorder = 24;
+        private const int bottomLeft = 8;
+        private const int bottomTop = 26;
         public static bool AreAllMonstersDead = false;
 
         public static void Start()
@@ -20,28 +22,34 @@ namespace AdventureGame
 
             Draw.CharacterCreation();
             var player = Character.Creation();
+            player.StartingGold(player);
+           
             Draw.WelcomeMessage(player);
             Draw.WorldFrame();
-            player.StartingGold(player);
+            Draw.Help(bottomLeft, bottomTop);
 
             var items = Item.MakeList();
             var armors = Armor.MakeList(player);
             var weapons = Weapon.MakeList(player);
-
-            var consumables = new List<Consumable>();
             var monsters = new List<Creature>();
 
-            var worldItems = new Item[10];
-            worldItems[0] = items[rnd.Next(items.Count)];
-            worldItems[1] = items[rnd.Next(items.Count)];
-            worldItems[2] = items[rnd.Next(items.Count)];
-            worldItems[3] = armors[rnd.Next(armors.Count)];
-            worldItems[4] = armors[rnd.Next(armors.Count)];
-            worldItems[5] = armors[rnd.Next(armors.Count)];
-            worldItems[6] = weapons[rnd.Next(weapons.Count)];
-            worldItems[7] = weapons[rnd.Next(weapons.Count)];
-            worldItems[8] = weapons[rnd.Next(weapons.Count)];
-            worldItems[9] = weapons[rnd.Next(weapons.Count)];
+            var worldItems = new Item[]
+            {
+                items[rnd.Next(items.Count)],
+                items[rnd.Next(items.Count)],
+                armors[rnd.Next(armors.Count)],
+                armors[rnd.Next(armors.Count)],
+                armors[rnd.Next(armors.Count)],
+                armors[rnd.Next(armors.Count)],
+                weapons[rnd.Next(weapons.Count)],
+                weapons[rnd.Next(weapons.Count)],
+                weapons[rnd.Next(weapons.Count)],
+                weapons[rnd.Next(weapons.Count)],
+                Consumable.CreateRandomConsumable(),
+                Consumable.CreateRandomConsumable(),
+                Consumable.CreateRandomConsumable(),
+                Consumable.CreateRandomConsumable()
+        };
 
             foreach (var item in worldItems)
             {
@@ -51,22 +59,13 @@ namespace AdventureGame
 
             for (int i = 0; i < 10; i++)
             {
-                var consumable = Consumable.CreateRandomConsumable();
-                consumable.X = rnd.Next(leftBorder, rightBorder);
-                consumable.Y = rnd.Next(topBorder, bottomBorder);
-                consumables.Add(consumable);
-            }
-
-            for (int i = 0; i < 1; i++)
-            {
                 var monster = Creature.CreateRandomMonster();
-                // använd const istället för magiska siffror.
                 monster.X = rnd.Next(leftBorder, rightBorder);
                 monster.Y = rnd.Next(topBorder, bottomBorder);
                 monsters.Add(monster);
             }
 
-            Draw.Everything(player, monsters, consumables, worldItems);
+           // Draw.Everything(player, monsters, consumables, worldItems);
 
             do
             {
@@ -79,21 +78,14 @@ namespace AdventureGame
                 foreach (var monster in monsters)
                     Draw.Monster(monster);
 
-                // Skriver ut föremålen så länge de inte är tagna.
-                foreach (var item in consumables)
-                    Draw.Item(item);
-
+                // Skriver ut föremålen så länge de inte är upplockade.
                 foreach (var item in worldItems)
                     Draw.Item(item);
-
 
                 // Styr spelaren.
                 player.Move(player);
 
-                // Om spelaren har samma posiiton som föremålet plockas det upp.
-                foreach (var item in consumables)
-                    Item.WannaPickMeUp(player, item);
-
+                // Om spelaren har samma position som ett föremål plockas det upp.
                 foreach (var item in worldItems)
                     Item.WannaPickMeUp(player, item);
 
@@ -101,14 +93,14 @@ namespace AdventureGame
                 foreach (var monster in monsters)
                     Encounter.WannaFightMe(player, monster);
 
+                // Om spelaren dör förlorar man.
                 if (player.HitPoints <= 0)
                     break;
 
-                foreach (var monster in monsters)               
-                    if (monster.HitPoints > 0)                    
-                        AreAllMonstersDead = false;
-                    
-                
+                // Om alla monster dör vinner man.
+                foreach (var monster in monsters)
+                    if (monster.HitPoints > 0)
+                        AreAllMonstersDead = false;                
 
             } while (!AreAllMonstersDead);
 

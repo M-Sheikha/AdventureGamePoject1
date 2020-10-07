@@ -34,11 +34,7 @@ namespace AdventureGame
             Inventory.Add(goldPieces);
         }
 
-        public void PrintEmpty()
-        {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(" ");
-        }
+
 
         public void Move(Player player)
         {
@@ -48,28 +44,28 @@ namespace AdventureGame
                 case ConsoleKey.LeftArrow:
                     if (X > Game.leftBorder)
                     {
-                        PrintEmpty();
+                        Draw.Empty(player);
                         X--;
                     }
                     break;
                 case ConsoleKey.RightArrow:
                     if (X < Game.rightBorder)
                     {
-                        PrintEmpty();
+                        Draw.Empty(player);
                         X++;
                     }
                     break;
                 case ConsoleKey.UpArrow:
                     if (Y > Game.topBorder)
                     {
-                        PrintEmpty();
+                        Draw.Empty(player);
                         Y--;
                     }
                     break;
                 case ConsoleKey.DownArrow:
                     if (Y < Game.bottomBorder)
                     {
-                        PrintEmpty();
+                        Draw.Empty(player);
                         Y++;
                     }
                     break;
@@ -109,7 +105,7 @@ namespace AdventureGame
 
             }
 
-            if (PlayerAttackRoll(player) >= monster.ArmorClass)
+            if (AttackRoll(player) >= monster.ArmorClass)
             {
                 if (!player.Weapon.Name.Equals("Unarmed"))
                 {
@@ -137,6 +133,14 @@ namespace AdventureGame
                 Console.SetCursorPosition(left, top++);
                 Console.WriteLine(resultText);
             }
+        }
+
+        public int AttackRoll(Player player)
+        {
+            if (!player.Weapon.Equals("Unarmed"))
+                return RollDice("1d20") + player.Weapon.AbilityModifier;
+            else
+                return RollDice("1d20") + GetAbilityModifier(player.Strength);
         }
     }
 }
