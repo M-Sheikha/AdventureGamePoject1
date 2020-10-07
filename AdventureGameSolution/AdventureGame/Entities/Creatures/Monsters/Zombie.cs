@@ -9,6 +9,8 @@ namespace AdventureGame
         public Zombie()
         {
             Name = "Zombie";
+            Race = "Medium undead";
+            Token = 'U';
             ArmorClass = 8;
             HitPoints = 22;
             Strength = 13;

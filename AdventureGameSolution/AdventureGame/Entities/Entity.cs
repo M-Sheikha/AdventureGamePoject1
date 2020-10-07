@@ -4,16 +4,12 @@ namespace AdventureGame
 {    
     abstract class Entity
     {
-        public const int left = 10;
         public static Random rnd = new Random();
-        public const int leftBorder = 10;
-        public const int rightBorder = 106;
-        public const int topBorder = 2;
-        public const int bottomBorder = 24;
+
+        public const int left = 10;
+
         public string Name { get; set; }
         public char Token { get; set; }
-
-        public int ArmorClass { get; set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -28,7 +24,7 @@ namespace AdventureGame
             Name = name;
         }
 
-        public static int AbilityModifier(int ability)
+        public static int GetAbilityModifier(int ability)
         {
             return (ability - 10) / 2;
         }

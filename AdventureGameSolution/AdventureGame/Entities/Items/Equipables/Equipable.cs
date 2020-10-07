@@ -6,11 +6,15 @@ namespace AdventureGame
 {
     class Equipable : Item
     {
-        public string Property { get; set; }
+        public string Placement { get; set; }
+        public int AbilityModifier { get; set; }
+        public string AbilityModifierName { get; set; }
 
-        public Equipable(string name, string property) : base(name)
+        public Equipable(string name, string placement, int abilityModifier, string abilityModifierName) : base(name)
         {
-            Property = property;
+            Placement = placement;
+            AbilityModifier = abilityModifier;
+            AbilityModifierName = abilityModifierName;
         }
     }
 }

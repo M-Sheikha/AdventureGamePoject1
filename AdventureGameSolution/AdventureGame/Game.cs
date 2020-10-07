@@ -7,6 +7,11 @@ namespace AdventureGame
 {
     class Game
     {
+        public const int leftBorder = 10;
+        public const int rightBorder = 106;
+        public const int topBorder = 2;
+        public const int bottomBorder = 24;
+
         public static void Start()
         {
             Random rnd = new Random();
@@ -17,8 +22,6 @@ namespace AdventureGame
             Draw.WelcomeMessage(player);
             Draw.WorldFrame();
             player.StartingGold(player);
-            
-
 
             var items = Item.MakeList();
             var armors = Armor.MakeList(player);
@@ -27,36 +30,29 @@ namespace AdventureGame
             var consumables = new List<Consumable>();
             var monsters = new List<Creature>();
 
-            //player.inventory.Add(Consumable.CreateRandomConsumable());
-            //player.inventory.Add(Consumable.CreateRandomConsumable());
+            var worldItems = new Item[10];
+            worldItems[0] = items[rnd.Next(items.Count)];
+            worldItems[1] = items[rnd.Next(items.Count)];
+            worldItems[2] = items[rnd.Next(items.Count)];
+            worldItems[3] = armors[rnd.Next(armors.Count)];
+            worldItems[4] = armors[rnd.Next(armors.Count)];
+            worldItems[5] = armors[rnd.Next(armors.Count)];
+            worldItems[6] = weapons[rnd.Next(weapons.Count)];
+            worldItems[7] = weapons[rnd.Next(weapons.Count)];
+            worldItems[8] = weapons[rnd.Next(weapons.Count)];
+            worldItems[9] = weapons[rnd.Next(weapons.Count)];
 
-            //var worldItems = new Item[6];
-            ////worldItems[0] = items[rnd.Next(items.Count)];
-            //worldItems[0] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[1] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[2] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[3] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[4] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[5] = consumables[rnd.Next(consumables.Count)];
-            //worldItems[3] = armors[rnd.Next(armors.Count)];
-            //worldItems[4] = armors[rnd.Next(armors.Count)];
-            //worldItems[5] = armors[rnd.Next(armors.Count)];
-            //worldItems[6] = weapons[rnd.Next(weapons.Count)];
-            //worldItems[7] = weapons[rnd.Next(weapons.Count)];
-            //worldItems[8] = weapons[rnd.Next(weapons.Count)];
-            //worldItems[9] = weapons[rnd.Next(weapons.Count)];
-
-            //foreach (var item in worldItems)
-            //{
-            //    item.X = rnd.Next(10, 105);
-            //    item.Y = rnd.Next(2, 24);
-            //}
+            foreach (var item in worldItems)
+            {
+                item.X = rnd.Next(leftBorder, rightBorder);
+                item.Y = rnd.Next(topBorder, bottomBorder);
+            }
 
             for (int i = 0; i < 10; i++)
             {
                 var consumable = Consumable.CreateRandomConsumable();
-                consumable.X = rnd.Next(10, 106);
-                consumable.Y = rnd.Next(2, 24);
+                consumable.X = rnd.Next(leftBorder, rightBorder);
+                consumable.Y = rnd.Next(topBorder, bottomBorder);
                 consumables.Add(consumable);
             }
 
@@ -64,17 +60,17 @@ namespace AdventureGame
             {
                 var monster = Creature.CreateRandomMonster();
                 // använd const istället för magiska siffror.
-                monster.X = rnd.Next(10, 106);
-                monster.Y = rnd.Next(2, 24);
+                monster.X = rnd.Next(leftBorder, rightBorder);
+                monster.Y = rnd.Next(topBorder, bottomBorder);
                 monsters.Add(monster);
             }
 
-            Draw.Everything(player, monsters, consumables);
+            Draw.Everything(player, monsters, consumables, worldItems);
 
             do
             {
                 // Skriver ut spelaren till skärmen.
-                Draw.Player(player);
+                Draw.Monster(player);
 
                 // Skriver ut monstren så länge de inte är besegrade.
                 foreach (var monster in monsters)
@@ -84,12 +80,18 @@ namespace AdventureGame
                 foreach (var item in consumables)
                     Draw.Item(item);
 
-                
+                foreach (var item in worldItems)
+                    Draw.Item(item);
+
+
                 // Styr spelaren.
                 player.Move(player);
 
                 // Om spelaren har samma posiiton som föremålet plockas det upp.
                 foreach (var item in consumables)
+                    Item.WannaPickMeUp(player, item);
+
+                foreach (var item in worldItems)
                     Item.WannaPickMeUp(player, item);
 
                 // Om spelaren har samma posiiton som monstret sker ett möte.

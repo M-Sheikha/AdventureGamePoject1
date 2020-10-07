@@ -9,6 +9,8 @@ namespace AdventureGame
         public Quasit()
         {
             Name = "Quasit";
+            Race = "Tiny fiend";
+            Token = 'f';
             ArmorClass = 13;
             HitPoints = 7;
             Strength = 5;

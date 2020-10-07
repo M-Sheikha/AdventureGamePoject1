@@ -6,18 +6,18 @@ namespace AdventureGame
 {
     class Item : Entity
     {        
-        public int Value { get; set; }
+        public int Quantity { get; set; }
         public bool IsTaken { get; set; }
 
-        public Item()
+        public Item() : base()
         {
-            Token = '●';
+            Token = 'C';
             IsTaken = false;
         }
 
         public Item(string name) : base(name)
         {
-            Token = '●';
+            Token = 'I';
             IsTaken = false;
         }
 
@@ -54,13 +54,13 @@ namespace AdventureGame
             {
                 if (item.Name.Equals("Gold Pieces") || item is Consumable)
                 {
-                    item.Value = rnd.Next(1, 11);
+                    item.Quantity = rnd.Next(1, 11);
                     bool notThere = true;
-                    foreach (var valueItem in player.inventory.ToList())
+                    foreach (var valueItem in player.Inventory.ToList())
                     {
                         if (valueItem.Name.Equals(item.Name))
                         {
-                            valueItem.Value += item.Value;
+                            valueItem.Quantity += item.Quantity;
                             item.IsTaken = true;
                             item.X = 0;
                             item.Y = 0;
@@ -70,7 +70,7 @@ namespace AdventureGame
 
                     if (notThere)
                     {
-                        player.inventory.Add(item);
+                        player.Inventory.Add(item);
                         item.IsTaken = true;
                         item.X = 0;
                         item.Y = 0;
@@ -78,7 +78,7 @@ namespace AdventureGame
                 }
                 else
                 {
-                    player.inventory.Add(item);
+                    player.Inventory.Add(item);
                     item.IsTaken = true;
                     item.X = 0;
                     item.Y = 0;

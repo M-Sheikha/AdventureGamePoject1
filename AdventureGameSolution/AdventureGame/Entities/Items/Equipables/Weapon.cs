@@ -7,21 +7,18 @@ namespace AdventureGame
     class Weapon: Equipable
     {
         public string Damage { get; set; }
-        public new int AbilityModifier { get; set; }
-        public string Modifier { get; set; }
 
-        public Weapon(string name, string property, int abilityModifier, string modifier, string damage) : base(name, property)
+        public Weapon(string name, string placement, int abilityModifier, string abilityModifierName, string damage) : base(name, placement, abilityModifier, abilityModifierName)
         {
             Damage = damage;
-            AbilityModifier = abilityModifier;
-            Modifier = modifier;
-            Value = 1;
+            Quantity = 1;
+            Token = 'W';
         }
 
         public static List<Weapon> MakeList(Player player)
         {
-            var strengthModifier = AbilityModifier(player.Strength);
-            var dexteriryModifier = AbilityModifier(player.Dexterity);
+            var strengthModifier = GetAbilityModifier(player.Strength);
+            var dexteriryModifier = GetAbilityModifier(player.Dexterity);
             
             //Simple Melee Weapons
             var club = new Weapon("Club", "Main hand", strengthModifier, "Str", "1d4");

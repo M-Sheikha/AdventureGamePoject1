@@ -52,30 +52,30 @@ namespace AdventureGame
             Stat("Armor Class", player.ArmorClass);
             Stat("Hit Points", player.HitPoints);
             top += 2;
-            Stat("Strength", player.Strength, Entity.AbilityModifier(player.Strength));
-            Stat("Dextrerity", player.Dexterity, Entity.AbilityModifier(player.Dexterity));
-            Stat("Constitution", player.Constitution, Entity.AbilityModifier(player.Constitution));
-            Stat("Intelligence", player.Intelligence, Entity.AbilityModifier(player.Intelligence));
-            Stat("Wisdom", player.Wisdom, Entity.AbilityModifier(player.Wisdom));
-            Stat("Charisma", player.Charisma, Entity.AbilityModifier(player.Charisma));
+            Stat("Strength", player.Strength, Entity.GetAbilityModifier(player.Strength));
+            Stat("Dextrerity", player.Dexterity, Entity.GetAbilityModifier(player.Dexterity));
+            Stat("Constitution", player.Constitution, Entity.GetAbilityModifier(player.Constitution));
+            Stat("Intelligence", player.Intelligence, Entity.GetAbilityModifier(player.Intelligence));
+            Stat("Wisdom", player.Wisdom, Entity.GetAbilityModifier(player.Wisdom));
+            Stat("Charisma", player.Charisma, Entity.GetAbilityModifier(player.Charisma));
             top += 2;
 
             Console.SetCursorPosition(left, top++);
             if (player.Weapon.AbilityModifier >= 0)
-                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
+                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.AbilityModifierName}) Damage");
             else
-                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (-{player.Weapon.AbilityModifier} {player.Weapon.Modifier}) Damage");
+                Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (-{player.Weapon.AbilityModifier} {player.Weapon.AbilityModifierName}) Damage");
             top += 2;
 
-            if (player.armor.Count > 0)
+            if (player.Armor.Count > 0)
             {
-                foreach (var item in player.armor)
+                foreach (var item in player.Armor)
                 {
                     Console.SetCursorPosition(left, top++);
-                    if (item.Property.Equals("Off-hand"))
+                    if (item.Placement.Equals("Off-hand"))
                         Console.Write($"{item.Name} =  +{item.ArmorClass} Armor Class");
-                    else if (item.DexterityModifier > 0)
-                        Console.Write($"{item.Name} = {item.ArmorClass} (+{item.DexterityModifier} Dex) Armor Class");
+                    else if (item.AbilityModifier > 0)
+                        Console.Write($"{item.Name} = {item.ArmorClass} (+{item.AbilityModifier} {item.AbilityModifierName}) Armor Class");
                     else
                         Console.Write($"{item.Name} = {item.ArmorClass} Armor Class");
                 }
@@ -89,7 +89,7 @@ namespace AdventureGame
             Console.CursorVisible = true;
             Console.Clear();
             TopOfFrame("INVENTORY");
-            SidesOfFrame(player.inventory.Count + 2);
+            SidesOfFrame(player.Inventory.Count + 2);
             DividingLine();
             SidesOfFrame(2);
             BottomOfFrame();
@@ -257,7 +257,7 @@ namespace AdventureGame
             }
         }
 
-        public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables)
+        public static void Everything(Player player, List<Creature> monsters, List<Consumable> consumables, Item[] items)
         {
 
             for (int i = 0; i < consumables.Count; i++)
@@ -265,6 +265,8 @@ namespace AdventureGame
                 Monster(monsters[i]);
                 Thread.Sleep(50);
                 Item(consumables[i]);
+                Thread.Sleep(50);
+                Item(items[i]);
                 Thread.Sleep(50);
             }
             Player(player);

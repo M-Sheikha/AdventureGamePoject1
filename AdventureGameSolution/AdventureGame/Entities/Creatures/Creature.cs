@@ -21,6 +21,8 @@ namespace AdventureGame
         // den andra varelsens egeneskaper under ett möte.
 
         public int HitPoints { get; set; }
+        public int ArmorClass { get; set; }
+        public int Damage { get; set; }
 
         public string Race { get; set; }
         public bool IsDefeated { get; set; }
@@ -32,29 +34,12 @@ namespace AdventureGame
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
+        
 
-        public int Damage { get; set; }
-
-        public Creature()
+        public Creature() : base()
         {
-            Token = 'M';
             IsDefeated = false;         
         }
-
-        //public static List<Creature> MakeMonsterList()
-        //{
-        //    var monsters = new List<Creature>
-        //    {
-        //        new Bat("Bat"),
-        //        new BlackBear("Black Bear"),
-        //        new Imp("Imp"),
-        //        new Quasit("Quasit"),
-        //        new Skeleton("Skeleton"),
-        //        new Zombie("Zombie"),
-        //    };
-
-        //    return monsters;
-        //}
 
         public static Creature CreateRandomMonster()
         {
@@ -76,7 +61,7 @@ namespace AdventureGame
             if (!player.Weapon.Equals("Unarmed"))
                 return RollDice("1d20") + player.Weapon.AbilityModifier;
             else
-                return RollDice("1d20") + AbilityModifier(player.Strength);
+                return RollDice("1d20") + GetAbilityModifier(player.Strength);
         }
 
         public void PrintMonster(Creature monster)

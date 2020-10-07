@@ -10,6 +10,8 @@ namespace AdventureGame
         public Imp()
         {
             Name = "Imp";
+            Race = "Tiny fiend";
+            Token = 'f';
             ArmorClass = 13;
             HitPoints = 10;
             Strength = 6;

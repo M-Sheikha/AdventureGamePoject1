@@ -49,8 +49,8 @@ namespace AdventureGame
             Console.WriteLine("Roll for initiative!");
             Console.ReadKey(true);
 
-            player.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(player.Dexterity);
-            monster.Initiative = Entity.RollDice("1d20") + Entity.AbilityModifier(monster.Dexterity);
+            player.Initiative = Entity.RollDice("1d20") + Entity.GetAbilityModifier(player.Dexterity);
+            monster.Initiative = Entity.RollDice("1d20") + Entity.GetAbilityModifier(monster.Dexterity);
 
             Console.SetCursorPosition(left, top++);
             Console.WriteLine($"You rolled {player.Initiative}.");

@@ -9,6 +9,8 @@ namespace AdventureGame
         public Skeleton()
         {
             Name = "Skeleton";
+            Race = "Medium undead";
+            Token = 'U';
             ArmorClass = 13;
             HitPoints = 13;
             Strength = 10;

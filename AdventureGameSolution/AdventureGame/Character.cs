@@ -52,9 +52,9 @@ namespace AdventureGame
             player.Class = GetClass();
             GetPlayerStats(player);
             GetRaceBonus(player);
-            player.Weapon = new Weapon("Unarmed", "", Entity.AbilityModifier(player.Strength), "Str", "1");
+            player.Weapon = new Weapon("Unarmed", "", Entity.GetAbilityModifier(player.Strength), "Str", "1");
             player.MaxHealth = player.HitPoints;
-            player.ArmorClass = 10 + Entity.AbilityModifier(player.Dexterity);
+            player.ArmorClass = 10 + Entity.GetAbilityModifier(player.Dexterity);
             top++;
             Console.SetCursorPosition(left, top);
             Console.CursorVisible = false;

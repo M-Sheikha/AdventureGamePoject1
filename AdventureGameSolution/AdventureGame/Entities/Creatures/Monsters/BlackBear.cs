@@ -9,6 +9,8 @@ namespace AdventureGame
         public BlackBear()
         {
             Name = "Black Bear";
+            Race = "Medium beast";
+            Token = 'B';
             ArmorClass = 11;
             HitPoints = 19;
             Strength = 15;

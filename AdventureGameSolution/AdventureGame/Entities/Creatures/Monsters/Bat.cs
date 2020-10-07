@@ -9,6 +9,8 @@ namespace AdventureGame
         public Bat()
         {
             Name = "Bat";
+            Race = "Tiny beast";
+            Token = 'b';
             ArmorClass = 12;
             HitPoints = 1;
             Strength = 2;
