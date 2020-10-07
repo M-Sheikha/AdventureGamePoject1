@@ -302,7 +302,7 @@ namespace AdventureGame
                             {
                                 // Om man inte redan har full health kan man använda healing 
                                 // potions m.m. och CalculateHealth räknar ut hur mycket man helas.
-                                if (player.HitPoints < player.MaxHealth)
+                                if (player.HitPoints < player.MaxHitPoints)
                                 {
                                     Console.SetCursorPosition(left, top);
                                     string question = $"Do you want to use {consumable.Name}?(y/n) ";
@@ -315,9 +315,9 @@ namespace AdventureGame
                                         Console.Write($"You used {consumable.Name} and was healed ");
                                         consumable.HitPoints = Entity.RollDice(consumable.Dice) + consumable.ExtraHealth;
                                         player.HitPoints += consumable.HitPoints;
-                                        if (player.HitPoints >= player.MaxHealth)
+                                        if (player.HitPoints >= player.MaxHitPoints)
                                         {
-                                            player.HitPoints = player.MaxHealth;
+                                            player.HitPoints = player.MaxHitPoints;
                                             Console.WriteLine("to max health.");
                                         }
                                         else
@@ -539,7 +539,7 @@ namespace AdventureGame
                                 {
                                     // Om man inte redan har full health kan man använda healing 
                                     // potions m.m. och CalculateHealth räknar ut hur mycket man helas.
-                                    if (player.HitPoints < player.MaxHealth)
+                                    if (player.HitPoints < player.MaxHitPoints)
                                     {
                                         Console.SetCursorPosition(left, top);
                                         string question = $"Do you want to use {consumable.Name}?(y/n) ";
@@ -552,9 +552,9 @@ namespace AdventureGame
                                             Console.Write($"You used {consumable.Name} and was healed ");
                                             consumable.HitPoints = Entity.RollDice(consumable.Dice) + consumable.ExtraHealth;
                                             player.HitPoints += consumable.HitPoints;
-                                            if (player.HitPoints >= player.MaxHealth)
+                                            if (player.HitPoints >= player.MaxHitPoints)
                                             {
-                                                player.HitPoints = player.MaxHealth;
+                                                player.HitPoints = player.MaxHitPoints;
                                                 Console.WriteLine("to max health.");
                                             }
                                             else

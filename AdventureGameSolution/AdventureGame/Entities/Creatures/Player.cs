@@ -14,7 +14,7 @@ namespace AdventureGame
 
         public Weapon Weapon { get; set; }
         public string Class { get; set; }
-        public int MaxHealth { get; set; }
+        public int MaxHitPoints { get; set; }
 
         public List<Item> Inventory = new List<Item>();
         public List<Armor> Armor = new List<Armor>();
@@ -31,7 +31,7 @@ namespace AdventureGame
             var goldPieces = new Item("Gold Pieces");
             for (int i = 0; i < 5; i++)
                 goldPieces.Quantity += rnd.Next(1, 5);
-            Inventory.Add(goldPieces);
+            player.Inventory.Add(goldPieces);
         }
 
 
