@@ -82,6 +82,7 @@ namespace AdventureGame
                 foreach (var item in worldItems)
                     Draw.Item(item);
 
+
                 // Styr spelaren.
                 player.Move(player);
 
