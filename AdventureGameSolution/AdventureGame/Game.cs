@@ -57,7 +57,7 @@ namespace AdventureGame
                 consumables.Add(consumable);
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 var monster = Creature.CreateRandomMonster();
                 // använd const istället för magiska siffror.

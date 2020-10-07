@@ -274,7 +274,7 @@ namespace AdventureGame
 
             for (int i = 0; i < consumables.Count; i++)
             {
-                Monster(monsters[i]);
+                //Monster(monsters[i]);
                 Thread.Sleep(50);
                 Item(consumables[i]);
                 Thread.Sleep(50);
