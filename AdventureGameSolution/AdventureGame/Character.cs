@@ -67,9 +67,10 @@ namespace AdventureGame
         {
             Console.SetCursorPosition(left, top++);
             string question = "What is your characters name? ";
-            Console.Write(question);
+            
             do
             {
+                Console.Write(question);
                 Console.CursorVisible = true;
                 string name = Console.ReadLine();
                 if (int.TryParse(name, out _))                
@@ -95,7 +96,7 @@ namespace AdventureGame
             for (int i = 0; i < question.Length + name.Length; i++)
                 Console.Write(" ");
             Console.SetCursorPosition(left, top++);
-            Console.Write(question + " ");
+            //Console.Write(question + " ");
         }
 
 
@@ -108,26 +109,17 @@ namespace AdventureGame
             Console.SetCursorPosition(left, top++);
             Console.WriteLine("[5] Dragonborn  [6] Gnome  [7] Half-Elf  [8] Half-Orc  [9] Tiefling");
             Console.SetCursorPosition(left, top++);
-            Console.Write("Which race are you? ");
+            var question = "Which race are you? ";
+            
+
+
             do
             {
+                Console.Write(question);
                 Console.CursorVisible = true;
                 string playerChoice = Console.ReadLine();
-                if (playerChoice.Equals(""))
-                {
-                    Console.CursorVisible = false;
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to enter a race.");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("Which race are you? ");
-                }
+                if (playerChoice.Equals(""))                
+                    TypeOver(question, "You have to enter a race. ", playerChoice);                                  
                 else if (int.TryParse(playerChoice, out int choice))
                 {
                     if (choice > 0 && choice < 10)
@@ -146,18 +138,7 @@ namespace AdventureGame
                             _ => throw new NotImplementedException()
                         };
                     }
-                    Console.CursorVisible = false;
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to enter a number between 1-9.");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("Which race are you? ");                    
+                    TypeOver(question, "You have to enter a number between 1-9.", playerChoice.ToString());                              
                 }
                 else
                 {
@@ -178,18 +159,20 @@ namespace AdventureGame
                         if (race.ToLower().Contains(playerChoice.ToLower()))
                             return race;
 
-                    Console.CursorVisible = false;
-                    Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to enter an existing race.");
-                    Thread.Sleep(2000);
-                    Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
-                        Console.Write(" ");
-                    Console.SetCursorPosition(left, top++);
-                    Console.Write("Which race are you? ");
+                    TypeOver(question, "You have to enter an existing race.", playerChoice);
+
+                    //Console.CursorVisible = false;
+                    //Console.SetCursorPosition(left, top);
+                    //Console.WriteLine("You have to enter an existing race.");
+                    //Thread.Sleep(2000);
+                    //Console.SetCursorPosition(left, top);
+                    //for (int i = 0; i < 80; i++)
+                    //    Console.Write(" ");
+                    //Console.SetCursorPosition(left, --top);
+                    //for (int i = 0; i < 80; i++)
+                    //    Console.Write(" ");
+                    //Console.SetCursorPosition(left, top++);
+                    //Console.Write("Which race are you? ");
 
                     //string race = TypeInRace(playerChoice);
                     //if (race.Length > 2)
