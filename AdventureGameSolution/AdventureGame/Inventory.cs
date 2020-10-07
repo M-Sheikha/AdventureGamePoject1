@@ -231,9 +231,9 @@ namespace AdventureGame
                                         }
                                     }
                                     // OM det är en "Off-hand" så kolla efter en annan "Off-hand" OCH efter ett "Two-handed" Weapon. === Equals === +
-                                    if (armor.Property.Equals("Off-hand") && player.weapon.Count > 0)
+                                    if (armor.Property.Equals("Off-hand") && !player.Weapon.Equals("Unarmed"))
                                     {
-                                        if (player.weapon[0].Property.Equals("Two-handed"))
+                                        if (player.Weapon.Property.Equals("Two-handed"))
                                             // You already have a Two-handed weapon equipped.
                                             isEquippable = false;
                                     }
@@ -293,8 +293,8 @@ namespace AdventureGame
                                             if (!choice.ToLower().Equals("n"))
                                             {
                                                 Console.CursorVisible = false;
-                                                player.inventory.Add(player.weapon[0]);
-                                                player.weapon.RemoveAt(0);
+                                                player.inventory.Add(player.Weapon);
+                                                player.Weapon = new Weapon("Unarmed", "", Entity.AbilityModifier(player.Strength), "Str", "1");
                                                 Console.SetCursorPosition(left, top);
                                                 for (int i = 0; i < 80; i++)
                                                     Console.Write(" ");
@@ -484,9 +484,9 @@ namespace AdventureGame
                                             }
                                         }
                                         // OM det är en "Off-hand" så kolla efter en annan "Off-hand" OCH efter ett "Two-handed" Weapon. === Equals === +
-                                        if (armor.Property.Equals("Off-hand") && player.weapon.Count > 0)
+                                        if (armor.Property.Equals("Off-hand") && !player.Weapon.Equals("Unarmed"))
                                         {
-                                            if (player.weapon[0].Property.Equals("Two-handed"))
+                                            if (player.Weapon.Property.Equals("Two-handed"))
                                                 // You already have a Two-handed weapon equipped.
                                                 isEquippable = false;
                                         }
@@ -546,8 +546,8 @@ namespace AdventureGame
                                                 if (!choice.ToLower().Equals("n"))
                                                 {
                                                     Console.CursorVisible = false;
-                                                    player.inventory.Add(player.weapon[0]);
-                                                    player.weapon.RemoveAt(0);
+                                                    player.inventory.Add(player.Weapon);
+                                                    player.Weapon = new Weapon("Unarmed", "", Entity.AbilityModifier(player.Strength), "Str", "1");
                                                     Console.SetCursorPosition(left, top);
                                                     for (int i = 0; i < 80; i++)
                                                         Console.Write(" ");

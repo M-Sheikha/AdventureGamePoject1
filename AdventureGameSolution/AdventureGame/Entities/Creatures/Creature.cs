@@ -73,8 +73,8 @@ namespace AdventureGame
 
         public int PlayerAttackRoll(Player player)
         {
-            if (player.weapon.Count > 0)
-                return RollDice("1d20") + player.weapon[0].AbilityModifier;
+            if (!player.Weapon.Equals("Unarmed"))
+                return RollDice("1d20") + player.Weapon.AbilityModifier;
             else
                 return RollDice("1d20") + AbilityModifier(player.Strength);
         }

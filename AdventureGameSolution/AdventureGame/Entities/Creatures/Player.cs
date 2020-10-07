@@ -11,7 +11,7 @@ namespace AdventureGame
     class Player : Creature
     {       
         public List<Item> inventory = new List<Item>();
-        public List<Weapon> weapon = new List<Weapon>();
+        //public List<Weapon> weapon = new List<Weapon>();
         public List<Armor> armor = new List<Armor>();
 
         public Weapon Weapon { get; set; }
@@ -87,9 +87,9 @@ namespace AdventureGame
         public void Attack(Player player, Creature monster, int left, ref int top)
         {
             Console.SetCursorPosition(left, top++);
-            if (player.weapon.Count > 0)
+            if (!player.Weapon.Equals("Unarmed"))
             {
-                string tryText = $"You try to hit the {monster.Name} with your {player.weapon[0].Name}!";
+                string tryText = $"You try to hit the {monster.Name} with your {player.Weapon.Name}!";
                 if (Encounter.firstPartOfRound)
                     Encounter.remeberLine1 = tryText;
                 else
@@ -111,9 +111,9 @@ namespace AdventureGame
 
             if (PlayerAttackRoll(player) >= monster.ArmorClass)
             {
-                if (player.weapon.Count > 0)
+                if (!player.Weapon.Equals("Unarmed"))
                 {
-                    player.Damage = RollDice(player.weapon[0].Damage) + player.weapon[0].AbilityModifier;
+                    player.Damage = RollDice(player.Weapon.Damage) + player.Weapon.AbilityModifier;
                 }
                 else
                     player.Damage = 1 + AbilityModifier(player.Strength);
