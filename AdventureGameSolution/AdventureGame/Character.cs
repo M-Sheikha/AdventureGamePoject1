@@ -66,7 +66,8 @@ namespace AdventureGame
         private static string GetName()
         {
             Console.SetCursorPosition(left, top++);
-            Console.Write("What is your characters name? ");
+            string question = "What is your characters name? ";
+            Console.Write(question);
             do
             {
                 Console.CursorVisible = true;
@@ -75,16 +76,17 @@ namespace AdventureGame
                 {
                     Console.CursorVisible = false;
                     Console.SetCursorPosition(left, top);
-                    Console.WriteLine("You have to enter a valid name.");
+                    string message = "You have to enter a valid name.";
+                    Console.WriteLine(message);
                     Thread.Sleep(2000);
                     Console.SetCursorPosition(left, top);
-                    for (int i = 0; i < 80; i++)
+                    for (int i = 0; i < message.Length; i++)
                         Console.Write(" ");
                     Console.SetCursorPosition(left, --top);
-                    for (int i = 0; i < 80; i++)
+                    for (int i = 0; i < question.Length + name.Length; i++)
                         Console.Write(" ");
                     Console.SetCursorPosition(left, top++);
-                    Console.Write("What is your characters name? ");
+                    Console.Write(question);
                 }
                 else if (name.Length < 1)
                 {
