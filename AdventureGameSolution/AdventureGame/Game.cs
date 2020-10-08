@@ -90,7 +90,7 @@ namespace AdventureGame
                 foreach (var item in worldItems)
                     Item.WannaPickMeUp(player, item);
 
-                // Om spelaren har samma posiiton som monstret sker ett möte.
+                // Om spelaren har samma posiiton som ett monster sker ett möte.
                 foreach (var monster in monsters)
                     Encounter.WannaFightMe(player, monster);
 

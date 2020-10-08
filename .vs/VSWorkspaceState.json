@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdventureGameSolution"
+    "\\AdventureGameSolution",
+    "\\AdventureGameSolution\\AdventureGame",
+    "\\AdventureGameSolution\\AdventureGame\\Entities",
+    "\\AdventureGameSolution\\AdventureGame\\Entities\\Creatures"
   ],
-  "SelectedNode": "\\AdventureGameSolution\\AdventureGameSolution.sln",
+  "SelectedNode": "\\AdventureGameSolution\\AdventureGame\\Entities\\Creatures\\Player.cs",
   "PreviewInSolutionExplorer": false
 }
